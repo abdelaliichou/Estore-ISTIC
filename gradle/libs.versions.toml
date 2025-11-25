@@ -1,17 +1,92 @@
 [versions]
 agp = "8.9.1"
+androidxJunit = "1.1.3"
+browser = "1.9.0"
+browserVersion = "1.4.0"
+chipNavigationBar = "1.4.0"
+espressoCoreVersion = "3.4.0"
+filamentAndroid = "1.17.1"
+firebaseAppcheckSafetynet = "16.1.2"
+firebaseAppcheckSafetynetVersion = "16.0.1"
+firebaseAuth = "24.0.1"
+firebaseAuthVersion = "21.0.7"
+firebaseBom = "34.6.0"
+firebaseBomVersion = "29.3.1"
+firebaseDatabase = "22.0.1"
+firebaseDatabaseVersion = "20.0.5"
+firebaseFirestore = "26.0.2"
+firebaseFirestoreVersion = "24.2.2"
+firebaseStorage = "20.0.1"
+firebaseUiAuth = "8.0.1"
+imageslideshow = "0.1.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 appcompat = "1.7.1"
+legacySupportCoreUtils = "1.0.0"
+legacySupportV4 = "1.0.0"
+library = "1.1.0"
+lottie = "3.7.0"
 material = "1.13.0"
+activity = "1.10.1"
+constraintlayout = "2.2.1"
+materialVersion = "1.6.1"
+navigationFragment = "2.8.9"
+navigationUi = "2.8.9"
+paperdb = "2.7.2"
+picasso = "2.71828"
+pinview = "1.4.4"
+playServicesAuth = "21.4.0"
+playServicesAuthVersion = "20.2.0"
+shimmer = "0.5.0"
+superbottombar = "0.4"
+zigzagview = "1.2.0"
 
 [libraries]
+browser = { module = "androidx.browser:browser", version.ref = "browser" }
+browser-v140 = { module = "androidx.browser:browser", version.ref = "browserVersion" }
+chip-navigation-bar = { module = "com.github.ismaeldivita:chip-navigation-bar", version.ref = "chipNavigationBar" }
+espresso-core-v340 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
+filament-android = { module = "com.google.ar.sceneform:filament-android", version.ref = "filamentAndroid" }
+firebase-appcheck-safetynet = { module = "com.google.firebase:firebase-appcheck-safetynet", version.ref = "firebaseAppcheckSafetynet" }
+firebase-appcheck-safetynet-v1601 = { module = "com.google.firebase:firebase-appcheck-safetynet", version.ref = "firebaseAppcheckSafetynetVersion" }
+firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
+firebase-auth-v2107 = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuthVersion" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-bom-v2931 = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBomVersion" }
+firebase-database = { module = "com.google.firebase:firebase-database", version.ref = "firebaseDatabase" }
+firebase-database-v2005 = { module = "com.google.firebase:firebase-database", version.ref = "firebaseDatabaseVersion" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
+firebase-firestore-v2422 = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestoreVersion" }
+firebase-storage = { module = "com.google.firebase:firebase-storage", version.ref = "firebaseDatabase" }
+firebase-storage-v2001 = { module = "com.google.firebase:firebase-storage", version.ref = "firebaseStorage" }
+firebase-ui-auth = { module = "com.firebaseui:firebase-ui-auth", version.ref = "firebaseUiAuth" }
+firebase-ui-database = { module = "com.firebaseui:firebase-ui-database", version.ref = "firebaseUiAuth" }
+google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
+imageslideshow = { module = "com.github.denzcoskun:ImageSlideShow", version.ref = "imageslideshow" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+junit-v113 = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
+legacy-support-core-utils = { module = "androidx.legacy:legacy-support-core-utils", version.ref = "legacySupportCoreUtils" }
+legacy-support-v4 = { module = "androidx.legacy:legacy-support-v4", version.ref = "legacySupportV4" }
+library = { module = "nl.joery.animatedbottombar:library", version.ref = "library" }
+lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+material-v161 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
+navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
+navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
+paperdb = { module = "io.github.pilgr:paperdb", version.ref = "paperdb" }
+picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
+pinview = { module = "io.github.chaosleung:pinview", version.ref = "pinview" }
+play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
+play-services-auth-v2020 = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuthVersion" }
+shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
+superbottombar = { module = "com.github.ertugrulkaragoz:SuperBottomBar", version.ref = "superbottombar" }
+zigzagview = { module = "com.github.beigirad:ZigzagView", version.ref = "zigzagview" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

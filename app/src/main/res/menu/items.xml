@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/Home"
+        android:icon="@drawable/ic_home"
+        android:title="Home"
+        app:cnb_backgroundColor="@color/colorfirst"
+        app:cnb_iconColor="@color/white"
+        app:cnb_textColor="@color/white" />
+
+    <item
+        android:id="@+id/Fav"
+        android:icon="@drawable/ic_heart"
+        android:title="Favorite"
+        app:cnb_backgroundColor="@color/colorfirst"
+        app:cnb_iconColor="@color/white"
+        app:cnb_textColor="@color/white" />
+
+    <item
+        android:id="@+id/Pay"
+        android:icon="@drawable/ic_payment"
+        android:title="Orders"
+        app:cnb_backgroundColor="@color/colorfirst"
+        app:cnb_iconColor="@color/white"
+        app:cnb_textColor="@color/white" />
+    <item
+        android:id="@+id/User"
+        android:icon="@drawable/ic_user"
+        android:title="About"
+        app:cnb_backgroundColor="@color/colorfirst"
+        app:cnb_iconColor="@color/white"
+        app:cnb_textColor="@color/white" />
+
+
+
+</menu>

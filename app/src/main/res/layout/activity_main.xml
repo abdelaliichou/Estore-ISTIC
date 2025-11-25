@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FDFDFD"
+    tools:context=".View.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttom" />
+
+    <nl.joery.animatedbottombar.AnimatedBottomBar
+        android:id="@+id/buttom"
+        style="@style/Text"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/navigation_back"
+        android:backgroundTint="@color/white"
+        app:abb_badgeBackgroundColor="@color/red"
+        app:abb_iconSize="20dp"
+        app:abb_indicatorAppearance="round"
+        app:abb_indicatorColor="@color/colorfirst"
+        app:abb_indicatorHeight="4dp"
+        app:abb_indicatorLocation="bottom"
+        app:abb_indicatorMargin="15dp"
+        app:abb_rippleColor="@color/mainblue"
+        app:abb_rippleEnabled="true"
+        app:abb_selectedIndex="0"
+        app:abb_selectedTabType="icon"
+        app:abb_tabColor="#A6474747"
+        app:abb_tabColorSelected="@color/colorfirst"
+        app:abb_tabs="@menu/items"
+        app:abb_textAppearance="@style/Text"
+        app:abb_textSize="14dp" />
+
+</RelativeLayout>
