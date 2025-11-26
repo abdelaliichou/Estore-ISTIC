@@ -1,5 +1,6 @@
 ## try to use binding instead of findViewById
 ## work with Optional instead of null objects 
+## add mappers from json to dto 
 ## work with Builder design pattern instead of new()
 ## try to better handling the user infos validations and regexes and centrelize all of them
 ## do a better modalisation for our database, for the products, categories and orders
