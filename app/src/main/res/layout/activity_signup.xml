@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
-    tools:context=".View.SignupActivity">
+    tools:context=".View.signupActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

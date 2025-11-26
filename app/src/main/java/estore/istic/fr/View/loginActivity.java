@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import estore.istic.fr.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class loginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

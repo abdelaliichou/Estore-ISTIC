@@ -13,18 +13,60 @@
         android:theme="@style/Theme.EStore"
         tools:targetApi="31">
         <activity
+            android:name=".View.forgetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.userProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.productsByCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.resetEmailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.searchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.phoneOtpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.orderDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.motionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.productDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.ordersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.trackingOrdersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.passwordRecoveredActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.categoriesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.productsActivity"
+            android:exported="false" />
+        <activity
             android:name=".View.MainActivity"
             android:exported="false"
             android:theme="@style/Theme.EStore" />
         <activity
-            android:name=".View.ContactUsActivity"
+            android:name=".View.contactUsActivity"
             android:exported="false" />
         <activity
-            android:name=".View.SignupActivity"
+            android:name=".View.signupActivity"
             android:exported="false" />
         <activity
-            android:name=".View.LoginActivity"
-            android:exported="true" >
+            android:name=".View.loginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

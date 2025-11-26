@@ -10,13 +10,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import estore.istic.fr.R;
 
-public class ContactUsActivity extends AppCompatActivity {
+public class searchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_contact_us);
+        setContentView(R.layout.activity_search);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
