@@ -1,6 +1,8 @@
 package estore.istic.fr.Model.Domain;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     String userID;
     String name , email ;
     String phoneNumber;

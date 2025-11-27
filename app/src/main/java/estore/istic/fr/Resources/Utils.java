@@ -1,34 +1,35 @@
 package estore.istic.fr.Resources;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsetsController;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
-import com.example.e_commerce.View.Fragments.FavoriteFragment;
-import com.example.e_commerce.View.Fragments.HomeFragment;
-import com.example.e_commerce.View.Fragments.OrdersFragment;
-import com.example.e_commerce.View.Activities.SearchActivity;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 import estore.istic.fr.Model.Domain.Category;
-import estore.istic.fr.Model.Domain.OrderItem;
 import estore.istic.fr.Model.Domain.Product;
+import estore.istic.fr.R;
+import estore.istic.fr.View.forgetPasswordActivity;
+import estore.istic.fr.View.loginActivity;
 
 
 public class Utils {
@@ -36,11 +37,11 @@ public class Utils {
     public static ArrayList<Category> list1, list;
     public static ArrayList<Product> list2, list3, list5, list4;
     public static List<SlideModel> slideModels;
-    public static int isHere = 0;
     public static int existss = 0;
 
-    // hide the keyboard when we clicks any where(better user experience )
+    public static String EMAIL_PATTERN = "[a-zA-Z0-9!#$%&'*+/=?^:_`{|}~.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*";
 
+    // hide the keyboard when we clicks any where(better user experience )
     public static void SettingKeyboard(Activity activity) {
         InputMethodManager inputMethodManager =
                 (InputMethodManager) activity.getSystemService(
@@ -53,9 +54,7 @@ public class Utils {
         }
     }
 
-    // hiding the keyboard when we clicks any where ( better user experience )
-
-    public static void setUpKeybaord(View view, Activity activity) {
+    public static void setUpKeyboard(View view, Activity activity) {
         // Set up touch listener for non-text box views to hide keyboard.
         if (!(view instanceof EditText)) {
             view.setOnTouchListener(new View.OnTouchListener() {
@@ -65,14 +64,88 @@ public class Utils {
                 }
             });
         }
-        //If a layout container, iterate over children and seed recursion.
+        // If a layout container, iterate over children and seed recursion.
         if (view instanceof ViewGroup) {
             for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
                 View innerView = ((ViewGroup) view).getChildAt(i);
-                setUpKeybaord(innerView, activity);
+                setUpKeyboard(innerView, activity);
             }
         }
     }
+
+    public static AlertDialog createDialog(
+            Context context,
+            String title,
+            String message,
+            boolean isCancelable,
+            int icon,
+            int background
+    ) {
+        MaterialAlertDialogBuilder progressDialog = new MaterialAlertDialogBuilder(context);
+
+        progressDialog.setTitle(title);
+        progressDialog.setMessage(message);
+        progressDialog.setCancelable(isCancelable);
+        progressDialog.setBackground(context.getResources().getDrawable(background));
+        progressDialog.setIcon(icon);
+        progressDialog.setCancelable(false);
+
+        return progressDialog.show();
+    }
+
+    public static void statusAndActionBarIconsColor(
+            Activity activity,
+            int parentID
+    ) {
+
+        // action bar
+        if (activity instanceof AppCompatActivity) {
+            AppCompatActivity appCompatActivity = (AppCompatActivity) activity;
+            if (Optional.ofNullable(appCompatActivity.getSupportActionBar()).isPresent()) {
+                appCompatActivity.getSupportActionBar().hide();
+            }
+        }
+
+        // Setup keyboard
+        setUpKeyboard(activity.findViewById(parentID), activity);
+
+        // Set status bar color
+        activity.getWindow().setStatusBarColor(Color.WHITE);
+
+        // Set dark status bar icons
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            Objects.requireNonNull(activity.getWindow().getDecorView().getWindowInsetsController())
+                    .setSystemBarsAppearance(
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                    );
+        }
+
+        // Set navigation bar color
+        activity.getWindow().setNavigationBarColor(Color.WHITE);
+
+        // Set dark navigation bar icons
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            activity.getWindow()
+                    .getDecorView()
+                    .getWindowInsetsController()
+                    .setSystemBarsAppearance(
+                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                    );
+        }
+    }
+
+
+    public static void showToast(Context context, String message) {
+        Toast.makeText(
+                context,
+                message,
+                Toast.LENGTH_SHORT
+        ).show();
+    }
+
+    /*
 
     public static ArrayList<Category> CategoriesList() {
         if (list1 == null) {
@@ -300,6 +373,8 @@ public class Utils {
             }
         });
     }
+
+     */
 }
 
 

@@ -1,10 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".View.phoneOtpActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/otp_image"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_verification_code" />
+
+            <TextView
+                android:id="@+id/otp_main_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="OTP \nVerification ! "
+                android:textColor="#0F1647"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/otp_second_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppins"
+                android:text="Check your SMS messages ,We've sent you\nthe PIN in (+33) "
+                android:textColor="#9DA4AA"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+
+        <com.chaos.view.PinView
+            android:id="@+id/otp_number"
+            style="@style/PinWidget.PinView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:cursorVisible="false"
+            android:hint="****"
+            android:inputType="number"
+            android:itemBackground="@color/mainblue"
+            android:textColor="@color/black"
+            android:textColorHint="#AAB4FF"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:hideLineWhenFilled="true"
+            app:itemCount="6"
+            app:itemHeight="50dp"
+            app:itemRadius="10dp"
+            app:itemSpacing="10dp"
+            app:itemWidth="45dp"
+            app:lineColor="@color/darkblue3"
+            app:lineWidth="1dp"
+            app:viewType="rectangle" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.13" />
+
+        <RelativeLayout
+            android:id="@+id/otp_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/done_creating_task_button_back"
+            android:backgroundTint="@color/colorlast"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Verify Code"
+                android:textColor="#ffffff"
+                android:textSize="18dp" />
+        </RelativeLayout>
+
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.18" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progrres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone" />
+
+</RelativeLayout>

@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "265173749104",
+    "firebase_url": "https://e-commerce-fc39e-default-rtdb.firebaseio.com",
+    "project_id": "e-commerce-fc39e",
+    "storage_bucket": "e-commerce-fc39e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265173749104:android:ae50ca1ea7e6debfc193b5",
+        "android_client_info": {
+          "package_name": "com.example.admin_ecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "265173749104-a21agockotb3d4q79ur011ulog20fh02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNGCrQTMVsCg7byPSa0Fh2ZU1BHsbQsBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "265173749104-a21agockotb3d4q79ur011ulog20fh02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265173749104:android:6b82dde1b4a9c416c193b5",
+        "android_client_info": {
+          "package_name": "com.example.e_commerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "265173749104-9cihge8494svbumclt6r3agdh48pqf5m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.e_commerce",
+            "certificate_hash": "da8ec1274ae0ae1a4e36a8a5827024e0ac1456cf"
+          }
+        },
+        {
+          "client_id": "265173749104-a21agockotb3d4q79ur011ulog20fh02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNGCrQTMVsCg7byPSa0Fh2ZU1BHsbQsBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "265173749104-a21agockotb3d4q79ur011ulog20fh02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265173749104:android:b5e4c954417610b9c193b5",
+        "android_client_info": {
+          "package_name": "estore.istic.fr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "265173749104-a21agockotb3d4q79ur011ulog20fh02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNGCrQTMVsCg7byPSa0Fh2ZU1BHsbQsBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "265173749104-a21agockotb3d4q79ur011ulog20fh02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

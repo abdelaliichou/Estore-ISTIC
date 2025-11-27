@@ -15,7 +15,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class Animations {
-    static int duree = 450 ;
+    static int duration = 450 ;
     static int DURATION = 850;
     static int DURATION1 = 750;
     static int DURATION2 = 350;
@@ -51,7 +51,7 @@ public class Animations {
         ObjectAnimator animatorAlpha = ObjectAnimator.ofFloat(itemView, "alpha", 1.f);
         ObjectAnimator.ofFloat(itemView, "alpha", 0.f).start();
         // animatorTranslateX.setStartDelay(not_first_item ? DURATION : (i * DURATION));
-        animatorTranslateX.setDuration((/*not_first_item*/true ? 2 : 1) * duree);
+        animatorTranslateX.setDuration((/*not_first_item*/true ? 2 : 1) * duration);
         animatorSet.playTogether(animatorTranslateX, animatorAlpha);
         animatorSet.start();
     }
