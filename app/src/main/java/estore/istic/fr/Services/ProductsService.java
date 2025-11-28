@@ -35,7 +35,7 @@ public class ProductsService {
         DatabaseReference favoritesRef = databaseHelper.getDatabaseReference().child("favorites").child(uid);
 
         // fetch all products
-        productsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        productsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot product : snapshot.getChildren()) {

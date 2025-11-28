@@ -116,14 +116,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginRight="15dp">
 
                 <TextView
                     android:id="@+id/category_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="5dp"
                     android:fontFamily="@font/poppins_medium"
                     android:text="Category"
                     android:textColor="#2B2B2B"
@@ -157,14 +157,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="15dp">
 
                 <TextView
                     android:id="@+id/popular_items_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
                     android:fontFamily="@font/poppins_medium"
                     android:text="Popular items"
                     android:textColor="#2B2B2B"
@@ -213,9 +213,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:elevation="100dp">
 
                 <RelativeLayout
@@ -270,6 +270,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp">
 
@@ -277,8 +279,6 @@
                     android:id="@+id/suggested_items_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
                     android:fontFamily="@font/poppins_medium"
                     android:text="All items"
                     android:textColor="#2B2B2B"
@@ -324,7 +324,7 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="20dp" />
+                android:layout_height="15dp" />
 
 
         </LinearLayout>

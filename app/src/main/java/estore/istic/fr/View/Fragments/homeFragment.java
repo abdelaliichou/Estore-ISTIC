@@ -2,7 +2,6 @@ package estore.istic.fr.View.Fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,14 +17,9 @@ import android.widget.Toast;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.google.android.material.card.MaterialCardView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import estore.istic.fr.Controller.CategoriesAdapter;
@@ -35,14 +29,12 @@ import estore.istic.fr.Facade.OnCategoryActionListener;
 import estore.istic.fr.Facade.OnFavoriteProductsModifiedListener;
 import estore.istic.fr.Facade.OnProductActionListener;
 import estore.istic.fr.Facade.OnGetProductsResultListener;
-import estore.istic.fr.Facade.OnUserActionListener;
 import estore.istic.fr.Model.Domain.Category;
 import estore.istic.fr.Model.Domain.Product;
 import estore.istic.fr.Model.Dto.ProductDto;
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Animations;
 import estore.istic.fr.Resources.Utils;
-import estore.istic.fr.Resources.databaseHelper;
 import estore.istic.fr.Services.CategoriesService;
 import estore.istic.fr.Services.ProductsService;
 import estore.istic.fr.Services.UsersService;
@@ -50,14 +42,14 @@ import estore.istic.fr.Services.UsersService;
 public class homeFragment extends Fragment implements OnProductActionListener, OnCategoryActionListener {
 
     ImageView searchImage, bigImage;
-    public static ImageSlider imageSlider;
+    ImageSlider imageSlider;
     TextView HeaderText, popularItemsText, secondHeaderText, CategoriesText, SuggestedItemsText, viewAllText1, viewAllText2, viewAllText3;
     MaterialCardView parent_slide_card;
-    public static RecyclerView firstRecycler, secondRecycler, thirdRecycler;
-    public static CategoriesAdapter categoriesAdapter;
-    public static ProductsAdapter productsFirstAdapter, productsSecondAdapter;
-    static View view;
-    public static ProgressBar progressBar1, progressBar2;
+    RecyclerView firstRecycler, secondRecycler, thirdRecycler;
+    CategoriesAdapter categoriesAdapter;
+    ProductsAdapter productsFirstAdapter, productsSecondAdapter;
+    View view;
+    ProgressBar progressBar1, progressBar2;
 
     public homeFragment() {
     }
@@ -74,17 +66,19 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
         Utils.statusAndActionBarIconsColor(getActivity(), R.id.main);
 
         initialisation(view);
-        handlingOnClicks();
-        SettingUpImageSlider();
-        fetchProducts(view);
+        settingAnimation();
+
         fetchCategories(view);
-        SettingAnimation();
-        SettingHeaderTextUser();
+        fetchProducts(view);
+
+        settingHeaderTextUser();
+        handlingOnClicks();
+        settingImageSlider();
 
         return view;
     }
 
-    private void SettingAnimation() {
+    private void settingAnimation() {
         Animations.FromeRightToLeftCard(parent_slide_card);
         Animations.FromeLeftToRight(HeaderText);
         Animations.FromeLeftToRight(popularItemsText);
@@ -126,30 +120,11 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
         searchImage.setOnClickListener(view -> startActivity(new Intent(getActivity(), SearchActivity.class)));*/
     }
 
-    public void SettingUpImageSlider() {
+    public void settingImageSlider() {
         imageSlider.setImageList(
                 Utils.getSlideList(),
                 ScaleTypes.CENTER_CROP
         );
-    }
-
-    public void fetchProducts(View view) {
-        ProductsService.getAllProducts(new OnGetProductsResultListener() {
-            @Override
-            public void onLoading() {
-                progressBar2.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onSuccess(List<ProductDto> products) {
-                settingProductsRecyclers(view, products);
-            }
-
-            @Override
-            public void onError(String message) {
-                progressBar2.setVisibility(View.GONE);
-            }
-        });
     }
 
     public void fetchCategories(View view) {
@@ -175,8 +150,27 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
                 view.getContext(),
                 categories
         );
-        firstRecycler.setAdapter(categoriesAdapter);
         firstRecycler.setLayoutManager(provideLayoutManager());
+        firstRecycler.setAdapter(categoriesAdapter);
+    }
+
+    public void fetchProducts(View view) {
+        ProductsService.getAllProducts(new OnGetProductsResultListener() {
+            @Override
+            public void onLoading() {
+                progressBar2.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onSuccess(List<ProductDto> products) {
+                settingProductsRecyclers(view, products);
+            }
+
+            @Override
+            public void onError(String message) {
+                progressBar2.setVisibility(View.GONE);
+            }
+        });
     }
 
     public void settingProductsRecyclers(
@@ -191,18 +185,20 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
         productsSecondAdapter = new ProductsAdapter(
                 view.getContext(),
                 this,
-                partitionedProducts.get(true)
+                partitionedProducts.get(true),
+                false
         );
+        secondRecycler.setLayoutManager(provideLayoutManager());
         secondRecycler.setAdapter(productsSecondAdapter);
-        secondRecycler.setLayoutManager((provideLayoutManager()));
 
         productsFirstAdapter = new ProductsAdapter(
                 view.getContext(),
                 this,
-                partitionedProducts.get(false)
+                partitionedProducts.get(false),
+                false
         );
-        thirdRecycler.setAdapter(productsFirstAdapter);
         thirdRecycler.setLayoutManager(provideLayoutManager());
+        thirdRecycler.setAdapter(productsFirstAdapter);
     }
 
     public RecyclerView.LayoutManager provideLayoutManager() {
@@ -213,7 +209,7 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
         );
     }
 
-    public void SettingHeaderTextUser() {
+    public void settingHeaderTextUser() {
         UsersService.getUserName(userName -> userName.ifPresent(msg -> {
             HeaderText.setText("Welcome, ".concat(userName.get()).concat("\n").concat(HeaderText.getText().toString()));
         }));
@@ -240,12 +236,12 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
             public void onSuccess(String message) {
                 Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 
-                // notify the adapter
+                // notify the right adapter
                 if (product.getPrice() >= 600) {
-                    productsSecondAdapter.onProductAddedToFavorite(position, true);
+                    productsSecondAdapter.onUpdateProductFavoriteStatus(position, true);
                     return;
                 }
-                productsFirstAdapter.onProductAddedToFavorite(position, true);
+                productsFirstAdapter.onUpdateProductFavoriteStatus(position, true);
             }
 
             @Override
@@ -262,12 +258,12 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
             public void onSuccess(String message) {
                 Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 
-                // notify the adapter
+                // notify the right adapter
                 if (product.getPrice() >= 600) {
-                    productsSecondAdapter.onProductAddedToFavorite(position, false);
+                    productsSecondAdapter.onUpdateProductFavoriteStatus(position, false);
                     return;
                 }
-                productsFirstAdapter.onProductAddedToFavorite(position, false);
+                productsFirstAdapter.onUpdateProductFavoriteStatus(position, false);
             }
 
             @Override

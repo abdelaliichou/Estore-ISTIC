@@ -25,26 +25,43 @@ import estore.istic.fr.R;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> implements OnFavoriteProductsModifiedResultListener {
 
+    private static final int VIEW_TYPE_LIST = 0;
+    private static final int VIEW_TYPE_GRID = 1;
     OnProductActionListener productListener;
-
     List<ProductDto> productsList;
     Context context;
+    boolean isGrid;
 
     public ProductsAdapter(
             Context context,
             OnProductActionListener listener,
-            List<ProductDto> products
+            List<ProductDto> products,
+            boolean isGrid
     ) {
+        this.isGrid = isGrid;
         this.context = context;
         this.productsList = products;
         this.productListener = listener;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return isGrid ? VIEW_TYPE_GRID : VIEW_TYPE_LIST;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        int layout;
+        if (viewType == VIEW_TYPE_GRID) {
+            layout = R.layout.populair_item_gridlayout;
+        } else {
+            layout = R.layout.populair_item;
+        }
+
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.populair_item,
+                layout,
                 parent,
                 false
         );
@@ -110,7 +127,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     }
 
     @Override
-    public void onProductAddedToFavorite(int position, boolean isFavorite) {
+    public void onUpdateProductFavoriteStatus(int position, boolean isFavorite) {
         productsList.get(position).setFavorite(isFavorite);
         notifyItemChanged(position);
     }
@@ -119,7 +136,6 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     public int getItemCount() {
         return productsList.size();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage, fullHeart, emptyHeart, ratting, hot;
