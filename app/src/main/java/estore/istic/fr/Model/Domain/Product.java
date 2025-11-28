@@ -3,10 +3,15 @@ package estore.istic.fr.Model.Domain;
 import com.google.firebase.database.PropertyName;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import estore.istic.fr.Model.Dto.ProductDto;
 
 public class Product implements Serializable {
 
-    String productID;
+    @PropertyName("product_id")
+    String productId;
     @PropertyName("category_id")
     String categoryId;
     @PropertyName("image_url")
@@ -17,10 +22,10 @@ public class Product implements Serializable {
     public Product() {}
 
     public Product(
-            String categoryId,
             String name,
             double price,
-            String imageUrl
+            String imageUrl,
+            String categoryId
     ) {
         this.name = name;
         this.price = price;
@@ -28,6 +33,15 @@ public class Product implements Serializable {
         this.categoryId = categoryId;
     }
 
+    public Product(
+            String name,
+            double price,
+            String imageUrl
+    ) {
+        this.name = name;
+        this.price = price;
+        this.imageUrl = imageUrl;
+    }
 
     public String getName() {
         return name;
@@ -62,10 +76,11 @@ public class Product implements Serializable {
     }
 
     public String getProductId() {
-        return productID;
+        return productId;
     }
 
-    public void setProductID(String productID) {
-        this.categoryId = productID;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
+
 }

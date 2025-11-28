@@ -32,6 +32,7 @@ import java.util.Optional;
 
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Animations;
+import estore.istic.fr.Resources.DatabaseSeeder;
 import estore.istic.fr.Resources.databaseHelper;
 import estore.istic.fr.Resources.Utils;
 
@@ -63,6 +64,8 @@ public class loginActivity extends AppCompatActivity {
         handlingAnimation();
         RememberMeUser(this);
         handlingOnClicks(this);
+
+        // DatabaseSeeder.seed();
 
     }
 

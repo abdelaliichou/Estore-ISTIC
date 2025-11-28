@@ -4,7 +4,7 @@ import java.util.List;
 
 import estore.istic.fr.Model.Dto.ProductDto;
 
-public interface OnProductsResultListener {
+public interface OnGetProductsResultListener {
     void onLoading();
     void onSuccess(List<ProductDto> products);
     void onError(String message);

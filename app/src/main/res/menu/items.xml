@@ -18,16 +18,16 @@
         app:cnb_textColor="@color/white" />
 
     <item
-        android:id="@+id/Pay"
+        android:id="@+id/Cart"
         android:icon="@drawable/ic_payment"
-        android:title="Orders"
+        android:title="Cart"
         app:cnb_backgroundColor="@color/colorfirst"
         app:cnb_iconColor="@color/white"
         app:cnb_textColor="@color/white" />
     <item
-        android:id="@+id/User"
+        android:id="@+id/Options"
         android:icon="@drawable/ic_user"
-        android:title="About"
+        android:title="Options"
         app:cnb_backgroundColor="@color/colorfirst"
         app:cnb_iconColor="@color/white"
         app:cnb_textColor="@color/white" />

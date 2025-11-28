@@ -8,15 +8,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import estore.istic.fr.Facade.OnProductsResultListener;
+import estore.istic.fr.Facade.OnGetProductsResultListener;
 import estore.istic.fr.Model.Domain.Product;
 import estore.istic.fr.Model.Dto.ProductDto;
 import estore.istic.fr.Resources.databaseHelper;
 
 
-public class ProductsService {
+public class OrdersService {
 
-    public static void getAllProducts(OnProductsResultListener listener) {
+    public static void getAllProducts(OnGetProductsResultListener listener) {
 
         listener.onLoading();
         ArrayList<ProductDto> list = new ArrayList<>();

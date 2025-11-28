@@ -1,10 +1,15 @@
 package estore.istic.fr.Model.Domain;
 
+import com.google.firebase.database.PropertyName;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
-    String userID;
+    @PropertyName("user_id")
+    String userId;
     String name , email ;
+    @PropertyName("phone_number")
+
     String phoneNumber;
 
     public User() {}

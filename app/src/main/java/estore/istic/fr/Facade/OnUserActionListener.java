@@ -1,10 +1,7 @@
 package estore.istic.fr.Facade;
 
-import estore.istic.fr.Model.Domain.Product;
-import estore.istic.fr.Model.Dto.ProductDto;
+import java.util.Optional;
 
-public interface OnProductActionListener {
-    void onProductClicked(ProductDto product);
-    void onProductLiked(Product product, int position);
-    void onProductUnliked(Product product, int position);
+public interface OnUserActionListener {
+     void onSuccess(Optional<String> userName);
 }

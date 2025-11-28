@@ -1,7 +1,5 @@
 package estore.istic.fr.Facade;
 
-public interface OnFavoriteProductsModifiedListener {
-    void onLoading();
-    void onSuccess(String message);
-    void onError(String message);
+public interface OnFavoriteProductsModifiedResultListener {
+    void onProductAddedToFavorite(int position, boolean isFavorite);
 }

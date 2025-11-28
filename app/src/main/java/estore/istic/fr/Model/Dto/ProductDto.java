@@ -18,4 +18,6 @@ public class ProductDto {
     public Product getProduct() { return this.product; }
     public String getPriceString() { return "$" + product.getPrice(); }
     public boolean isFavorite() { return isFavorite; }
+
+    public void setFavorite(boolean isFavorite) { this.isFavorite = isFavorite; }
 }

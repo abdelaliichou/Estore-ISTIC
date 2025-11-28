@@ -7,31 +7,27 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import estore.istic.fr.Facade.OnProductsResultListener;
-import estore.istic.fr.Model.Domain.Product;
-import estore.istic.fr.Model.Dto.ProductDto;
+import estore.istic.fr.Facade.OnCategoriesResultListener;
+import estore.istic.fr.Model.Domain.Category;
 import estore.istic.fr.Resources.databaseHelper;
 
 
-public class ProductsService {
+public class CategoriesService {
 
-    public static void getAllProducts(OnProductsResultListener listener) {
+    public static void getAllCategories(OnCategoriesResultListener listener) {
 
         listener.onLoading();
-        ArrayList<ProductDto> list = new ArrayList<>();
+        List<Category> list = new ArrayList<>();
 
         databaseHelper.getDatabaseReference()
-                .child("products")
+                .child("categories")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot product : snapshot.getChildren()) {
-                            list.add(new ProductDto(
-                                        product.getValue(Product.class),
-                                        false
-                                    )
-                            );
+                        for (DataSnapshot category : snapshot.getChildren()) {
+                            list.add(category.getValue(Category.class));
                         }
 
                         listener.onSuccess(list);

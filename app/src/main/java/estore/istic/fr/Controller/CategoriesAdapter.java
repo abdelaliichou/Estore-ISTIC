@@ -1,4 +1,4 @@
-package com.example.e_commerce.Controler;
+package estore.istic.fr.Controller;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,46 +12,47 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.e_commerce.Modele.CategoryModel;
-import com.example.e_commerce.Modele.Utils;
-import com.example.e_commerce.R;
-import com.example.e_commerce.View.Fragments.HomeFragment;
 import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class categories_adapter extends RecyclerView.Adapter<categories_adapter.ViewHolder> {
+import estore.istic.fr.Model.Domain.Category;
+import estore.istic.fr.R;
+
+public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
     int isclicked = -1;
-    private ArrayList<CategoryModel> Category_list = new ArrayList<>();
-    private Context context;
+    List<Category> categoriesList;
+    Context context;
 
-    public categories_adapter(ArrayList<CategoryModel> tasks_list, Context context) {
+    public CategoriesAdapter(
+            Context context,
+            List<Category> tasks_list
+    ) {
         this.context = context;
-        this.Category_list = tasks_list;
+        this.categoriesList = tasks_list;
     }
 
     @NonNull
     @Override
-    public categories_adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item, parent, false);
         return new ViewHolder(view);
     }
 
     @SuppressLint("ResourceAsColor")
     @Override
-    public void onBindViewHolder(@NonNull categories_adapter.ViewHolder holder, int position) {
-        holder.text.setText(Category_list.get(position).getCategory());
-        Picasso.get().load(Category_list.get(position).getImageUrl()).into(holder.image);
-//        Animations.FromeRightToLeftCard(holder.cardView);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.text.setText(categoriesList.get(position).getName());
+        Picasso.get().load(categoriesList.get(position).getImageUrl()).into(holder.image);
         if (position == isclicked) { // the clicked item
             holder.cardView.setStrokeWidth(6);
             holder.cardView.setStrokeColor(R.color.colorfirst);
             holder.backEffect.setBackground(null);
             holder.text.setTextColor(context.getResources().getColor(R.color.colorfirst));
             //changing the popular items list to the items that correspond with the category item clicked
-            HomeFragment.progressBar1.setVisibility(View.VISIBLE);
-            HomeFragment.adapter2.items_list = (Utils.getPopularItemsListFromDataBase(Category_list.get(position).getCategory())) ;
+            // HomeFragment.progressBar1.setVisibility(View.VISIBLE);
+            // HomeFragment.adapter2.items_list = (Utils.getPopularItemsListFromDataBase(Category_list.get(position).getCategory())) ;
             //HomeFragment.adapter2.notifyDataSetChanged();
 
         } else { // all the not clicked items
@@ -64,7 +65,7 @@ public class categories_adapter extends RecyclerView.Adapter<categories_adapter.
 
     @Override
     public int getItemCount() {
-        return Category_list.size();
+        return categoriesList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

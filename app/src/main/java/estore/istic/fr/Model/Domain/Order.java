@@ -7,7 +7,8 @@ import java.util.List;
 import estore.istic.fr.Model.Dto.OrderStatus;
 
 public class Order {
-    String orderID;
+    @PropertyName("order_id")
+    String orderId;
     @PropertyName("user_id")
     private String userId;
     private OrderStatus status;
@@ -31,12 +32,12 @@ public class Order {
         this.orderDate = System.currentTimeMillis();
     }
 
-    public String getOrderID() {
-        return orderID;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setOrderID(String orderID) {
-        this.orderID = orderID;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public String getUserId() {

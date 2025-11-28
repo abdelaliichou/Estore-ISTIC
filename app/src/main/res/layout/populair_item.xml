@@ -14,7 +14,7 @@
     android:layerType="hardware"
     app:cardCornerRadius="10dp"
     app:cardElevation="5dp"
-    app:strokeColor="@color/colorlast">
+    app:strokeWidth="0dp">
 
 
     <LinearLayout

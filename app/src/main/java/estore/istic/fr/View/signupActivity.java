@@ -159,7 +159,7 @@ public class signupActivity extends AppCompatActivity {
             // save the created user into the realtime database
             User user = new User(name, email, number);
             databaseHelper.getDatabaseReference()
-                    .child("Users")
+                    .child("users")
                     .child(Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid())
                     .setValue(user)
                     .addOnCompleteListener(task1 -> {

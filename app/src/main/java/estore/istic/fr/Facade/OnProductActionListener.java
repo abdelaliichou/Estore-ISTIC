@@ -1,9 +1,10 @@
 package estore.istic.fr.Facade;
 
+import estore.istic.fr.Model.Domain.Product;
 import estore.istic.fr.Model.Dto.ProductDto;
 
-public interface OnCategoryActionListener {
+public interface OnProductActionListener {
     void onProductClicked(ProductDto product);
-    void onProductLiked(ProductDto product, int position);
-    void onProductUnliked(ProductDto product, int position);
+    void onProductLiked(Product product, int position);
+    void onProductUnliked(Product product, int position);
 }

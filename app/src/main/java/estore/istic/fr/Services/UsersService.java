@@ -6,41 +6,27 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Optional;
 
-import estore.istic.fr.Facade.OnProductsResultListener;
-import estore.istic.fr.Model.Domain.Product;
-import estore.istic.fr.Model.Dto.ProductDto;
+import estore.istic.fr.Facade.OnUserActionListener;
 import estore.istic.fr.Resources.databaseHelper;
 
+public class UsersService {
 
-public class OrdersService {
-
-    public static void getAllProducts(OnProductsResultListener listener) {
-
-        listener.onLoading();
-        ArrayList<ProductDto> list = new ArrayList<>();
-
+    public static void getUserName(OnUserActionListener listener) {
         databaseHelper.getDatabaseReference()
-                .child("products")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+                .child("users")
+                .child(Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid())
+                .child("name")
+                .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot product : snapshot.getChildren()) {
-                            list.add(new ProductDto(
-                                        product.getValue(Product.class),
-                                        false
-                                    )
-                            );
-                        }
-
-                        listener.onSuccess(list);
+                            listener.onSuccess(Optional.ofNullable(snapshot.getValue(String.class)));
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        listener.onError(error.getMessage());
-                    }
+                    public void onCancelled(@NonNull DatabaseError error) {}
                 });
     }
 }
