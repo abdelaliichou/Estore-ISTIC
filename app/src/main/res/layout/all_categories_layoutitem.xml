@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_parent"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:clickable="true"
+    android:layout_margin="10dp"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="5dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true"
+    app:layout_constraintTop_toTopOf="parent"
+    app:strokeColor="#2b2b2b"
+    app:strokeWidth="1dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/AllCategories_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="#00000000" />
+
+        <RelativeLayout
+            android:id="@+id/backeffect"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#40878787" />
+
+        <TextView
+            android:id="@+id/AllCategories_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:includeFontPadding="false"
+            android:text="Abdelali"
+            android:textColor="#2b2b2b"
+            android:textSize="16dp" />
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

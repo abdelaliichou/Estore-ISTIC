@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
+    android:layout_width="150dp"
+    android:layout_height="200dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="4dp"
+    android:layout_marginBottom="10dp"
+    android:clickable="true"
+    android:elevation="10dp"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layerType="hardware"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp"
+    app:strokeColor="@color/colorlast">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f2f2f2"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
+
+            <ImageView
+                android:id="@+id/product_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/id_image" />
+
+            <View
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@drawable/gradient3" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="7dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="7dp">
+            <ImageView
+                android:id="@+id/ratting"
+                android:layout_width="50dp"
+                android:layout_height="17dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_ratting" />
+
+            <ImageView
+                android:id="@+id/populaire"
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:src="@drawable/ic_populaire" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/poppins_medium"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="Nike shoes - Men"
+            android:textColor="#2b2b2b"
+            android:textSize="10dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="9dp">
+
+            <TextView
+                android:id="@+id/product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/poppins_semibold"
+                android:gravity="center"
+                android:text="$ 99.99"
+                android:textColor="#000000"
+                android:textSize="15dp" />
+
+            <ImageView
+                android:id="@+id/product_liked_empty"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_heart_empty" />
+
+            <ImageView
+                android:id="@+id/product_liked_fill"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_heart_fill"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/more_informations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="7dp"
+            android:background="@drawable/view_more_item_back"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="More info"
+                android:textColor="#ffffff"
+                android:textSize="14dp" />
+        </RelativeLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
