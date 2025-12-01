@@ -27,3 +27,4 @@
 26. Change all the design & the images & colors & illustrations
 27. Refactore colors file and deleting unused colors
 28. i11n and making the app compatible with multiple languages
+29. Add possibility to send receit by mail, and download it as pdf from the notifications 
