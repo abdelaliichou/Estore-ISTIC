@@ -1,6 +1,7 @@
 package estore.istic.fr.View.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ import estore.istic.fr.Model.Dto.ProductDto;
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Utils;
 import estore.istic.fr.Services.ProductsService;
+import estore.istic.fr.View.productDetailsActivity;
 
 
 public class favoritesFragment extends Fragment implements OnProductActionListener {
@@ -134,13 +136,14 @@ public class favoritesFragment extends Fragment implements OnProductActionListen
 
     @Override
     public void onProductClicked(ProductDto product) {
-        /*
-        Intent intent = new Intent(getActivity(), ItemMoreInfomationsActivity.class);
+        Intent intent = new Intent(getActivity(), productDetailsActivity.class);
         intent.putExtra("name", product.getProduct().getName());
-        intent.putExtra("price", product.getProduct().getPrice());
-        intent.putExtra("imageurl", product.getProduct().getImageUrl());
+        intent.putExtra("id", product.getProduct().getProductId());
+        intent.putExtra("imageUrl", product.getProduct().getImageUrl());
+        intent.putExtra("isFavorite", String.valueOf(product.isFavorite()));
+        intent.putExtra("price", String.valueOf(product.getProduct().getPrice()));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);*/
+        startActivity(intent);
     }
 
     @Override

@@ -64,6 +64,7 @@
         android:foreground="?android:attr/selectableItemBackground"
         app:cardBackgroundColor="@color/colorlast"
         app:cardCornerRadius="10dp"
+        app:strokeWidth="0dp"
         app:cardElevation="7dp">
 
         <RelativeLayout
