@@ -4,14 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -24,7 +22,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 
 import java.util.Objects;
@@ -32,7 +29,6 @@ import java.util.Optional;
 
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Animations;
-import estore.istic.fr.Resources.DatabaseSeeder;
 import estore.istic.fr.Resources.databaseHelper;
 import estore.istic.fr.Resources.Utils;
 
@@ -125,7 +121,10 @@ public class loginActivity extends AppCompatActivity {
                     "Searching for this user...",
                     false,
                     R.drawable.ic__cloud_upload,
-                    R.drawable.alert_dialog_back
+                    R.drawable.alert_dialog_back,
+                    false,
+                    null,
+                    null
             );
 
             dialog.show();
@@ -151,7 +150,10 @@ public class loginActivity extends AppCompatActivity {
                     "Hello again, we're redirecting you to Home !",
                     false,
                     R.drawable.ic__cloud_upload,
-                    R.drawable.alert_dialog_back
+                    R.drawable.alert_dialog_back,
+                    false,
+                    null,
+                    null
             );
             dialog.show();
             navigateToHome();

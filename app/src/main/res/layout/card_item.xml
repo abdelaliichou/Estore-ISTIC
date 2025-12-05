@@ -47,6 +47,8 @@
                         android:id="@+id/populaire"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/ratting"
+                        android:layout_marginLeft="5dp"
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_populaire" />
 

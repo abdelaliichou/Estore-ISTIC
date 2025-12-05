@@ -4,37 +4,105 @@ import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
-import estore.istic.fr.Facade.OnGetProductsResultListener;
+import estore.istic.fr.Facade.OnCartActionListener;
+import estore.istic.fr.Facade.OnCartRealTimeListener;
+import estore.istic.fr.Facade.OnOrderSaveListener;
+import estore.istic.fr.Model.Domain.Order;
 import estore.istic.fr.Model.Domain.Product;
-import estore.istic.fr.Model.Dto.ProductDto;
+import estore.istic.fr.Model.Dto.CartItem;
 import estore.istic.fr.Resources.databaseHelper;
 
 
 public class OrdersService {
 
-    public static void getAllProducts(OnGetProductsResultListener listener) {
+    private static final String uid = Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid();
+    private static ValueEventListener listener; // to stop listening when quiting the app
 
-        listener.onLoading();
-        ArrayList<ProductDto> list = new ArrayList<>();
+    public static void stopListening() {
+        DatabaseReference ref = databaseHelper.getDatabaseReference()
+                .child("cart")
+                .child(uid);
+        if (listener != null) ref.removeEventListener(listener);
+    }
+
+    public static void getCartItems(OnCartRealTimeListener realtimeListener) {
+
+        realtimeListener.onLoading();
+
+        listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<CartItem> items = new ArrayList<>();
+                for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
+                    Optional<CartItem> item = Optional.ofNullable(itemSnapshot.getValue(CartItem.class));
+                    item.ifPresent(items::add);
+                }
+
+                realtimeListener.onData(items);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                realtimeListener.onError(error.getMessage());
+            }
+        };
 
         databaseHelper.getDatabaseReference()
-                .child("products")
+                .child("cart")
+                .child(uid)
+                .addValueEventListener(listener);
+    }
+
+    public static void addProductToCart(Product product, int quantity, OnCartActionListener listener) {
+
+        DatabaseReference ref = databaseHelper.getDatabaseReference()
+                .child("cart")
+                .child(uid);
+
+        CartItem cartItem = new CartItem(product, quantity);
+
+        ref.orderByChild("product/productId")
+                .equalTo(product.getProductId())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot product : snapshot.getChildren()) {
-                            list.add(new ProductDto(
-                                        product.getValue(Product.class),
-                                        false
-                                    )
-                            );
-                        }
 
-                        listener.onSuccess(list);
+                        // Product already in cart → update quantity
+                        if (snapshot.exists()) {
+                            for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
+                                Optional<CartItem> existingItem = Optional.ofNullable(itemSnapshot.getValue(CartItem.class));
+                                existingItem.ifPresent(item -> {
+                                    int newQuantity = existingItem.get().getQuantity() + quantity;
+                                    ref.child(Objects.requireNonNull(itemSnapshot.getKey()))
+                                            .child("quantity")
+                                            .setValue(newQuantity)
+                                            .addOnCompleteListener(task -> {
+                                                if (task.isSuccessful()) {
+                                                    listener.onSuccess(product.getName() + " quantity updated in cart!");
+                                                } else {
+                                                    listener.onError(Objects.requireNonNull(task.getException()).getMessage());
+                                                }
+                                            });
+                                });
+                            }
+                        } else {
+                            // Product not in cart → add new
+                            ref.push().setValue(cartItem).addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    listener.onSuccess(product.getName() + " added to cart!");
+                                } else {
+                                    listener.onError(Objects.requireNonNull(task.getException()).getMessage());
+                                }
+                            });
+                        }
                     }
 
                     @Override
@@ -42,5 +110,76 @@ public class OrdersService {
                         listener.onError(error.getMessage());
                     }
                 });
+    }
+
+    public static void saveOrder(Order order, OnOrderSaveListener listener) {
+        DatabaseReference ref = databaseHelper.getDatabaseReference()
+                .child("orders")
+                .child(order.getUserId());
+
+        Optional<String> orderId = Optional.ofNullable(ref.push().getKey());
+
+        if (orderId.isEmpty()) {
+            listener.onError("Failed to save order!");
+            return;
+        }
+
+        listener.onLoading();
+        order.setOrderId(orderId.get());
+        ref.child(orderId.get())
+                .setValue(order)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        listener.onSuccess(orderId.get());
+                    } else {
+                        listener.onError(Objects.requireNonNull(task.getException()).getMessage());
+                    }
+                });
+    }
+
+    public static void clearCart(String uid) {
+        databaseHelper.getDatabaseReference()
+                .child("cart")
+                .child(uid)
+                .removeValue();
+    }
+
+    public static void deleteCartItem(CartItem cartItem, OnCartActionListener listener) {
+
+        DatabaseReference ref = databaseHelper.getDatabaseReference()
+                .child("cart")
+                .child(uid);
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                boolean removed = false;
+                for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
+
+                    Optional<CartItem> item = Optional.ofNullable(itemSnapshot.getValue(CartItem.class));
+                    if (item.isPresent() && item.get().getProduct().getProductId().equals(cartItem.getProduct().getProductId())) {
+                        ref.child(Objects.requireNonNull(itemSnapshot.getKey())).removeValue((error, databaseReference) -> {
+                            if (error == null) {
+                                listener.onSuccess(cartItem.getProduct().getName().concat(" removed from cart!"));
+                            } else {
+                                listener.onError(error.getMessage());
+                            }
+                        });
+                        removed = true;
+                        break;
+                    }
+                }
+
+                if (!removed) {
+                    listener.onError(cartItem.getProduct().getName().concat(" not found in cart!"));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                listener.onError(error.getMessage());
+            }
+        });
     }
 }

@@ -1,7 +1,9 @@
 package estore.istic.fr.View.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,14 +14,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import estore.istic.fr.Controller.CategoriesAdapter;
@@ -51,7 +54,27 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
     View view;
     ProgressBar progressBar1, progressBar2;
 
-    public homeFragment() {
+    private Optional<Context> safeContext;
+
+    public homeFragment() {}
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        safeContext = Optional.of(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        safeContext = Optional.empty();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ProductsService.stopListening("favorites");
+        ProductsService.stopListening("products");
     }
 
     @Override
@@ -66,14 +89,19 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
         Utils.statusAndActionBarIconsColor(getActivity(), R.id.main);
 
         initialisation(view);
+
         settingAnimation();
+        settingImageSlider();
+        settingHeaderTextUser();
+        settingProductsRecyclers(
+                view,
+                Collections.emptyList()
+        );
 
         fetchCategories(view);
-        fetchProducts(view);
+        fetchProducts();
 
-        settingHeaderTextUser();
         handlingOnClicks();
-        settingImageSlider();
 
         return view;
     }
@@ -138,7 +166,9 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
             }
 
             @Override
-            public void onError(String message) {}
+            public void onError(String message) {
+                showToast(message);
+            }
         });
     }
 
@@ -154,20 +184,31 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
         firstRecycler.setAdapter(categoriesAdapter);
     }
 
-    public void fetchProducts(View view) {
+    public void fetchProducts() {
         ProductsService.getAllProducts(new OnGetProductsResultListener() {
             @Override
             public void onLoading() {
-                progressBar2.setVisibility(View.GONE);
+                progressBar2.setVisibility(View.VISIBLE);
+                progressBar1.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onSuccess(List<ProductDto> products) {
-                settingProductsRecyclers(view, products);
+                progressBar1.setVisibility(View.GONE);
+                progressBar2.setVisibility(View.GONE);
+                Map<Boolean, List<ProductDto>> partitionedProducts = products.stream().collect(
+                        Collectors.partitioningBy(p -> p.getProduct().getPrice() >= 600)
+                );
+
+                // notify the wright adapter
+                productsSecondAdapter.updateList(partitionedProducts.get(true));
+                productsFirstAdapter.updateList(partitionedProducts.get(false));
             }
 
             @Override
             public void onError(String message) {
+                showToast(message);
+                progressBar1.setVisibility(View.GONE);
                 progressBar2.setVisibility(View.GONE);
             }
         });
@@ -230,46 +271,38 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
     }
 
     @Override
-    public void onProductLiked(Product product, int position) {
+    public void onProductLiked(Product product) {
         ProductsService.addProductToFavorite(product, new OnFavoriteProductsModifiedListener() {
             @Override
             public void onSuccess(String message) {
-                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-
-                // notify the right adapter
-                if (product.getPrice() >= 600) {
-                    productsSecondAdapter.onUpdateProductFavoriteStatus(position, true);
-                    return;
-                }
-                productsFirstAdapter.onUpdateProductFavoriteStatus(position, true);
+                showToast(message);
             }
 
             @Override
             public void onError(String message) {
-                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                showToast(message);
             }
         });
     }
 
     @Override
-    public void onProductUnliked(Product product, int position) {
+    public void onProductUnliked(Product product) {
         ProductsService.removeProductFromFavorite(product, new OnFavoriteProductsModifiedListener() {
             @Override
             public void onSuccess(String message) {
-                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-
-                // notify the right adapter
-                if (product.getPrice() >= 600) {
-                    productsSecondAdapter.onUpdateProductFavoriteStatus(position, false);
-                    return;
-                }
-                productsFirstAdapter.onUpdateProductFavoriteStatus(position, false);
+                showToast(message);
             }
 
             @Override
             public void onError(String message) {
-                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                showToast(message);
             }
+        });
+    }
+
+    public void showToast(String message) {
+        safeContext.ifPresent(context -> {
+            Utils.showToast(context, message);
         });
     }
 }

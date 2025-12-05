@@ -1,7 +1,9 @@
 package estore.istic.fr.View.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,9 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import estore.istic.fr.Controller.ProductsAdapter;
@@ -34,7 +37,27 @@ public class favoritesFragment extends Fragment implements OnProductActionListen
     RecyclerView favoriteProductsRecycler;
     ProgressBar progressBar;
 
+    private Optional<Context> safeContext;
+
     public favoritesFragment() {}
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        safeContext = Optional.of(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        safeContext = Optional.empty();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ProductsService.stopListening("favorites");
+    }
 
     @Override
     public View onCreateView(
@@ -48,6 +71,7 @@ public class favoritesFragment extends Fragment implements OnProductActionListen
         Utils.statusAndActionBarIconsColor(getActivity(), R.id.main);
 
         initialisation(view);
+        settingProductsRecyclers(view, Collections.emptyList());
         fetchProducts(view);
         refresh(view);
 
@@ -83,12 +107,13 @@ public class favoritesFragment extends Fragment implements OnProductActionListen
                         .filter(ProductDto::isFavorite)
                         .collect(Collectors.toList());
 
-                settingProductsRecyclers(view, favorites);
+                favoriteProductsAdapter.updateList(favorites);
             }
 
             @Override
             public void onError(String message) {
                 progressBar.setVisibility(View.GONE);
+                showToast(message);
             }
         });
     }
@@ -119,40 +144,39 @@ public class favoritesFragment extends Fragment implements OnProductActionListen
     }
 
     @Override
-    public void onProductLiked(Product product, int position) {
+    public void onProductLiked(Product product) {
         ProductsService.addProductToFavorite(product, new OnFavoriteProductsModifiedListener() {
             @Override
             public void onSuccess(String message) {
-                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-                favoriteProductsAdapter.onUpdateProductFavoriteStatus(
-                        position,
-                        true
-                );
+                showToast(message);
             }
 
             @Override
             public void onError(String message) {
-                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                showToast(message);
             }
         });
     }
 
     @Override
-    public void onProductUnliked(Product product, int position) {
+    public void onProductUnliked(Product product) {
         ProductsService.removeProductFromFavorite(product, new OnFavoriteProductsModifiedListener() {
             @Override
             public void onSuccess(String message) {
-                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-                favoriteProductsAdapter.onUpdateProductFavoriteStatus(
-                        position,
-                        false
-                );
+                showToast(message);
             }
 
             @Override
             public void onError(String message) {
-                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                showToast(message);
             }
         });
     }
+
+    public void showToast(String message) {
+        safeContext.ifPresent(context -> {
+                    Utils.showToast(context, message);
+        });
+    }
+
 }

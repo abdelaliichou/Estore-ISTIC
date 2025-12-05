@@ -1,66 +1,294 @@
 package estore.istic.fr.View.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import estore.istic.fr.Controller.CartAdapter;
+import estore.istic.fr.Facade.OnCartAdapterListener;
+import estore.istic.fr.Facade.OnCartActionListener;
+import estore.istic.fr.Facade.OnCartRealTimeListener;
+import estore.istic.fr.Facade.OnOrderSaveListener;
+import estore.istic.fr.Model.Domain.Order;
+import estore.istic.fr.Model.Domain.OrderItem;
+import estore.istic.fr.Model.Dto.CartItem;
+import estore.istic.fr.Model.Mappers.OrderMapper;
+import estore.istic.fr.Resources.databaseHelper;
 import estore.istic.fr.R;
+import estore.istic.fr.Resources.Utils;
+import estore.istic.fr.Services.OrdersService;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link cartFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class cartFragment extends Fragment {
+public class cartFragment extends Fragment implements OnCartAdapterListener {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    RelativeLayout payButton;
+    RecyclerView card_recycler;
+    ImageView emptyImage;
+    CartAdapter adapter;
+    TextView totalPrice, totalItems;
+    AlertDialog dialog;
+    ProgressBar progressBar;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Optional<Context> safeContext;
 
-    public cartFragment() {
-        // Required empty public constructor
-    }
+    public cartFragment() {}
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment cartFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static cartFragment newInstance(String param1, String param2) {
-        cartFragment fragment = new cartFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        safeContext = Optional.of(context);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public void onDetach() {
+        super.onDetach();
+        safeContext = Optional.empty();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false);
+    public void onDestroyView() {
+        super.onDestroyView();
+        OrdersService.stopListening();
+    }
+
+    @Override
+    public View onCreateView(
+            LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState
+    ) {
+        View view = inflater.inflate(R.layout.fragment_cart, container, false);
+
+        Utils.statusAndActionBarIconsColor(getActivity(), R.id.main);
+
+        initialisation(view);
+        settingRecycler(view.getContext(), Collections.emptyList());
+        listeningToCartItems();
+        onClicks();
+
+        return view;
+    }
+
+    public void initialisation(View view) {
+        emptyImage = view.findViewById(R.id.empty);
+        payButton = view.findViewById(R.id.pay);
+        progressBar = view.findViewById(R.id.card_progress);
+        card_recycler = view.findViewById(R.id.Card_items);
+        totalItems = view.findViewById(R.id.product_number);
+        totalPrice = view.findViewById(R.id.products_total_price);
+    }
+
+    public void listeningToCartItems() {
+        OrdersService.getCartItems(new OnCartRealTimeListener() {
+            @Override
+            public void onLoading() {
+                emptyImage.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onData(List<CartItem> cartItems) {
+                updateUI(cartItems);
+                progressBar.setVisibility(View.GONE);
+                emptyImage.setVisibility(cartItems.isEmpty() ? View.VISIBLE : View.GONE);
+
+                adapter.updateList(cartItems);
+            }
+
+            @Override
+            public void onError(String message) {
+                showToast(message);
+                emptyImage.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void updateUI(List<CartItem> cartItems) {
+        totalPrice.setText(String.valueOf(getTotalPrice(cartItems)));
+        totalItems.setText(String.valueOf(getTotalQuantity(cartItems)));
+    }
+
+    public double getTotalPrice(List<CartItem> cartItems) {
+        return cartItems.stream()
+                .mapToDouble(CartItem::calculateTotalPrice)
+                .sum();
+    }
+
+    public int getTotalQuantity(List<CartItem> cartItems) {
+        return cartItems.stream()
+                .mapToInt(CartItem::getQuantity)
+                .sum();
+    }
+
+    public void settingRecycler(Context context, List<CartItem> cartItems) {
+        adapter = new CartAdapter(
+                cartItems,
+                context,
+                true,
+                this
+        );
+        card_recycler.setAdapter(adapter);
+        card_recycler.setLayoutManager(new LinearLayoutManager(
+                context,
+                LinearLayoutManager.VERTICAL,
+                false
+        ));
+    }
+
+    public void onClicks() {
+        payButton.setOnClickListener(view -> {
+            if (adapter.getCartItems().isEmpty()) {
+                showToast("Cart is empty !");
+                return;
+            }
+
+            confirmationDialog();
+        });
+    }
+
+    public void confirmationDialog() {
+        dialog = Utils.createDialog(
+                getActivity(),
+                "Confirmation dialog !",
+                "You want to send this order to the store ?",
+                true,
+                R.drawable.update_profile_image,
+                R.drawable.alert_dialog_back,
+                true,
+                this::sendOrder,
+                () -> {}
+        );
+        dialog.show();
+    }
+
+    public void sendOrder() {
+        dialog = Utils.createDialog(
+                getActivity(),
+                "Wait a minute please !",
+                "Your order is being send to the store !",
+                false,
+                R.drawable.ic__cloud_upload,
+                R.drawable.alert_dialog_back,
+                false,
+                null,
+                null
+        );
+        dialog.show();
+        registerOrder(adapter.getCartItems());
+    }
+
+    public void registerOrder(List<CartItem> cartItems) {
+
+        String uid = Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid();
+        List<OrderItem> orderItems = OrderMapper.cartToOrderItems(cartItems);
+        Order order = new Order(
+                uid,
+                getTotalPrice(cartItems),
+                orderItems
+        );
+
+        OrdersService.saveOrder(order, new OnOrderSaveListener() {
+            @Override
+            public void onLoading() {
+                showToast("Processing the order... ");
+            }
+
+            @Override
+            public void onSuccess(String orderId) {
+                dialog.dismiss();
+                bottomSheetDialog();
+                OrdersService.clearCart(uid);
+            }
+
+            @Override
+            public void onError(String message) {
+                dialog.dismiss();
+                showToast(message);
+            }
+        });
+
+
+        // StartDelivery(pushValue);
+    }
+
+    public void bottomSheetDialog() {
+        Utils.createBottomSheet(
+                requireActivity(),
+                () -> {
+                    // startActivity(new Intent(getActivity(), OrderDetails_Activity.class).putExtra("id", "last_order"))
+                }
+        );
+    }
+
+    public void StartDelivery(String OrderID) {
+        // the child to start the delivery , initialled with "first"
+        /*
+        FirebaseDatabase.getInstance().getReference().child("Delivery").child("Started").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(OrderID).child("status").setValue("first").addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getActivity(), "Delivering start !", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+         */
+    }
+
+    @Override
+    public void onProductLongClicked(CartItem item) {
+        dialog = Utils.createDialog(
+                getActivity(),
+                "Confirmation text !",
+                "Do you want to delete this product from your card ?",
+                true,
+                R.drawable.delete,
+                R.drawable.alert_dialog_back,
+                true,
+                () -> removeItemFromCart(item),
+                () -> {}
+        );
+        dialog.show();
+    }
+
+    public void removeItemFromCart(CartItem item) {
+        OrdersService.deleteCartItem(item, new OnCartActionListener() {
+            @Override
+            public void onSuccess(String message) {
+                showToast(message);
+            }
+
+            @Override
+            public void onError(String error) {
+                showToast(error);
+            }
+        });
+    }
+
+    public void showToast(String message) {
+        safeContext.ifPresent(context -> {
+            Utils.showToast(context, message);
+        });
     }
 }

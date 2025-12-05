@@ -11,19 +11,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import estore.istic.fr.Facade.OnFavoriteProductsModifiedResultListener;
 import estore.istic.fr.Facade.OnProductActionListener;
 import estore.istic.fr.Model.Dto.ProductDto;
 import estore.istic.fr.R;
+import estore.istic.fr.Resources.ProductsDiffCallback;
 
-public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> implements OnFavoriteProductsModifiedResultListener {
+public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
 
     private static final int VIEW_TYPE_LIST = 0;
     private static final int VIEW_TYPE_GRID = 1;
@@ -31,6 +33,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     List<ProductDto> productsList;
     Context context;
     boolean isGrid;
+    int lastAnimatedPosition = -1;
 
     public ProductsAdapter(
             Context context,
@@ -40,7 +43,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     ) {
         this.isGrid = isGrid;
         this.context = context;
-        this.productsList = products;
+        this.productsList = new ArrayList<>(products);
         this.productListener = listener;
     }
 
@@ -80,6 +83,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
         holder.productName.setText(product.getProduct().getName());
         holder.productPrice.setText("$".concat(product.getProduct().getPrice().toString()));
+
         holder.card.setAnimation(AnimationUtils.loadAnimation(
                 context,
                 R.anim.card_pop_up
@@ -110,8 +114,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         holder.emptyHeart.setOnClickListener(v -> {
             if (holder.emptyHeart.getVisibility() == View.VISIBLE) {
                 productListener.onProductLiked(
-                        product.getProduct(),
-                        position
+                        product.getProduct()
                 );
             }
         });
@@ -119,17 +122,21 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         holder.fullHeart.setOnClickListener(v -> {
             if (holder.fullHeart.getVisibility() == View.VISIBLE) {
                 productListener.onProductUnliked(
-                        product.getProduct(),
-                        position
+                        product.getProduct()
                 );
             }
         });
     }
 
-    @Override
-    public void onUpdateProductFavoriteStatus(int position, boolean isFavorite) {
-        productsList.get(position).setFavorite(isFavorite);
-        notifyItemChanged(position);
+    @SuppressLint("NotifyDataSetChanged")
+    public void updateList(List<ProductDto> newList) {
+        DiffUtil.Callback callback = new ProductsDiffCallback(this.productsList, newList);
+        DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
+
+        this.productsList.clear();
+        this.productsList.addAll(newList);
+
+        result.dispatchUpdatesTo(this);
     }
 
     @Override
@@ -137,7 +144,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         return productsList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView productImage, fullHeart, emptyHeart, ratting, hot;
         TextView productName, productPrice;
         MaterialCardView card;

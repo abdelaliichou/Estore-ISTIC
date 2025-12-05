@@ -1,14 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorgray"
+    android:orientation="vertical"
+    android:paddingTop="15dp"
     tools:context=".View.Fragments.cartFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/empty"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/empty"
+        android:visibility="gone" />
+
     <TextView
+        android:id="@+id/header_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/poppins_bold"
+        android:text="My Cart"
+        android:textColor="#2B2B2B"
+        android:textSize="28dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/Card_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_above="@+id/buttom"
+        android:layout_below="@+id/header_text"
+        android:clipToPadding="false"
+        android:paddingBottom="20dp"/>
 
-</FrameLayout>
+    <LinearLayout
+        android:id="@+id/buttom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_sheet"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Total prodcuts"
+                android:textColor="#9DA4AA"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/product_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="0,00"
+                android:textColor="@color/colorfirst"
+                android:textSize="16dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Total price"
+                android:textColor="#9DA4AA"
+                android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/products_total_price"
+                android:fontFamily="@font/poppins_semibold"
+                android:gravity="center_vertical"
+                android:text="$"
+                android:textColor="#FF1F1F"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/products_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="0,00"
+                android:textColor="@color/colorfirst"
+                android:textSize="16dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/done_creating_task_button_back"
+            android:backgroundTint="#D9FFC4"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/buy" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="PLACE ORDER"
+                android:textColor="#4DA538"
+                android:textSize="16dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ProgressBar
+
+        android:id="@+id/card_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

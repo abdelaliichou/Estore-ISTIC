@@ -2,6 +2,7 @@ package estore.istic.fr.Resources;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.MotionEvent;
@@ -10,14 +11,17 @@ import android.view.ViewGroup;
 import android.view.WindowInsetsController;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -78,19 +82,51 @@ public class Utils {
         }
     }
 
+    public static void createBottomSheet(
+            Context context,
+            @Nullable Runnable onConfirm
+    ) {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.BottomSheetDialogTheme);
+        bottomSheetDialog.setContentView(R.layout.layout_bottom_sheet);
+        bottomSheetDialog.setCanceledOnTouchOutside(true);
+        Optional<RelativeLayout> checkButton = Optional.ofNullable(bottomSheetDialog.findViewById(R.id.check_procces));
+        checkButton.ifPresent(button -> {
+            button.setOnClickListener(view -> {
+                onConfirm.run();
+                bottomSheetDialog.dismiss();
+            });
+        });
+        bottomSheetDialog.show();
+    }
+
     public static AlertDialog createDialog(
             Context context,
             String title,
             String message,
             boolean isCancelable,
             int icon,
-            int background
+            int background,
+            boolean isClickable,
+            @Nullable Runnable onConfirm,
+            @Nullable Runnable onCancel
     ) {
         MaterialAlertDialogBuilder progressDialog = new MaterialAlertDialogBuilder(context);
 
         progressDialog.setTitle(title);
         progressDialog.setMessage(message);
         progressDialog.setCancelable(isCancelable);
+        if (isClickable) {
+            progressDialog.setNegativeButton("Cancel", (dialog, i) -> {
+                        onCancel.run();
+                        dialog.dismiss();
+                    }
+            );
+            progressDialog.setPositiveButton("Confirm", (dialog, i) -> {
+                        onConfirm.run();
+                        dialog.dismiss();
+                    }
+            );
+        }
         progressDialog.setBackground(context.getResources().getDrawable(background));
         progressDialog.setIcon(icon);
         progressDialog.setCancelable(false);
@@ -161,32 +197,6 @@ public class Utils {
         return list;
     }
 
-     /*
-
-    static public ArrayList<OrderItem> getCardItemsList() {
-        ArrayList<OrderItem> liss = new ArrayList<>();
-        DatabaseReference head = FirebaseDatabase.getInstance().getReference();
-        head.child("UserCard").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot item : snapshot.getChildren()) {
-                    OrderItem model = item.getValue(OrderItem.class);
-                    liss.add(0, model);
-                    OrdersFragment.adapter.notifyItemInserted(0);
-                    OrdersFragment.adapter.notifyDataSetChanged();
-                    OrdersFragment.progressBar.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                OrdersFragment.progressBar.setVisibility(View.GONE);
-            }
-        });
-        return liss;
-    }
-
-     */
 }
 
 

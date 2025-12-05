@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -130,8 +129,10 @@ public class signupActivity extends AppCompatActivity {
                     "We are registering you , you'll be ready in just a moment ...",
                     false,
                     R.drawable.ic__cloud_upload,
-                    R.drawable.alert_dialog_back
-
+                    R.drawable.alert_dialog_back,
+                    false,
+                    null,
+                    null
             );
 
             dialog.show();

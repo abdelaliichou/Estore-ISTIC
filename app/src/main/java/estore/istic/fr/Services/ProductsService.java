@@ -24,28 +24,41 @@ import estore.istic.fr.Resources.databaseHelper;
 
 public class ProductsService {
 
-    public static void getAllProducts(OnGetProductsResultListener listener) {
+    private static final String uid = Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid();
 
-        listener.onLoading();
+    private static ValueEventListener productsListener; // to stop listening when quiting the app
+
+    public static void stopListening(String child) {
+        DatabaseReference ref = databaseHelper.getDatabaseReference()
+                .child(child)
+                .child(uid);
+
+        if (productsListener != null) ref.removeEventListener(productsListener);
+    }
+
+    public static void getAllProducts(OnGetProductsResultListener realtimeListener) {
+
+        realtimeListener.onLoading();
         List<Product> allProducts = new ArrayList<>();
         Set<String> allFavoriteProductsIds = new HashSet<>();
 
-        String uid = Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid();
         DatabaseReference productsRef = databaseHelper.getDatabaseReference().child("products");
         DatabaseReference favoritesRef = databaseHelper.getDatabaseReference().child("favorites").child(uid);
 
         // fetch all products
-        productsRef.addValueEventListener(new ValueEventListener() {
+        productsListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                allProducts.clear();
                 for (DataSnapshot product : snapshot.getChildren()) {
                     allProducts.add(product.getValue(Product.class));
                 }
 
                 // fetch favorites
-                favoritesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                favoritesRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot favSnapshot) {
+                        allFavoriteProductsIds.clear();
                         for (DataSnapshot favoriteProduct : favSnapshot.getChildren()) {
                             allFavoriteProductsIds.add(Objects.requireNonNull(favoriteProduct.getValue(Product.class)).getProductId());
                         }
@@ -56,28 +69,29 @@ public class ProductsService {
                                 .peek(dto -> dto.setFavorite(allFavoriteProductsIds.contains(dto.getProduct().getProductId())))
                                 .collect(Collectors.toList());
 
-                        listener.onSuccess(completeList);
+                        realtimeListener.onSuccess(completeList);
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        listener.onError(error.getMessage());
+                        realtimeListener.onError(error.getMessage());
                     }
                 });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                listener.onError(error.getMessage());
+                realtimeListener.onError(error.getMessage());
             }
-        });
+        };
+
+        productsRef.addValueEventListener(productsListener);
     }
 
     public static void addProductToFavorite(
             Product product,
             OnFavoriteProductsModifiedListener listener
     ) {
-        String uid = Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid();
         DatabaseReference ref = databaseHelper
                 .getDatabaseReference()
                 .child("favorites")
@@ -88,17 +102,17 @@ public class ProductsService {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                         if (snapshot.exists()) {
                             listener.onSuccess(product.getName().concat(" already favorite!"));
-                            return;
+                        } else {
+                            ref.push().setValue(product).addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    listener.onSuccess(product.getName().concat(" added to favorite!"));
+                                } else {
+                                    listener.onError(Objects.requireNonNull(task.getException()).getMessage());
+                                }
+                            });
                         }
-
-                        ref.push().setValue(product).addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                listener.onSuccess(product.getName().concat(" added to favorite!"));
-                            }
-                        });
                     }
 
                     @Override
@@ -112,7 +126,6 @@ public class ProductsService {
             Product product,
             OnFavoriteProductsModifiedListener listener
     ) {
-        String uid = Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid();
         DatabaseReference ref = databaseHelper
                 .getDatabaseReference()
                 .child("favorites")
@@ -123,18 +136,18 @@ public class ProductsService {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                         if (!snapshot.exists()) {
                             listener.onSuccess(product.getName().concat(" is not in favorites!"));
-                            return;
-                        }
-
-                        for (DataSnapshot favSnap : snapshot.getChildren()) {
-                            favSnap.getRef().removeValue().addOnCompleteListener(task -> {
-                                if (task.isSuccessful()) {
-                                    listener.onSuccess(product.getName().concat(" removed from favorites!"));
-                                }
-                            });
+                        } else {
+                            for (DataSnapshot favSnap : snapshot.getChildren()) {
+                                favSnap.getRef().removeValue().addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        listener.onSuccess(product.getName().concat(" removed from favorites!"));
+                                    } else {
+                                        listener.onError(Objects.requireNonNull(task.getException()).getMessage());
+                                    }
+                                });
+                            }
                         }
                     }
 
