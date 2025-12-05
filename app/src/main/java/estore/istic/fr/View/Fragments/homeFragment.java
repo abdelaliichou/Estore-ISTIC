@@ -33,6 +33,7 @@ import estore.istic.fr.Facade.OnCategoryActionListener;
 import estore.istic.fr.Facade.OnFavoriteProductsModifiedListener;
 import estore.istic.fr.Facade.OnProductActionListener;
 import estore.istic.fr.Facade.OnGetProductsResultListener;
+import estore.istic.fr.Facade.OnUserActionListener;
 import estore.istic.fr.Model.Domain.Category;
 import estore.istic.fr.Model.Domain.Product;
 import estore.istic.fr.Model.Dto.ProductDto;
@@ -253,9 +254,17 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
     }
 
     public void settingHeaderTextUser() {
-        UsersService.getUserName(userName -> userName.ifPresent(msg -> {
-            HeaderText.setText("Welcome, ".concat(userName.get()).concat("\n").concat(HeaderText.getText().toString()));
-        }));
+        UsersService.getUserName(new OnUserActionListener() {
+            @Override
+            public void onSuccess(String userName, String userEmail, String phoneNumber) {
+                HeaderText.setText("Welcome, ".concat(userName).concat("\n").concat(HeaderText.getText().toString()));
+            }
+
+            @Override
+            public void onError(String message) {
+                showToast(message);
+            }
+        });
     }
 
     @Override

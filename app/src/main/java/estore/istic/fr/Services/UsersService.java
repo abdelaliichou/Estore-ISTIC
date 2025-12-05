@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import estore.istic.fr.Facade.OnUserActionListener;
+import estore.istic.fr.Model.Domain.User;
 import estore.istic.fr.Resources.databaseHelper;
 
 public class UsersService {
@@ -18,11 +19,19 @@ public class UsersService {
         databaseHelper.getDatabaseReference()
                 .child("users")
                 .child(Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid())
-                .child("name")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            listener.onSuccess(Optional.ofNullable(snapshot.getValue(String.class)));
+                        Optional<User> user = Optional.ofNullable(snapshot.getValue(User.class));
+                        if (user.isPresent()) {
+                            listener.onSuccess(
+                                    user.get().getName(),
+                                    user.get().getEmail(),
+                                    user.get().getPhoneNumber()
+                            );
+                        } else {
+                            listener.onError("Error while fetching user info");
+                        }
                     }
 
                     @Override
