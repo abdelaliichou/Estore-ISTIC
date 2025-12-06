@@ -71,10 +71,7 @@ public class favoritesFragment extends Fragment implements OnProductActionListen
         Utils.statusAndActionBarIconsColor(getActivity(), R.id.main);
 
         initialisation(view);
-        settingProductsRecyclers(
-                view,
-                Collections.emptyList()
-        );
+        settingProductsRecyclers(view, Collections.emptyList());
         fetchProducts();
 
         return view;

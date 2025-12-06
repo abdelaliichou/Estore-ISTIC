@@ -145,13 +145,26 @@
                     android:textSize="13dp" />
             </RelativeLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/first_recycler"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:clipToPadding="false"
-                android:paddingLeft="5dp"
-                android:paddingRight="10dp" />
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/first_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:clipToPadding="false"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="10dp" />
+
+                <ProgressBar
+                    android:id="@+id/categories_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"

@@ -43,6 +43,7 @@ import estore.istic.fr.Resources.Utils;
 import estore.istic.fr.Services.CategoriesService;
 import estore.istic.fr.Services.ProductsService;
 import estore.istic.fr.Services.UsersService;
+import estore.istic.fr.View.categoriesActivity;
 import estore.istic.fr.View.productDetailsActivity;
 import estore.istic.fr.View.productsActivity;
 
@@ -50,13 +51,13 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
 
     ImageView searchImage, bigImage;
     ImageSlider imageSlider;
-    TextView HeaderText, popularItemsText, secondHeaderText, CategoriesText, SuggestedItemsText, viewAllText1, viewAllText2, viewAllText3;
+    TextView HeaderText, popularItemsText, secondHeaderText, categoriesText, SuggestedItemsText, viewAllText1, viewAllText2, viewAllText3;
     MaterialCardView parent_slide_card;
-    RecyclerView firstRecycler, secondRecycler, thirdRecycler;
+    RecyclerView categoriesRecycler, populaireProductsRecycler, allProductsRecycler;
     CategoriesAdapter categoriesAdapter;
-    ProductsAdapter productsFirstAdapter, productsSecondAdapter;
+    ProductsAdapter allProductsAdapter, populaireProductsAdapter;
     View view;
-    ProgressBar progressBar1, progressBar2;
+    ProgressBar populaireProductsProgressBar, allProductsProgressBar, categoriesProgressBar;
 
     private Optional<Context> safeContext;
 
@@ -97,10 +98,7 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
         settingAnimation();
         settingImageSlider();
         settingHeaderTextUser();
-        settingProductsRecyclers(
-                view,
-                Collections.emptyList()
-        );
+        settingProductsRecyclers(view, Collections.emptyList());
 
         fetchCategories(view);
         fetchProducts();
@@ -114,7 +112,7 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
         Animations.FromeRightToLeftCard(parent_slide_card);
         Animations.FromeLeftToRight(HeaderText);
         Animations.FromeLeftToRight(popularItemsText);
-        Animations.FromeLeftToRight(CategoriesText);
+        Animations.FromeLeftToRight(categoriesText);
         Animations.FromeLeftToRight(SuggestedItemsText);
         Animations.FromRightToLeft1(viewAllText1);
         Animations.FromRightToLeft1(viewAllText2);
@@ -125,31 +123,28 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
     public void initialisation(View view) {
         bigImage = view.findViewById(R.id.second_big_image);
         searchImage = view.findViewById(R.id.search);
-        progressBar1 = view.findViewById(R.id.populaire_items_progress);
-        progressBar2 = view.findViewById(R.id.all_items_progress);
-        progressBar2.setVisibility(View.VISIBLE);
+        populaireProductsProgressBar = view.findViewById(R.id.populaire_items_progress);
+        allProductsProgressBar = view.findViewById(R.id.all_items_progress);
+        categoriesProgressBar = view.findViewById(R.id.categories_progress);
         HeaderText = view.findViewById(R.id.header_text);
         popularItemsText = view.findViewById(R.id.popular_items_text);
         secondHeaderText = view.findViewById(R.id.second_header);
-        CategoriesText = view.findViewById(R.id.category_text);
+        categoriesText = view.findViewById(R.id.category_text);
         SuggestedItemsText = view.findViewById(R.id.suggested_items_text);
         viewAllText1 = view.findViewById(R.id.first_view_all_text);
         viewAllText2 = view.findViewById(R.id.second_view_all_text);
         viewAllText3 = view.findViewById(R.id.third_view_all_text);
         imageSlider = view.findViewById(R.id.slider);
         parent_slide_card = view.findViewById(R.id.parent_card);
-        firstRecycler = view.findViewById(R.id.first_recycler);
-        secondRecycler = view.findViewById(R.id.second_recyclerview);
-        thirdRecycler = view.findViewById(R.id.third_recycler);
+        categoriesRecycler = view.findViewById(R.id.first_recycler);
+        populaireProductsRecycler = view.findViewById(R.id.second_recyclerview);
+        allProductsRecycler = view.findViewById(R.id.third_recycler);
     }
 
     public void handlingOnClicks() {
         viewAllText3.setOnClickListener(view -> startActivity(new Intent(getActivity(), productsActivity.class)));
         viewAllText2.setOnClickListener(view -> startActivity(new Intent(getActivity(), productsActivity.class)));
-        /*
-        imageSlider.setItemClickListener(i -> Utils.showToast(requireActivity().getApplication(), "Clicked on "));
-        viewAllText1.setOnClickListener(view -> startActivity(new Intent(getActivity(), ViewAllCategoriesActivity.class)));
-        searchImage.setOnClickListener(view -> startActivity(new Intent(getActivity(), SearchActivity.class)));*/
+        viewAllText1.setOnClickListener(view -> startActivity(new Intent(getActivity(), categoriesActivity.class)));
     }
 
     public void settingImageSlider() {
@@ -162,15 +157,19 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
     public void fetchCategories(View view) {
         CategoriesService.getAllCategories(new OnCategoriesResultListener() {
             @Override
-            public void onLoading() {}
+            public void onLoading() {
+                categoriesProgressBar.setVisibility(View.VISIBLE);
+            }
 
             @Override
             public void onSuccess(List<Category> categories) {
+                categoriesProgressBar.setVisibility(View.GONE);
                 settingCategoriesRecycler(view, categories);
             }
 
             @Override
             public void onError(String message) {
+                categoriesProgressBar.setVisibility(View.GONE);
                 showToast(message);
             }
         });
@@ -182,38 +181,40 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
     ) {
         categoriesAdapter = new CategoriesAdapter(
                 view.getContext(),
-                categories
+                this,
+                categories,
+                false
         );
-        firstRecycler.setLayoutManager(provideLayoutManager());
-        firstRecycler.setAdapter(categoriesAdapter);
+        categoriesRecycler.setLayoutManager(provideLayoutManager());
+        categoriesRecycler.setAdapter(categoriesAdapter);
     }
 
     public void fetchProducts() {
         ProductsService.getAllProducts(new OnGetProductsResultListener() {
             @Override
             public void onLoading() {
-                progressBar2.setVisibility(View.VISIBLE);
-                progressBar1.setVisibility(View.VISIBLE);
+                populaireProductsProgressBar.setVisibility(View.VISIBLE);
+                allProductsProgressBar.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onSuccess(List<ProductDto> products) {
-                progressBar1.setVisibility(View.GONE);
-                progressBar2.setVisibility(View.GONE);
+                populaireProductsProgressBar.setVisibility(View.GONE);
+                allProductsProgressBar.setVisibility(View.GONE);
                 Map<Boolean, List<ProductDto>> partitionedProducts = products.stream().collect(
                         Collectors.partitioningBy(p -> p.getProduct().getPrice() >= 600)
                 );
 
                 // notify the wright adapter
-                productsSecondAdapter.updateList(partitionedProducts.get(true));
-                productsFirstAdapter.updateList(partitionedProducts.get(false));
+                populaireProductsAdapter.updateList(partitionedProducts.get(true));
+                allProductsAdapter.updateList(partitionedProducts.get(false));
             }
 
             @Override
             public void onError(String message) {
                 showToast(message);
-                progressBar1.setVisibility(View.GONE);
-                progressBar2.setVisibility(View.GONE);
+                populaireProductsProgressBar.setVisibility(View.GONE);
+                allProductsProgressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -227,23 +228,23 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
                 Collectors.partitioningBy(p -> p.getProduct().getPrice() >= 600)
         );
 
-        productsSecondAdapter = new ProductsAdapter(
+        populaireProductsAdapter = new ProductsAdapter(
                 view.getContext(),
                 this,
                 partitionedProducts.get(true),
                 false
         );
-        secondRecycler.setLayoutManager(provideLayoutManager());
-        secondRecycler.setAdapter(productsSecondAdapter);
+        populaireProductsRecycler.setLayoutManager(provideLayoutManager());
+        populaireProductsRecycler.setAdapter(populaireProductsAdapter);
 
-        productsFirstAdapter = new ProductsAdapter(
+        allProductsAdapter = new ProductsAdapter(
                 view.getContext(),
                 this,
                 partitionedProducts.get(false),
                 false
         );
-        thirdRecycler.setLayoutManager(provideLayoutManager());
-        thirdRecycler.setAdapter(productsFirstAdapter);
+        allProductsRecycler.setLayoutManager(provideLayoutManager());
+        allProductsRecycler.setAdapter(allProductsAdapter);
     }
 
     public RecyclerView.LayoutManager provideLayoutManager() {
@@ -255,7 +256,7 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
     }
 
     public void settingHeaderTextUser() {
-        UsersService.getUserName(new OnUserActionListener() {
+        UsersService.getUserData(new OnUserActionListener() {
             @Override
             public void onSuccess(String userName, String userEmail, String phoneNumber) {
                 HeaderText.setText("Welcome, ".concat(userName).concat("\n").concat(HeaderText.getText().toString()));
@@ -269,7 +270,29 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
     }
 
     @Override
-    public void onCategoryClicked(Category category, int position) {}
+    public void onCategoryClicked(Category category) {
+        ProductsService.filterProductsByCategory(category.getCategoryId(), new OnGetProductsResultListener() {
+            @Override
+            public void onLoading() {
+                populaireProductsProgressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onSuccess(List<ProductDto> products) {
+                populaireProductsProgressBar.setVisibility(View.GONE);
+                if (products.isEmpty()) {
+                    showToast("No products found !");
+                    return;
+                }
+                populaireProductsAdapter.updateList(products);
+            }
+
+            @Override
+            public void onError(String message) {
+                populaireProductsProgressBar.setVisibility(View.GONE);
+            }
+        });
+    }
 
     @Override
     public void onProductClicked(ProductDto product) {
@@ -318,4 +341,5 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
             Utils.showToast(context, message);
         });
     }
+
 }

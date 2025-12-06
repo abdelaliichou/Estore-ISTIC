@@ -58,10 +58,7 @@ public class productsActivity extends AppCompatActivity implements OnProductActi
         Utils.statusAndActionBarIconsColor(this, R.id.main);
 
         initialisation();
-        settingProductsRecyclers(
-                this,
-                Collections.emptyList()
-        );
+        settingProductsRecyclers(this, Collections.emptyList());
         fetchProducts();
 
     }
@@ -91,13 +88,16 @@ public class productsActivity extends AppCompatActivity implements OnProductActi
             @Override
             public void onLoading() {
                 shimmerFrameLayout.setVisibility(View.VISIBLE);
+                productsRecycler.setVisibility(View.GONE);
                 shimmerFrameLayout.startShimmer();
             }
 
             @Override
             public void onSuccess(List<ProductDto> products) {
+                productsRecycler.setVisibility(View.VISIBLE);
                 shimmerFrameLayout.setVisibility(View.GONE);
                 shimmerFrameLayout.stopShimmer();
+
                 productsAdapter.updateList(products);
 
                 // autocomplete logic
@@ -111,6 +111,7 @@ public class productsActivity extends AppCompatActivity implements OnProductActi
 
             @Override
             public void onError(String message) {
+                productsRecycler.setVisibility(View.VISIBLE);
                 shimmerFrameLayout.setVisibility(View.GONE);
                 shimmerFrameLayout.stopShimmer();
                 showToast(message);
@@ -134,7 +135,7 @@ public class productsActivity extends AppCompatActivity implements OnProductActi
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().isEmpty()) fetchProducts();
+                if (s.toString().trim().isEmpty()) fetchProducts();
             }
 
             @Override
@@ -147,11 +148,13 @@ public class productsActivity extends AppCompatActivity implements OnProductActi
             @Override
             public void onLoading() {
                 shimmerFrameLayout.setVisibility(View.VISIBLE);
+                productsRecycler.setVisibility(View.GONE);
                 shimmerFrameLayout.startShimmer();
             }
 
             @Override
             public void onSuccess(List<ProductDto> products) {
+                productsRecycler.setVisibility(View.VISIBLE);
                 shimmerFrameLayout.setVisibility(View.GONE);
                 shimmerFrameLayout.stopShimmer();
 
@@ -164,6 +167,7 @@ public class productsActivity extends AppCompatActivity implements OnProductActi
 
             @Override
             public void onError(String message) {
+                productsRecycler.setVisibility(View.VISIBLE);
                 shimmerFrameLayout.setVisibility(View.GONE);
                 shimmerFrameLayout.stopShimmer();
             }

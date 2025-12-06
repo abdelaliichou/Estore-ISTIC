@@ -27,9 +27,6 @@
             android:name=".View.resetEmailActivity"
             android:exported="false" />
         <activity
-            android:name=".View.searchActivity"
-            android:exported="false" />
-        <activity
             android:name=".View.phoneOtpActivity"
             android:exported="false" />
         <activity

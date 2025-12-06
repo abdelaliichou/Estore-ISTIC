@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.google.android.material.card.MaterialCardView;
 
-import java.util.Objects;
 import java.util.Optional;
 
 import estore.istic.fr.Facade.OnUserActionListener;
@@ -24,6 +23,7 @@ import estore.istic.fr.Resources.Animations;
 import estore.istic.fr.Resources.databaseHelper;
 import estore.istic.fr.Resources.Utils;
 import estore.istic.fr.Services.UsersService;
+import estore.istic.fr.View.contactUsActivity;
 import estore.istic.fr.View.loginActivity;
 
 public class optionsFragment extends Fragment {
@@ -87,7 +87,7 @@ public class optionsFragment extends Fragment {
     }
 
     public void loadUserData() {
-        UsersService.getUserName(new OnUserActionListener() {
+        UsersService.getUserData(new OnUserActionListener() {
             @Override
             public void onSuccess(String userName, String userEmail, String phoneNumber) {
                 name.setText(userName);
@@ -106,7 +106,7 @@ public class optionsFragment extends Fragment {
     public void handlingOnClicks() {
         //updateButton.setOnClickListener(view -> startActivity(new Intent(getActivity(), Update_Activity.class)));
         //ordersHistoryButton.setOnClickListener(view -> startActivity(new Intent(getActivity(), AllOrders_Activity.class)));
-        //contactLayout.setOnClickListener(view -> startActivity(new Intent(getActivity(), ContactUs_Activity.class)));
+        contactLayout.setOnClickListener(view -> startActivity(new Intent(getActivity(), contactUsActivity.class)));
         logoutButton.setOnClickListener(view -> {
             safeContext.ifPresent(context -> {
                 dialog = Utils.createDialog(

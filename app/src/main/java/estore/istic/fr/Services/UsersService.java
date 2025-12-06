@@ -15,7 +15,7 @@ import estore.istic.fr.Resources.databaseHelper;
 
 public class UsersService {
 
-    public static void getUserName(OnUserActionListener listener) {
+    public static void getUserData(OnUserActionListener listener) {
         databaseHelper.getDatabaseReference()
                 .child("users")
                 .child(Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid())
