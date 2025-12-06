@@ -2,10 +2,14 @@ package estore.istic.fr.Services;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -37,6 +41,25 @@ public class UsersService {
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         listener.onError("Error while fetching user info");
+                    }
+                });
+    }
+
+    public static void updateUserData(String userName, String phoneNumber, OnUserActionListener listener) {
+
+        Map<String, Object> updatedUser = new HashMap<>();
+        updatedUser.put("name", userName);
+        updatedUser.put("phoneNumber", phoneNumber);
+
+        databaseHelper.getDatabaseReference()
+                .child("users")
+                .child(Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid())
+                .updateChildren(updatedUser)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        listener.onSuccess("Profile updated successfully !","","");
+                    } else {
+                        listener.onError(Objects.requireNonNull(task.getException()).getMessage());
                     }
                 });
     }

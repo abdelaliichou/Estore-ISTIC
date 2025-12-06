@@ -1,16 +1,32 @@
 package estore.istic.fr.View;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.Objects;
+import java.util.function.Consumer;
+
+import estore.istic.fr.Facade.OnUserActionListener;
 import estore.istic.fr.R;
+import estore.istic.fr.Resources.Utils;
+import estore.istic.fr.Services.UsersService;
 
 public class userProfileActivity extends AppCompatActivity {
+
+    TextInputLayout nameLayout, phoneLayout;
+    RelativeLayout updateButton;
+    AlertDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,5 +38,88 @@ public class userProfileActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Utils.statusAndActionBarIconsColor(this, R.id.main);
+
+        initialisation();
+        loadUser();
+        onClicks();
+
     }
+
+    public void initialisation() {
+        nameLayout = findViewById(R.id.name);
+        phoneLayout = findViewById(R.id.phone);
+        updateButton = findViewById(R.id.update);
+    }
+
+    public void loadUser() {
+        UsersService.getUserData(new OnUserActionListener() {
+            @Override
+            public void onSuccess(String userName, String userEmail, String phoneNumber) {
+                Objects.requireNonNull(phoneLayout.getEditText()).setText(phoneNumber);
+                Objects.requireNonNull(nameLayout.getEditText()).setText(userName);
+            }
+
+            @Override
+            public void onError(String message) {
+                showToast(message);
+            }
+        });
+    }
+
+    public void onClicks() {
+        updateButton.setOnClickListener(view -> validateInformation());
+    }
+
+    public void validateInformation() {
+        if (Objects.requireNonNull(phoneLayout.getEditText()).getText().toString().isEmpty()) {
+            phoneLayout.getEditText().setError("Enter phone number !");
+            return;
+        }
+
+        if (Objects.requireNonNull(nameLayout.getEditText()).getText().toString().isEmpty()) {
+            nameLayout.getEditText().setError("Enter your name !");
+            return;
+        }
+
+        dialog = Utils.createDialog(
+                this,
+                "Updating profile !",
+                "We are updating your profile, please wait a minute !",
+                true,
+                R.drawable.update_profile_image,
+                R.drawable.alert_dialog_back,
+                false,
+                null,
+                null
+        );
+        dialog.show();
+        UpdateUser(
+                nameLayout.getEditText().getText().toString().trim(),
+                phoneLayout.getEditText().getText().toString().trim()
+        );
+    }
+
+    public void UpdateUser(String name, String number) {
+        UsersService.updateUserData(name, number, new OnUserActionListener() {
+            @Override
+            public void onSuccess(String userName, String userEmail, String phoneNumber) {
+                showToast(userName);
+                dialog.dismiss();
+                finish();
+            }
+
+            @Override
+            public void onError(String message) {
+                showToast(message);
+                dialog.dismiss();
+            }
+        });
+    }
+
+    public void showToast(String message) {
+        Utils.showToast(this, message);
+    }
+
 }
