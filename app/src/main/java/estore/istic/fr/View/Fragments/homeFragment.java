@@ -44,6 +44,7 @@ import estore.istic.fr.Services.CategoriesService;
 import estore.istic.fr.Services.ProductsService;
 import estore.istic.fr.Services.UsersService;
 import estore.istic.fr.View.productDetailsActivity;
+import estore.istic.fr.View.productsActivity;
 
 public class homeFragment extends Fragment implements OnProductActionListener, OnCategoryActionListener {
 
@@ -143,11 +144,11 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
     }
 
     public void handlingOnClicks() {
+        viewAllText3.setOnClickListener(view -> startActivity(new Intent(getActivity(), productsActivity.class)));
+        viewAllText2.setOnClickListener(view -> startActivity(new Intent(getActivity(), productsActivity.class)));
         /*
         imageSlider.setItemClickListener(i -> Utils.showToast(requireActivity().getApplication(), "Clicked on "));
         viewAllText1.setOnClickListener(view -> startActivity(new Intent(getActivity(), ViewAllCategoriesActivity.class)));
-        viewAllText3.setOnClickListener(view -> startActivity(new Intent(getActivity(), ViewAllItemsActivity.class)));
-        viewAllText2.setOnClickListener(view -> startActivity(new Intent(getActivity(), ViewAllItemsActivity.class)));
         searchImage.setOnClickListener(view -> startActivity(new Intent(getActivity(), SearchActivity.class)));*/
     }
 
@@ -298,7 +299,7 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
     }
 
     @Override
-    public void onProductUnliked(Product product) {
+    public void onProductDisliked(Product product) {
         ProductsService.removeProductFromFavorite(product, new OnFavoriteProductsModifiedListener() {
             @Override
             public void onSuccess(String message) {

@@ -6,5 +6,5 @@ import estore.istic.fr.Model.Dto.ProductDto;
 public interface OnProductActionListener {
     void onProductClicked(ProductDto product);
     void onProductLiked(Product product);
-    void onProductUnliked(Product product);
+    void onProductDisliked(Product product);
 }

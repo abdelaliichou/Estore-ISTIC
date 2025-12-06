@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +33,6 @@ import estore.istic.fr.View.productDetailsActivity;
 
 public class favoritesFragment extends Fragment implements OnProductActionListener {
 
-    SwipeRefreshLayout refresh;
     ProductsAdapter favoriteProductsAdapter;
     RecyclerView favoriteProductsRecycler;
     ProgressBar progressBar;
@@ -73,37 +71,30 @@ public class favoritesFragment extends Fragment implements OnProductActionListen
         Utils.statusAndActionBarIconsColor(getActivity(), R.id.main);
 
         initialisation(view);
-        settingProductsRecyclers(view, Collections.emptyList());
-        fetchProducts(view);
-        refresh(view);
+        settingProductsRecyclers(
+                view,
+                Collections.emptyList()
+        );
+        fetchProducts();
 
         return view;
     }
 
-    public void refresh(View view) {
-        refresh.setOnRefreshListener(() -> {
-            fetchProducts(view);
-            refresh.setRefreshing(false);
-        });
-    }
-
     public void initialisation(View view) {
-        refresh = view.findViewById(R.id.refresh);
         progressBar = view.findViewById(R.id.Favorite_progress);
         favoriteProductsRecycler = view.findViewById(R.id.Favorite_items);
-        progressBar.setVisibility(View.VISIBLE);
     }
 
-    public void fetchProducts(View view) {
+    public void fetchProducts() {
         ProductsService.getAllProducts(new OnGetProductsResultListener() {
             @Override
             public void onLoading() {
-                progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onSuccess(List<ProductDto> products) {
-
+                progressBar.setVisibility(View.GONE);
                 // filter by favorites
                 List<ProductDto> favorites = products.stream()
                         .filter(ProductDto::isFavorite)
@@ -162,7 +153,7 @@ public class favoritesFragment extends Fragment implements OnProductActionListen
     }
 
     @Override
-    public void onProductUnliked(Product product) {
+    public void onProductDisliked(Product product) {
         ProductsService.removeProductFromFavorite(product, new OnFavoriteProductsModifiedListener() {
             @Override
             public void onSuccess(String message) {

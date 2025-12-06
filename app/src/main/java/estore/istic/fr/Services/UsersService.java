@@ -35,7 +35,9 @@ public class UsersService {
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {}
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        listener.onError("Error while fetching user info");
+                    }
                 });
     }
 }

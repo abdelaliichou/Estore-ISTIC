@@ -8,6 +8,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -157,5 +158,66 @@ public class ProductsService {
                     }
                 });
 
+    }
+
+    public static void filterProductsByName(
+            String productName,
+            OnGetProductsResultListener realtimeListener
+    ) {
+
+        realtimeListener.onLoading();
+
+        List<Product> allProducts = new ArrayList<>();
+        Set<String> allFavoriteProductsIds = new HashSet<>();
+
+        DatabaseReference favoritesRef = databaseHelper.getDatabaseReference().child("favorites").child(uid);
+
+        // fetch all products
+        databaseHelper.getDatabaseReference()
+                .child("products")
+                .orderByChild("name")
+                .equalTo(productName)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (!snapshot.exists()) {
+                            realtimeListener.onSuccess(Collections.emptyList());
+                        } else {
+                            allProducts.clear();
+                            for (DataSnapshot product : snapshot.getChildren()) {
+                                allProducts.add(product.getValue(Product.class));
+                            }
+
+                            // fetch favorites
+                            favoritesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot favSnapshot) {
+                                    allFavoriteProductsIds.clear();
+                                    for (DataSnapshot favoriteProduct : favSnapshot.getChildren()) {
+                                        allFavoriteProductsIds.add(Objects.requireNonNull(favoriteProduct.getValue(Product.class)).getProductId());
+                                    }
+
+                                    // map to ProductDto including favorite info
+                                    List<ProductDto> completeList = ProductMapper.toDtoList(allProducts)
+                                            .stream()
+                                            .peek(dto -> dto.setFavorite(allFavoriteProductsIds.contains(dto.getProduct().getProductId())))
+                                            .collect(Collectors.toList());
+
+                                    realtimeListener.onSuccess(completeList);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    realtimeListener.onError(error.getMessage());
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        realtimeListener.onError(error.getMessage());
+                    }
+                });
     }
 }

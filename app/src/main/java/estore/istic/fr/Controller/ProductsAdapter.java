@@ -33,7 +33,6 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     List<ProductDto> productsList;
     Context context;
     boolean isGrid;
-    int lastAnimatedPosition = -1;
 
     public ProductsAdapter(
             Context context,
@@ -121,7 +120,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
         holder.fullHeart.setOnClickListener(v -> {
             if (holder.fullHeart.getVisibility() == View.VISIBLE) {
-                productListener.onProductUnliked(
+                productListener.onProductDisliked(
                         product.getProduct()
                 );
             }
