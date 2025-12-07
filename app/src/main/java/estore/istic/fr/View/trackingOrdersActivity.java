@@ -169,6 +169,7 @@ public class trackingOrdersActivity extends AppCompatActivity {
                 this,
                 "Thank you !\nYour trust is our priority",
                 "Done",
+                R.drawable.true_deliver,
                 () -> {}
         );
     }

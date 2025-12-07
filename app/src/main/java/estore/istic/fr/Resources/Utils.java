@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.WindowInsetsController;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +58,7 @@ public class Utils {
     public static int existss = 0;
 
     public static String EMAIL_PATTERN = "[a-zA-Z0-9!#$%&'*+/=?^:_`{|}~.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*";
+    public static String orderImageUrl = "https://images.unsplash.com/photo-1680281708071-453a5bc80372?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
     // hide the keyboard when we clicks any where(better user experience )
     public static void SettingKeyboard(Activity activity) {
@@ -94,6 +96,7 @@ public class Utils {
             Context context,
             String title,
             String okText,
+            int image,
             @Nullable Runnable onConfirm
     ) {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.BottomSheetDialogTheme);
@@ -102,10 +105,12 @@ public class Utils {
 
         Optional<RelativeLayout> checkButton = Optional.ofNullable(bottomSheetDialog.findViewById(R.id.check_procces));
         Optional<TextView> titleText = Optional.ofNullable(bottomSheetDialog.findViewById(R.id.title));
+        Optional<ImageView> icon = Optional.ofNullable(bottomSheetDialog.findViewById(R.id.icon));
         Optional<TextView> buttonText = Optional.ofNullable(bottomSheetDialog.findViewById(R.id.ok_text));
 
         titleText.get().setText(title);
         buttonText.get().setText(okText);
+        icon.get().setImageResource(image);
 
         checkButton.ifPresent(button -> {
             button.setOnClickListener(view -> {

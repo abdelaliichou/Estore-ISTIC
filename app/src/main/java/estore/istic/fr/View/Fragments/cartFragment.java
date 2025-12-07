@@ -232,6 +232,7 @@ public class cartFragment extends Fragment implements OnCartAdapterListener {
                 requireActivity(),
                 "Thank you !\nYour order is on the way",
                 "Check process ",
+                R.drawable.congratulations,
                 () -> {
                     startActivity(new Intent(
                                     getActivity(),

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorlast"
+    android:background="@color/white"
     tools:context=".View.userProfileActivity">
 
     <LinearLayout
@@ -21,7 +21,7 @@
             android:layout_marginTop="25dp"
             android:fontFamily="@font/poppins_bold"
             android:text="Update profile"
-            android:textColor="@color/white"
+            android:textColor="#1E2125"
             android:textSize="25sp" />
 
         <Space
@@ -34,7 +34,7 @@
             android:layout_height="0dp"
             android:layout_weight=".7"
             android:src="@drawable/update_profile_image"
-            app:tint="@color/white" />
+            app:tint="@color/colorlast" />
 
         <Space
             android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
             android:layout_marginLeft="20dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="Name"
-            android:textColor="@color/white"
+            android:textColor="#1E2125"
             android:textSize="16sp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -58,7 +58,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:textColorHint="@color/black"
-            app:boxBackgroundColor="#20FFFFFF"
+            app:boxBackgroundColor="@color/colorgray"
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
@@ -75,7 +75,7 @@
                 android:inputType="text"
                 android:maxLength="15"
                 android:maxLines="1"
-                android:textColor="@color/colorlasLite"
+                android:textColor="@color/fontmain"
                 android:textSize="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,7 +86,7 @@
             android:layout_marginTop="25dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="Phone number"
-            android:textColor="@color/white"
+            android:textColor="#1E2125"
             android:textSize="16sp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -97,7 +97,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:textColorHint="@color/black"
-            app:boxBackgroundColor="#20FFFFFF"
+            app:boxBackgroundColor="@color/colorgray"
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
@@ -114,7 +114,7 @@
                 android:inputType="numberDecimal"
                 android:maxLength="10"
                 android:maxLines="1"
-                android:textColor="@color/colorlasLite"
+                android:textColor="@color/fontmain"
                 android:textSize="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -131,7 +131,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="30dp"
             android:background="@drawable/done_creating_task_button_back"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/colorlast"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
@@ -147,7 +147,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
                 android:src="@drawable/update_profile_image"
-                app:tint="@color/black" />
+                app:tint="@color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -159,7 +159,7 @@
                 android:layout_marginBottom="5dp"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="Update info"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="18dp" />
         </RelativeLayout>
     </LinearLayout>

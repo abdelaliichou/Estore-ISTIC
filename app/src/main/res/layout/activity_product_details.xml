@@ -126,10 +126,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="product"
-                android:textColor="@color/black"
+                android:textColor="#1E2125"
                 android:textSize="22dp"
                 android:textStyle="bold" />
 
@@ -243,7 +244,8 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/black"
                     app:cardCornerRadius="5dp"
-                    app:cardElevation="3dp" />
+                    app:cardElevation="3dp"
+                    app:strokeWidth="0dp" />
 
                 <Space
                     android:layout_width="0dp"
@@ -260,7 +262,8 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/darkblue2"
                     app:cardCornerRadius="5dp"
-                    app:cardElevation="3dp" />
+                    app:cardElevation="3dp"
+                    app:strokeWidth="0dp" />
 
                 <Space
                     android:layout_width="0dp"
@@ -276,7 +279,8 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="5dp"
-                    app:cardElevation="3dp" />
+                    app:cardElevation="3dp"
+                    app:strokeWidth="0dp" />
 
                 <Space
                     android:layout_width="0dp"
@@ -293,7 +297,8 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/colorthird"
                     app:cardCornerRadius="5dp"
-                    app:cardElevation="3dp" />
+                    app:cardElevation="3dp"
+                    app:strokeWidth="0dp" />
 
                 <Space
                     android:layout_width="0dp"
@@ -311,7 +316,8 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/colorforth"
                     app:cardCornerRadius="5dp"
-                    app:cardElevation="3dp" />
+                    app:cardElevation="3dp"
+                    app:strokeWidth="0dp" />
 
 
             </LinearLayout>
@@ -320,9 +326,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginStart="20dp"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="Discription"
                 android:textColor="#1E2125"
@@ -332,9 +338,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:fontFamily="@font/poppins_medium"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:fontFamily="@font/poppins_medium"
                 android:text="Text messages are used for personal, family, business and social purposes. Governmental and non-governmental organizations use text messaging for communication between colleagues. In the 2010s, the sending of short informal messages became an accepted part of many cultures, as happened earlier with emailing.[1] This makes texting a quick and easy way to communicate with friends, family and colleagues, including in contexts where a call would be impolite or inappropriate (e.g., calling very late at night or when one knows the other person is busy with family or work activities). Like e-mail and voicemail and unlike calls (in which the caller hopes to speak directly with the recipient), texting does not require the caller and recipient to both be free at the same moment; this permits communication even between busy individuals. Text messages can also be used to interact with automated systems, for example, to order products or services from e-commerce websites, or to participate in online contests. Advertisers and service providers use direct text marketing to send messages to mobile users about promotions, payment due dates, and other notifications instead of using postal mail, email, or voicemail."
                 android:textColor="@color/edite_text_hint_color"
                 android:textSize="12dp" />

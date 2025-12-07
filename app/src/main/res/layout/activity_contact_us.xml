@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorlast"
+    android:background="@color/white"
     tools:context=".View.contactUsActivity">
 
     <LinearLayout
@@ -18,10 +18,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="25dp"
             android:fontFamily="@font/poppins_bold"
             android:text="Contact us"
-            android:textColor="@color/white"
+            android:textColor="#1E2125"
             android:textSize="25sp" />
 
         <Space
@@ -48,8 +48,8 @@
             android:layout_marginRight="20dp"
             android:fontFamily="@font/poppins_medium"
             android:gravity="center"
-            android:text="You can reach our team using the coordinates\nbelow, don't hesitate to contact us if you\nneeded anything ."
-            android:textColor="@color/white"
+            android:text="You can reach our team using the coordinates below, don't hesitate to contact us if you needed anything ."
+            android:textColor="@color/colorfirst"
             android:textSize="15sp" />
 
         <RelativeLayout
@@ -60,7 +60,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/done_creating_task_button_back"
-            android:backgroundTint="#20FFFFFF"
+            android:backgroundTint="@color/colorgray"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
@@ -72,7 +72,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/flesh"
-                app:tint="@color/white" />
+                app:tint="@color/fontmain" />
 
             <ImageView
                 android:layout_width="30dp"
@@ -83,7 +83,7 @@
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_email"
-                app:tint="@color/white" />
+                app:tint="@color/fontmain" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
                 android:layout_marginBottom="5dp"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="Contact with email"
-                android:textColor="@color/white"
+                android:textColor="@color/fontmain"
                 android:textSize="17dp" />
         </RelativeLayout>
 
@@ -107,7 +107,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/done_creating_task_button_back"
-            android:backgroundTint="#20FFFFFF"
+            android:backgroundTint="@color/colorgray"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
@@ -118,7 +118,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/flesh"
-                app:tint="@color/white" />
+                app:tint="@color/fontmain" />
 
             <ImageView
                 android:layout_width="30dp"
@@ -132,7 +132,7 @@
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:src="@drawable/fui_ic_phone_white_24dp"
-                app:tint="@color/white" />
+                app:tint="@color/fontmain" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -144,7 +144,7 @@
                 android:layout_marginBottom="5dp"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="Contact with phone"
-                android:textColor="@color/white"
+                android:textColor="@color/fontmain"
                 android:textSize="17dp" />
         </RelativeLayout>
 
@@ -156,7 +156,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/done_creating_task_button_back"
-            android:backgroundTint="#20FFFFFF"
+            android:backgroundTint="@color/colorgray"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
@@ -167,7 +167,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/flesh"
-                app:tint="@color/white" />
+                app:tint="@color/fontmain" />
 
             <ImageView
                 android:layout_width="25dp"
@@ -178,6 +178,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
+                app:tint="@color/fontmain"
                 android:src="@drawable/ic_facebook" />
 
             <TextView
@@ -190,7 +191,7 @@
                 android:layout_marginBottom="5dp"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="Contact with facebook"
-                android:textColor="@color/white"
+                android:textColor="@color/fontmain"
                 android:textSize="17dp" />
         </RelativeLayout>
 

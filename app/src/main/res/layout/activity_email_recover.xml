@@ -41,7 +41,7 @@
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
                 android:text="Check your E-mail ! "
-                android:textColor="#0F1647"
+                android:textColor="@color/colorfirst"
                 android:textSize="28sp" />
 
             <TextView
@@ -51,10 +51,12 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:fontFamily="@font/poppins"
                 android:gravity="center_horizontal"
-                android:text="Go check your email , we have sent\nyou a link so you can\nconfirme your new password !"
-                android:textColor="#43385C"
+                android:text="Go check your email , we have sent you a link so you can confirme your new password !"
+                android:textColor="@color/colorfirst"
                 android:textSize="13sp" />
 
 

@@ -31,10 +31,24 @@
         android:id="@+id/Card_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/buttom"
+        android:layout_above="@+id/gradient"
         android:layout_below="@+id/header_text"
         android:clipToPadding="false"
         android:paddingBottom="20dp"/>
+
+    <RelativeLayout
+        android:id="@+id/gradient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttom"
+        android:layout_marginTop="-20dp"
+        android:backgroundTint="#00000000">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@drawable/gradient4" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/buttom"
@@ -115,7 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/done_creating_task_button_back"
-            android:backgroundTint="#D9FFC4"
+            android:backgroundTint="#2800C793"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
@@ -134,7 +148,7 @@
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="PLACE ORDER"
-                android:textColor="#4DA538"
+                android:textColor="@color/colorlast"
                 android:textSize="16dp" />
         </RelativeLayout>
     </LinearLayout>

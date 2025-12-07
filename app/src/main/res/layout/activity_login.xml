@@ -17,7 +17,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.9"
+            android:layout_weight="2"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <ImageView
@@ -124,19 +125,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <CheckBox
-                android:id="@+id/remember_me"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:backgroundTint="@color/mainyellow"
-                android:text="Remember me"
-                android:textAppearance="@style/Text"
-                android:textColor="#757575"
-                android:textSize="11dp" />
-
             <TextView
                 android:id="@+id/forgot_password_text"
                 android:layout_width="wrap_content"
@@ -234,7 +222,7 @@
         <Space
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="0.01" />
+            android:layout_weight="0.1" />
 
         <LinearLayout
             android:id="@+id/or_login_with_layout"
@@ -247,7 +235,6 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:background="@color/mainyellow" />
 
@@ -255,85 +242,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="10dp"
+                android:layout_margin="20dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:fontFamily="@font/poppins_medium"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:text="Or login with "
-                android:textColor="#757575"
+                android:text="Great offers are waiting for you !"
+                android:textColor="@color/fontmain"
                 android:textSize="13sp" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:background="@color/mainyellow" />
 
         </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Space
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:paddingTop="7dp">
+            android:layout_weight=".2" />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="15dp"
-                android:backgroundTint="@color/white"
-
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardElevation="1dp"
-                app:shapeAppearanceOverlay="@style/circle">
-
-                <ImageView
-                    android:id="@+id/google_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/googlesvg" />
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:backgroundTint="#3B5998"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardElevation="1dp"
-                app:shapeAppearanceOverlay="@style/circle">
-
-                <ImageView
-                    android:id="@+id/facebook_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/facebooksvg" />
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-
-        </LinearLayout>
     </LinearLayout>
 
     <ProgressBar

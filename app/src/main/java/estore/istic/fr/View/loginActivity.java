@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -36,11 +35,10 @@ public class loginActivity extends AppCompatActivity {
 
     RelativeLayout LoginButton;
     TextView signupTestView, mainTextView, forgotPasswordTextView, secondTextView;
-    ImageView mainImage, googleImage, facebookImage;
+    ImageView mainImage;
     LinearLayout SupportLinearLayout, orLoginLayout;
     TextInputLayout emailLayout, passwordLayout;
     AlertDialog dialog;
-    CheckBox saveStateBox;
     ProgressBar progressBar;
 
     @Override
@@ -88,9 +86,6 @@ public class loginActivity extends AppCompatActivity {
         passwordLayout = findViewById(R.id.password_parent_login);
         orLoginLayout = findViewById(R.id.or_login_with_layout);
         forgotPasswordTextView = findViewById(R.id.forgot_password_text);
-        saveStateBox = findViewById(R.id.remember_me);
-        googleImage = findViewById(R.id.google_login);
-        facebookImage = findViewById(R.id.facebook_login);
     }
 
     public void handlingOnClicks(Context context) {

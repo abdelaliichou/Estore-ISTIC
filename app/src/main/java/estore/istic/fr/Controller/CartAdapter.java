@@ -80,28 +80,23 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
         holder.nameText.setText(cartItem.getProduct().getName().concat(".."));
         holder.priceText.setText(String.valueOf(cartItem.getProduct().getPrice()));
-        holder.totalItemsText.setText("Total: ".concat(String.valueOf(cartItem.getQuantity())));
-
-        //holder.dateText.setText(cartItems.get(position).getDate());
-        //holder.timeText.setText(cartItems.get(position).getTime());
+        holder.totalItemsText.setText("Quantity: ".concat(String.valueOf(cartItem.getQuantity())));
 
         holder.card.setAnimation(AnimationUtils.loadAnimation(context, R.anim.card_pop_up));
 
         if (isCart){
-            holder.card.setOnLongClickListener(view -> {
-                cartListener.onProductLongClicked(cartItem);
-                return false;
-            });
-
             if (cartItem.getProduct().getPrice() >= 600f){
-                holder.ratting.setVisibility(View.GONE);
                 holder.hot.setVisibility(View.VISIBLE);
-                return;
+            } else {
+                holder.hot.setVisibility(View.GONE);
             }
-
-            holder.ratting.setVisibility(View.VISIBLE);
-            holder.hot.setVisibility(View.GONE);
         }
+
+        holder.card.setOnLongClickListener(view -> {
+            cartListener.onProductLongClicked(cartItem);
+            return false;
+        });
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -118,7 +113,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image , ratting , hot;
-        TextView dateText, timeText, totalItemsText, priceText, nameText;
+        TextView totalItemsText, priceText, nameText;
         MaterialCardView card;
 
         public ViewHolder(@NonNull View itemView) {
@@ -127,8 +122,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             hot = itemView.findViewById(R.id.populaire);
             card = itemView.findViewById(R.id.card_item);
             image = itemView.findViewById(R.id.item_image);
-            dateText = itemView.findViewById(R.id.date);
-            timeText = itemView.findViewById(R.id.time);
             totalItemsText = itemView.findViewById(R.id.total_items);
             priceText = itemView.findViewById(R.id.item_price);
             nameText = itemView.findViewById(R.id.item_name);

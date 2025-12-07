@@ -20,6 +20,7 @@
         android:background="@drawable/done_creating_task_button_back" />
 
     <ImageView
+        android:id="@+id/icon"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:src="@drawable/congratulations"
