@@ -12,6 +12,7 @@ import android.view.WindowInsetsController;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -84,12 +85,21 @@ public class Utils {
 
     public static void createBottomSheet(
             Context context,
+            String title,
+            String okText,
             @Nullable Runnable onConfirm
     ) {
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.BottomSheetDialogTheme);
         bottomSheetDialog.setContentView(R.layout.layout_bottom_sheet);
         bottomSheetDialog.setCanceledOnTouchOutside(true);
+
         Optional<RelativeLayout> checkButton = Optional.ofNullable(bottomSheetDialog.findViewById(R.id.check_procces));
+        Optional<TextView> titleText = Optional.ofNullable(bottomSheetDialog.findViewById(R.id.title));
+        Optional<TextView> buttonText = Optional.ofNullable(bottomSheetDialog.findViewById(R.id.ok_text));
+
+        titleText.get().setText(title);
+        buttonText.get().setText(okText);
+
         checkButton.ifPresent(button -> {
             button.setOnClickListener(view -> {
                 onConfirm.run();

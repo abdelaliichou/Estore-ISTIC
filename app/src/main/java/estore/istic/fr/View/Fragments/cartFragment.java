@@ -1,6 +1,7 @@
 package estore.istic.fr.View.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,13 +30,12 @@ import estore.istic.fr.Facade.OnCartActionListener;
 import estore.istic.fr.Facade.OnCartRealTimeListener;
 import estore.istic.fr.Facade.OnOrderSaveListener;
 import estore.istic.fr.Model.Domain.Order;
-import estore.istic.fr.Model.Domain.OrderItem;
-import estore.istic.fr.Model.Dto.CartItem;
-import estore.istic.fr.Model.Mappers.OrderMapper;
+import estore.istic.fr.Model.Domain.CartItem;
 import estore.istic.fr.Resources.databaseHelper;
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Utils;
 import estore.istic.fr.Services.OrdersService;
+import estore.istic.fr.View.orderDetailsActivity;
 
 public class cartFragment extends Fragment implements OnCartAdapterListener {
 
@@ -197,13 +197,11 @@ public class cartFragment extends Fragment implements OnCartAdapterListener {
     }
 
     public void registerOrder(List<CartItem> cartItems) {
-
         String uid = Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid();
-        List<OrderItem> orderItems = OrderMapper.cartToOrderItems(cartItems);
         Order order = new Order(
                 uid,
                 getTotalPrice(cartItems),
-                orderItems
+                cartItems
         );
 
         OrdersService.saveOrder(order, new OnOrderSaveListener() {
@@ -233,8 +231,10 @@ public class cartFragment extends Fragment implements OnCartAdapterListener {
     public void bottomSheetDialog() {
         Utils.createBottomSheet(
                 requireActivity(),
+                "Thank you !\nYour order is on the way",
+                "Check process ",
                 () -> {
-                    // startActivity(new Intent(getActivity(), OrderDetails_Activity.class).putExtra("id", "last_order"))
+                    startActivity(new Intent(getActivity(), orderDetailsActivity.class));
                 }
         );
     }

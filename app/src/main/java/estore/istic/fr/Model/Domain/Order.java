@@ -16,14 +16,14 @@ public class Order {
     private long orderDate;
     @PropertyName("total_price")
     private double totalPrice;
-    private List<OrderItem> items;
+    private List<CartItem> items;
 
     public Order(){}
 
     public Order(
             String userId,
             double totalPrice,
-            List<OrderItem> items
+            List<CartItem> items
     ) {
         this.items = items;
         this.userId = userId;
@@ -72,11 +72,11 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public List<OrderItem> getItems() {
+    public List<CartItem> getItems() {
         return items;
     }
 
-    public void setItems(List<OrderItem> items) {
+    public void setItems(List<CartItem> items) {
         this.items = items;
     }
 }

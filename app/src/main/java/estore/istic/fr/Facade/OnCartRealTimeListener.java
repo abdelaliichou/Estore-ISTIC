@@ -2,7 +2,7 @@ package estore.istic.fr.Facade;
 
 import java.util.List;
 
-import estore.istic.fr.Model.Dto.CartItem;
+import estore.istic.fr.Model.Domain.CartItem;
 
 public interface OnCartRealTimeListener {
      void onLoading();

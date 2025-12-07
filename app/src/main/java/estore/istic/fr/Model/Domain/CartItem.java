@@ -1,6 +1,4 @@
-package estore.istic.fr.Model.Dto;
-
-import estore.istic.fr.Model.Domain.Product;
+package estore.istic.fr.Model.Domain;
 
 public class CartItem {
     private Product product;

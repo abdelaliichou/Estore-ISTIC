@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import estore.istic.fr.Facade.OnCartAdapterListener;
-import estore.istic.fr.Model.Dto.CartItem;
+import estore.istic.fr.Model.Domain.CartItem;
 import estore.istic.fr.R;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
@@ -27,7 +27,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     OnCartAdapterListener cartListener;
 
-    public List<CartItem> cartItems;
+    List<CartItem> cartItems;
     Context context;
     boolean isCart;
 
@@ -88,7 +88,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.card.setAnimation(AnimationUtils.loadAnimation(context, R.anim.card_pop_up));
 
         if (isCart){
-
             holder.card.setOnLongClickListener(view -> {
                 cartListener.onProductLongClicked(cartItem);
                 return false;

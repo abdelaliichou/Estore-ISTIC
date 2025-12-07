@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
@@ -14,10 +15,11 @@ import java.util.Optional;
 
 import estore.istic.fr.Facade.OnCartActionListener;
 import estore.istic.fr.Facade.OnCartRealTimeListener;
+import estore.istic.fr.Facade.OnGetOrderListener;
 import estore.istic.fr.Facade.OnOrderSaveListener;
 import estore.istic.fr.Model.Domain.Order;
 import estore.istic.fr.Model.Domain.Product;
-import estore.istic.fr.Model.Dto.CartItem;
+import estore.istic.fr.Model.Domain.CartItem;
 import estore.istic.fr.Resources.databaseHelper;
 
 
@@ -34,9 +36,7 @@ public class OrdersService {
     }
 
     public static void getCartItems(OnCartRealTimeListener realtimeListener) {
-
         realtimeListener.onLoading();
-
         listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -62,13 +62,11 @@ public class OrdersService {
     }
 
     public static void addProductToCart(Product product, int quantity, OnCartActionListener listener) {
-
         DatabaseReference ref = databaseHelper.getDatabaseReference()
                 .child("cart")
                 .child(uid);
 
         CartItem cartItem = new CartItem(product, quantity);
-
         ref.orderByChild("product/productId")
                 .equalTo(product.getProductId())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -118,7 +116,6 @@ public class OrdersService {
                 .child(order.getUserId());
 
         Optional<String> orderId = Optional.ofNullable(ref.push().getKey());
-
         if (orderId.isEmpty()) {
             listener.onError("Failed to save order!");
             return;
@@ -133,6 +130,75 @@ public class OrdersService {
                         listener.onSuccess(orderId.get());
                     } else {
                         listener.onError(Objects.requireNonNull(task.getException()).getMessage());
+                    }
+                });
+    }
+
+    public static void getLastOrder(OnGetOrderListener listener) {
+        String uid = Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid();
+        DatabaseReference ref = databaseHelper.getDatabaseReference()
+                .child("orders")
+                .child(uid);
+
+        listener.onLoading();
+        ref.orderByChild("orderDate")
+                .limitToLast(1)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if (!snapshot.exists()) {
+                            listener.onSuccess(Optional.empty());
+                            return;
+                        }
+
+                        for (DataSnapshot orderSnap : snapshot.getChildren()) {
+                            try {
+                                Optional<Order> order = Optional.ofNullable(orderSnap.getValue(Order.class));
+                                listener.onSuccess(order);
+                            } catch (DatabaseException e) {
+                                listener.onError("Could not fetch order delivery status");
+                            }
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        listener.onError(error.getMessage());
+                    }
+                });
+    }
+
+    public static void tracOrderDeliveryState(String orderID, OnOrderSaveListener listener) {
+        databaseHelper.getDatabaseReference()
+                .child("orders")
+                .child(Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid())
+                .orderByChild("orderId")
+                .equalTo(orderID)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if (!snapshot.exists()) {
+                            listener.onError("No order found!");
+                            return;
+                        }
+
+                        for (DataSnapshot orderSnapshot : snapshot.getChildren()) {
+                            Optional<Order> order = Optional.ofNullable(orderSnapshot.getValue(Order.class));
+                            if (order.isPresent()) {
+                                listener.onSuccess(order.get().getStatus().toString());
+                                return;
+                            } else {
+                                listener.onError("No order found!");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        listener.onError(error.getMessage());
                     }
                 });
     }
