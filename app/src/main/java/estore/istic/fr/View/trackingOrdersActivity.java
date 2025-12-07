@@ -75,7 +75,7 @@ public class trackingOrdersActivity extends AppCompatActivity {
     }
 
     public void fetchOrderState() {
-        OrdersService.tracOrderDeliveryState(getIntent().getStringExtra("orderID"), new OnOrderSaveListener() {
+        OrdersService.trackOrderDeliveryStatus(getIntent().getStringExtra("orderID"), new OnOrderSaveListener() {
             @Override
             public void onLoading() {}
 

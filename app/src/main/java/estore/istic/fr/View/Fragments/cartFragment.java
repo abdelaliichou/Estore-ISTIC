@@ -49,7 +49,8 @@ public class cartFragment extends Fragment implements OnCartAdapterListener {
 
     private Optional<Context> safeContext;
 
-    public cartFragment() {}
+    public cartFragment() {
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -175,7 +176,8 @@ public class cartFragment extends Fragment implements OnCartAdapterListener {
                 R.drawable.alert_dialog_back,
                 true,
                 this::sendOrder,
-                () -> {}
+                () -> {
+                }
         );
         dialog.show();
     }
@@ -223,9 +225,6 @@ public class cartFragment extends Fragment implements OnCartAdapterListener {
                 showToast(message);
             }
         });
-
-
-        // StartDelivery(pushValue);
     }
 
     public void bottomSheetDialog() {
@@ -234,26 +233,13 @@ public class cartFragment extends Fragment implements OnCartAdapterListener {
                 "Thank you !\nYour order is on the way",
                 "Check process ",
                 () -> {
-                    startActivity(new Intent(getActivity(), orderDetailsActivity.class));
+                    startActivity(new Intent(
+                                    getActivity(),
+                                    orderDetailsActivity.class
+                            ).putExtra("isLast", true)
+                    );
                 }
         );
-    }
-
-    public void StartDelivery(String OrderID) {
-        // the child to start the delivery , initialled with "first"
-        /*
-        FirebaseDatabase.getInstance().getReference().child("Delivery").child("Started").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(OrderID).child("status").setValue("first").addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(getActivity(), "Delivering start !", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-         */
     }
 
     @Override
@@ -267,7 +253,8 @@ public class cartFragment extends Fragment implements OnCartAdapterListener {
                 R.drawable.alert_dialog_back,
                 true,
                 () -> removeItemFromCart(item),
-                () -> {}
+                () -> {
+                }
         );
         dialog.show();
     }

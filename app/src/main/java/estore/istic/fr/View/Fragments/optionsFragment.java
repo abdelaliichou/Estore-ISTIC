@@ -26,6 +26,7 @@ import estore.istic.fr.Services.UsersService;
 import estore.istic.fr.View.contactUsActivity;
 import estore.istic.fr.View.loginActivity;
 import estore.istic.fr.View.orderDetailsActivity;
+import estore.istic.fr.View.ordersActivity;
 import estore.istic.fr.View.userProfileActivity;
 
 public class optionsFragment extends Fragment {
@@ -106,9 +107,16 @@ public class optionsFragment extends Fragment {
     }
 
     public void handlingOnClicks() {
-        deliveryProcessButton.setOnClickListener(view -> startActivity(new Intent(getActivity(), orderDetailsActivity.class)));
+        deliveryProcessButton.setOnClickListener(view -> {
+            // we want the last order done by this user
+            startActivity(new Intent(
+                            getActivity(),
+                            orderDetailsActivity.class
+                    ).putExtra("isLast", true)
+            );
+        });
+        ordersHistoryButton.setOnClickListener(view -> startActivity(new Intent(getActivity(), ordersActivity.class)));
         updateButton.setOnClickListener(view -> startActivity(new Intent(getActivity(), userProfileActivity.class)));
-        //ordersHistoryButton.setOnClickListener(view -> startActivity(new Intent(getActivity(), AllOrders_Activity.class)));
         contactLayout.setOnClickListener(view -> startActivity(new Intent(getActivity(), contactUsActivity.class)));
         logoutButton.setOnClickListener(view -> {
             safeContext.ifPresent(context -> {
@@ -125,13 +133,12 @@ public class optionsFragment extends Fragment {
                             requireActivity().finishAffinity();
                             startActivity(new Intent(view.getContext(), loginActivity.class));
                         },
-                        () -> {}
+                        () -> {
+                        }
                 );
                 dialog.show();
             });
         });
-
-
     }
 
 }

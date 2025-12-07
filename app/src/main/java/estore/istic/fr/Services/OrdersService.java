@@ -9,12 +9,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import estore.istic.fr.Facade.OnCartActionListener;
 import estore.istic.fr.Facade.OnCartRealTimeListener;
+import estore.istic.fr.Facade.OnGetAllOrdersListener;
 import estore.istic.fr.Facade.OnGetOrderListener;
 import estore.istic.fr.Facade.OnOrderSaveListener;
 import estore.istic.fr.Model.Domain.Order;
@@ -170,7 +172,80 @@ public class OrdersService {
                 });
     }
 
-    public static void tracOrderDeliveryState(String orderID, OnOrderSaveListener listener) {
+    public static void getOrderById(String orderId, OnGetOrderListener listener) {
+        String uid = Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid();
+        DatabaseReference ref = databaseHelper.getDatabaseReference()
+                .child("orders")
+                .child(uid);
+
+        listener.onLoading();
+        ref.orderByChild("orderId")
+                .equalTo(orderId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if (!snapshot.exists()) {
+                            listener.onSuccess(Optional.empty());
+                            return;
+                        }
+
+                        for (DataSnapshot orderSnap : snapshot.getChildren()) {
+                            try {
+                                Optional<Order> order = Optional.ofNullable(orderSnap.getValue(Order.class));
+                                listener.onSuccess(order);
+                            } catch (DatabaseException e) {
+                                listener.onError("Could not fetch order delivery status");
+                            }
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        listener.onError(error.getMessage());
+                    }
+                });
+    }
+
+    public static void getAllOrder(OnGetAllOrdersListener listener) {
+
+        listener.onLoading();
+        List<Order> allOrders = new ArrayList<>();
+
+        String uid = Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid();
+        databaseHelper.getDatabaseReference()
+                .child("orders")
+                .child(uid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if (!snapshot.exists()) {
+                            listener.onSuccess(Collections.emptyList());
+                            return;
+                        }
+
+                        for (DataSnapshot orderSnap : snapshot.getChildren()) {
+                            try {
+                                allOrders.add(0, Objects.requireNonNull(orderSnap.getValue(Order.class)));
+                            } catch (DatabaseException e) {
+                                // order could not be fetched, going to the next one
+                                // listener.onError("Could not fetch order delivery status");
+                            }
+                        }
+
+                        listener.onSuccess(allOrders);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        listener.onError(error.getMessage());
+                    }
+                });
+    }
+
+    public static void trackOrderDeliveryStatus(String orderID, OnOrderSaveListener listener) {
         databaseHelper.getDatabaseReference()
                 .child("orders")
                 .child(Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid())

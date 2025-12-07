@@ -1,8 +1,8 @@
 package estore.istic.fr.View;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,14 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -76,82 +69,9 @@ public class orderDetailsActivity extends AppCompatActivity implements OnCartAda
         orderRecycler = findViewById(R.id.order_list);
     }
 
-    public void onClicks(String orderID) {
-        checkProcessButton.setOnClickListener(view -> {
-            startActivity(
-                    new Intent(
-                            orderDetailsActivity.this,
-                            trackingOrdersActivity.class
-                    ).putExtra("orderID", orderID)
-            );
-        });
-    }
-
     public void updateUI() {
         fetchUserEmail();
-        fetchLastOrder(
-                orderID -> {
-                    orderIdText.setText(orderID);
-                    onClicks(orderID);
-                },
-                orderDate -> dateText.setText(parseDate(orderDate)),
-                orderPrice -> orderTotalPriceText.setText(String.valueOf(orderPrice)),
-                orderProductsQuantity -> orderProductsQuantityText.setText(String.valueOf(orderProductsQuantity)),
-                this::settingRecycler
-        );
-    }
-
-    public String parseDate(Long date) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Instant instant = Instant.ofEpochMilli(date);
-            ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-            return zdt.format(formatter);
-        }
-
-        Date fixedDate = new Date(date);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
-        return sdf.format(fixedDate);
-    }
-
-    public void fetchLastOrder(
-            Consumer<String> orderID,
-            Consumer<Long> orderDate,
-            Consumer<Double> orderPrice,
-            Consumer<Integer> orderProductsQuantity,
-            Consumer<List<CartItem>> orderProducts
-    ) {
-        OrdersService.getLastOrder(new OnGetOrderListener() {
-            @Override
-            public void onLoading() {
-                progressBar.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onSuccess(Optional<Order> lastOrder) {
-                progressBar.setVisibility(View.GONE);
-
-                // exposing the fetched data to the outside
-                lastOrder.ifPresent(order -> {
-                    orderID.accept(order.getOrderId());
-                    orderDate.accept(order.getOrderDate());
-                    orderPrice.accept(order.getTotalPrice());
-                    orderProducts.accept(order.getItems());
-                    orderProductsQuantity.accept(
-                            order.getItems()
-                                    .stream()
-                                    .mapToInt(CartItem::getQuantity)
-                                    .sum()
-                    );
-                });
-            }
-
-            @Override
-            public void onError(String message) {
-                progressBar.setVisibility(View.GONE);
-                showToast(message);
-            }
-        });
+        checkOrderType();
     }
 
     public void fetchUserEmail() {
@@ -165,6 +85,102 @@ public class orderDetailsActivity extends AppCompatActivity implements OnCartAda
             public void onError(String message) {
                 showToast(message);
             }
+        });
+    }
+
+    public void checkOrderType() {
+        boolean isLastOrder = getIntent().getBooleanExtra("isLast", true);
+        if (isLastOrder) {
+            // pass the order id received from the exposed value
+            fetchLastOrder(this::onClicks);
+            return;
+        }
+
+        // pass the order id from received from the intent
+        String orderId = getIntent().getStringExtra("id");
+        fetchOrder(orderId);
+        onClicks(orderId);
+    }
+
+    public void fetchLastOrder(Consumer<String> orderId) {
+        OrdersService.getLastOrder(new OnGetOrderListener() {
+            @Override
+            public void onLoading() {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onSuccess(Optional<Order> lastOrder) {
+                progressBar.setVisibility(View.GONE);
+                lastOrder.ifPresent(order -> {
+
+                    settingRecycler(order.getItems());
+
+                    orderIdText.setText(order.getOrderId());
+                    dateText.setText(Utils.parseDate(order.getOrderDate()));
+                    orderTotalPriceText.setText(String.valueOf(order.getTotalPrice()));
+                    orderProductsQuantityText.setText(String.valueOf(
+                            order.getItems()
+                                    .stream()
+                                    .mapToInt(CartItem::getQuantity)
+                                    .sum()
+                    ));
+
+                    // expose orderId because in this case we haven't receive order is by intent
+                    orderId.accept(order.getOrderId());
+                });
+            }
+
+            @Override
+            public void onError(String message) {
+                progressBar.setVisibility(View.GONE);
+                showToast(message);
+            }
+        });
+    }
+
+    public void fetchOrder(String orderId) {
+        OrdersService.getOrderById(orderId, new OnGetOrderListener() {
+            @Override
+            public void onLoading() {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onSuccess(Optional<Order> lastOrder) {
+                progressBar.setVisibility(View.GONE);
+                lastOrder.ifPresent(order -> {
+
+                    settingRecycler(order.getItems());
+
+                    orderIdText.setText(order.getOrderId());
+                    dateText.setText(Utils.parseDate(order.getOrderDate()));
+                    orderTotalPriceText.setText(String.valueOf(order.getTotalPrice()));
+                    orderProductsQuantityText.setText(String.valueOf(
+                            order.getItems()
+                                    .stream()
+                                    .mapToInt(CartItem::getQuantity)
+                                    .sum()
+                    ));
+                });
+            }
+
+            @Override
+            public void onError(String message) {
+                progressBar.setVisibility(View.GONE);
+                showToast(message);
+            }
+        });
+    }
+
+    public void onClicks(String orderID) {
+        checkProcessButton.setOnClickListener(view -> {
+            startActivity(
+                    new Intent(
+                            orderDetailsActivity.this,
+                            trackingOrdersActivity.class
+                    ).putExtra("orderID", orderID)
+            );
         });
     }
 
@@ -184,8 +200,7 @@ public class orderDetailsActivity extends AppCompatActivity implements OnCartAda
     }
 
     @Override
-    public void onProductLongClicked(CartItem item) {
-    }
+    public void onProductLongClicked(CartItem item) {}
 
     public void showToast(String message) {
         Utils.showToast(this, message);

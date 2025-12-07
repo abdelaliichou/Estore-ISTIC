@@ -28,8 +28,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -142,6 +149,19 @@ public class Utils {
         progressDialog.setCancelable(false);
 
         return progressDialog.show();
+    }
+
+    public static String parseDate(Long date) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Instant instant = Instant.ofEpochMilli(date);
+            ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            return zdt.format(formatter);
+        }
+
+        Date fixedDate = new Date(date);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        return sdf.format(fixedDate);
     }
 
     public static void statusAndActionBarIconsColor(
