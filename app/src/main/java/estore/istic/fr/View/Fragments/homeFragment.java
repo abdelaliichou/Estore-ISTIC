@@ -49,7 +49,7 @@ import estore.istic.fr.View.productsActivity;
 
 public class homeFragment extends Fragment implements OnProductActionListener, OnCategoryActionListener {
 
-    ImageView searchImage, bigImage;
+    ImageView bigImage;
     ImageSlider imageSlider;
     TextView HeaderText, popularItemsText, secondHeaderText, categoriesText, SuggestedItemsText, viewAllText1, viewAllText2, viewAllText3;
     MaterialCardView parent_slide_card;
@@ -122,7 +122,6 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
 
     public void initialisation(View view) {
         bigImage = view.findViewById(R.id.second_big_image);
-        searchImage = view.findViewById(R.id.search);
         populaireProductsProgressBar = view.findViewById(R.id.populaire_items_progress);
         allProductsProgressBar = view.findViewById(R.id.all_items_progress);
         categoriesProgressBar = view.findViewById(R.id.categories_progress);

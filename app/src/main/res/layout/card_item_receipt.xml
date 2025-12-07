@@ -4,7 +4,7 @@
     android:id="@+id/card_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_margin="6dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
@@ -112,12 +112,12 @@
                             android:maxLines="2"
                             android:text="React Frenncy"
                             android:textColor="#2b2b2b"
-                            android:textSize="14dp" />
+                            android:textSize="13dp" />
 
                         <Space
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1.1"/>
 
                     </LinearLayout>
                 </LinearLayout>

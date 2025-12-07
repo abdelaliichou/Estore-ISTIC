@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     tools:context=".View.Fragments.homeFragment">
 
@@ -19,47 +19,15 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="15dp"
-                android:scrollbars="none">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="Hello"
-                    android:textColor="#2B2B2B"
-                    android:textSize="25dp"
-                    android:visibility="gone" />
-
-                <ImageView
-                    android:layout_width="150dp"
-                    android:layout_height="70dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:src="@drawable/nutri" />
-
-                <ImageView
-                    android:id="@+id/search"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:src="@drawable/ic_search" />
-            </RelativeLayout>
-
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="70dp"
+                android:layout_centerVertical="true"
+                android:layout_margin="20dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:src="@drawable/nutri" />
 
             <TextView
                 android:id="@+id/second_header"
@@ -76,7 +44,6 @@
                 android:visibility="gone" />
 
             <androidx.cardview.widget.CardView
-                app:cardCornerRadius="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
                 android:layout_marginLeft="15dp"
@@ -84,7 +51,8 @@
                 android:backgroundTint="@color/black"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground">
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="10dp">
 
                 <ImageView
                     android:id="@+id/second_big_image"
@@ -117,8 +85,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="15dp">
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp">
 
                 <TextView
                     android:id="@+id/category_text"
@@ -170,9 +138,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginBottom="5dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="15dp">
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp">
 
                 <TextView
                     android:id="@+id/popular_items_text"
@@ -222,14 +190,14 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/parent_card"
-                app:cardCornerRadius="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="5dp"
-                android:elevation="100dp">
+                android:elevation="100dp"
+                app:cardCornerRadius="10dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -240,13 +208,13 @@
 
                     <com.denzcoskun.imageslider.ImageSlider
                         android:id="@+id/slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         app:iss_auto_cycle="true"
                         app:iss_delay="0"
                         app:iss_error_image="@color/purple_700"
                         app:iss_period="2500"
-                        app:iss_placeholder="@color/mainblue"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        app:iss_placeholder="@color/mainblue" />
 
                     <RelativeLayout
                         android:id="@+id/backeffect"
@@ -283,10 +251,10 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp">
 
                 <TextView
                     android:id="@+id/suggested_items_text"

@@ -2,7 +2,7 @@ package estore.istic.fr.View;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+
 import android.view.animation.AnimationUtils;
 
 import androidx.activity.EdgeToEdge;
@@ -17,7 +17,6 @@ import com.google.firebase.FirebaseApp;
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Animations;
 import estore.istic.fr.Resources.Utils;
-import okhttp3.internal.Util;
 
 public class splashActivity extends AppCompatActivity {
 
