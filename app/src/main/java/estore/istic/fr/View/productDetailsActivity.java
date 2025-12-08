@@ -90,7 +90,7 @@ public class productDetailsActivity extends AppCompatActivity {
     public void chargeProductData() {
         Picasso.get().load(loadProduct().getProduct().getImageUrl()).into(productImage);
         productNameTextView.setText(loadProduct().getProduct().getName());
-        productPriceTextView.setText("$".concat(String.valueOf(loadProduct().getProduct().getPrice())));
+        productPriceTextView.setText(Utils.dollarFormatter.format(loadProduct().getProduct().getPrice()));
         if (loadProduct().isFavorite()) {
             addToFavoritesHeartsUI();
         } else {

@@ -24,6 +24,7 @@ import estore.istic.fr.Facade.OnProductActionListener;
 import estore.istic.fr.Model.Dto.ProductDto;
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.ProductsDiffCallback;
+import estore.istic.fr.Resources.Utils;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
 
@@ -81,7 +82,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
                 .into(holder.productImage);
 
         holder.productName.setText(product.getProduct().getName());
-        holder.productPrice.setText("$".concat(product.getProduct().getPrice().toString()));
+        holder.productPrice.setText(Utils.dollarFormatter.format(product.getProduct().getPrice()));
 
         holder.card.setAnimation(AnimationUtils.loadAnimation(
                 context,

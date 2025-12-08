@@ -103,7 +103,7 @@ public class orderDetailsActivity extends AppCompatActivity implements OnCartAda
 
                     orderIdText.setText(order.getOrderId());
                     dateText.setText(Utils.parseDate(order.getOrderDate()));
-                    orderTotalPriceText.setText(String.valueOf(order.getTotalPrice()));
+                    orderTotalPriceText.setText(Utils.noDollarFormat.format(order.getTotalPrice()));
                     orderProductsQuantityText.setText(String.valueOf(
                             order.getItems()
                                     .stream()
@@ -142,7 +142,7 @@ public class orderDetailsActivity extends AppCompatActivity implements OnCartAda
 
                     orderIdText.setText(order.getOrderId());
                     dateText.setText(Utils.parseDate(order.getOrderDate()));
-                    orderTotalPriceText.setText(String.valueOf(order.getTotalPrice()));
+                    orderTotalPriceText.setText(Utils.noDollarFormat.format(order.getTotalPrice()));
                     orderProductsQuantityText.setText(String.valueOf(
                             order.getItems()
                                     .stream()

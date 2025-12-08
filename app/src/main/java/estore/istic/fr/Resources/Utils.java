@@ -24,6 +24,8 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -35,17 +37,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
 
 import estore.istic.fr.Model.Domain.Category;
 import estore.istic.fr.Model.Domain.Order;
 import estore.istic.fr.Model.Domain.Product;
 import estore.istic.fr.Model.Dto.OrderStatus;
-import estore.istic.fr.Model.Dto.ProductDto;
 import estore.istic.fr.R;
-import estore.istic.fr.View.forgetPasswordActivity;
-import estore.istic.fr.View.loginActivity;
 
 
 public class Utils {
@@ -55,7 +52,10 @@ public class Utils {
     public static int existss = 0;
 
     public static String EMAIL_PATTERN = "[a-zA-Z0-9!#$%&'*+/=?^:_`{|}~.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*";
-    public static String orderImageUrl = "https://images.unsplash.com/photo-1680281708071-453a5bc80372?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
+    public static NumberFormat dollarFormatter = NumberFormat.getCurrencyInstance(Locale.US);
+
+    public static DecimalFormat noDollarFormat = new DecimalFormat("#,###.00");
 
     // hide the keyboard when we clicks any where(better user experience )
     public static void SettingKeyboard(Activity activity) {

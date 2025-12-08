@@ -20,6 +20,7 @@ import java.util.List;
 import estore.istic.fr.Facade.OnCartAdapterListener;
 import estore.istic.fr.Model.Domain.CartItem;
 import estore.istic.fr.R;
+import estore.istic.fr.Resources.Utils;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private static final int VIEW_CART = 0;
@@ -79,7 +80,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 .into(holder.image);
 
         holder.nameText.setText(cartItem.getProduct().getName().concat(".."));
-        holder.priceText.setText(String.valueOf(cartItem.getProduct().getPrice()));
+        holder.priceText.setText(Utils.noDollarFormat.format(cartItem.getProduct().getPrice()));
         holder.totalItemsText.setText("Quantity: ".concat(String.valueOf(cartItem.getQuantity())));
 
         holder.card.setAnimation(AnimationUtils.loadAnimation(context, R.anim.card_pop_up));

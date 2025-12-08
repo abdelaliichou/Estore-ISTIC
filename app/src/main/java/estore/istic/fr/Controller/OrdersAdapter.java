@@ -54,7 +54,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 
         Order order = OrdersList.get(position);
         holder.date.setText(Utils.parseDate(order.getOrderDate()));
-        holder.totalPrice.setText(String.valueOf(order.getTotalPrice()));
+        holder.totalPrice.setText(Utils.noDollarFormat.format(order.getTotalPrice()));
         holder.orderId.setText("Order #".concat(order.getOrderId().substring(0,7)));
         holder.cardParent.setAnimation(AnimationUtils.loadAnimation(context, R.anim.card_pop_up));
         holder.quantity.setText(String.valueOf(

@@ -124,7 +124,7 @@ public class cartFragment extends Fragment implements OnCartAdapterListener {
     }
 
     public void updateUI(List<CartItem> cartItems) {
-        totalPrice.setText(String.valueOf(getTotalPrice(cartItems)));
+        totalPrice.setText(Utils.noDollarFormat.format(getTotalPrice(cartItems)));
         totalItems.setText(String.valueOf(getTotalQuantity(cartItems)));
     }
 

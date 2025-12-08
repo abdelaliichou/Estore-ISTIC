@@ -167,11 +167,9 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="30dp"
         android:layout_weight="1"
-        android:background="@drawable/bottom_sheet"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/mainblue"
         app:cardCornerRadius="10dp"
-        app:cardElevation="5dp"
-        app:strokeColor="@color/white"
+        app:cardElevation="0dp"
         app:strokeWidth="0dp">
 
 
@@ -198,7 +196,7 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="15dp"
-                    android:backgroundTint="#1A684E87"
+                    android:backgroundTint="@color/deliveredLite"
                     app:cardCornerRadius="7dp"
                     app:cardElevation="0dp"
                     app:strokeWidth="0dp">
@@ -208,7 +206,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="5dp"
                         android:src="@drawable/ic__delivery"
-                        app:tint="@color/colorlast" />
+                        app:tint="@color/delivered" />
                 </com.google.android.material.card.MaterialCardView>
 
 
