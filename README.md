@@ -4,8 +4,8 @@
 2. Work with Optional instead of null objects ✅
 3. Add mappers from json to dto ✅
 4. Work with Builder design pattern instead of new()
-5. Fix splah screen with a better tmplementation
-6. Fix going out and in to the app with the new splash screen to not tap on login everytime
+5. Fix splah screen with a better tmplementation ✅
+6. Fix going out and in to the app with the new splash screen to not tap on login everytime ✅
 7. Fix favorite items page refresh when deleting item from favorites, add listener like the one in the MMM networking course page 25 ✅
 8. Copy popup cardviews dialog design from moneypitch
 9. Add go back arrow in activities for onbackpressed()

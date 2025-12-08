@@ -92,7 +92,7 @@ public class Animations {
         ObjectAnimator animatorTranslateX = ObjectAnimator.ofFloat(itemView, "translationX", itemView.getX() + 300, 0);
         ObjectAnimator animatorAlpha = ObjectAnimator.ofFloat(itemView, "alpha", 1.f);
         ObjectAnimator.ofFloat(itemView, "alpha", 0.f).start();
-        animatorTranslateX.setStartDelay(3500);
+        animatorTranslateX.setStartDelay(1500);
         animatorTranslateX.setDuration(DURATION6);
         animatorSet.playTogether(animatorTranslateX, animatorAlpha);
         animatorSet.start();

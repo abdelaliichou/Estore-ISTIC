@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import estore.istic.fr.Facade.OnOrderActionListener;
+import estore.istic.fr.Model.Domain.CartItem;
 import estore.istic.fr.Model.Domain.Order;
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Utils;
@@ -56,6 +57,12 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
         holder.totalPrice.setText(String.valueOf(order.getTotalPrice()));
         holder.orderId.setText("Order #".concat(order.getOrderId().substring(0,7)));
         holder.cardParent.setAnimation(AnimationUtils.loadAnimation(context, R.anim.card_pop_up));
+        holder.quantity.setText(String.valueOf(
+                order.getItems()
+                        .stream()
+                        .mapToInt(CartItem::getQuantity)
+                        .sum()
+        ));
 
         listener.onOrderStatus(
                 holder.statusParent,
@@ -123,7 +130,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView totalPrice, date, statusText, orderId, moreCount;
+        TextView totalPrice, date, statusText, orderId, moreCount, quantity;
         RelativeLayout statusParent, frameMore;
         MaterialCardView cardParent ;
         CardView card1, card2, card3, moreCard;
@@ -131,6 +138,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            quantity = itemView.findViewById(R.id.quantity);
             orderId = itemView.findViewById(R.id.orderId);
             cardParent = itemView.findViewById(R.id.card_item);
             totalPrice = itemView.findViewById(R.id.orderPrice);

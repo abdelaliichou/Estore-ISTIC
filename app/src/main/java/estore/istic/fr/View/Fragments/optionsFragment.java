@@ -31,7 +31,7 @@ import estore.istic.fr.View.userProfileActivity;
 public class optionsFragment extends Fragment {
 
     RelativeLayout deliveryProcessButton, ordersHistoryButton, updateButton, contactLayout, logoutButton;
-    TextView name, email;
+    TextView name, number;
 
     AlertDialog dialog;
     private Optional<Context> safeContext;
@@ -75,7 +75,7 @@ public class optionsFragment extends Fragment {
         logoutButton = view.findViewById(R.id.logout);
         contactLayout = view.findViewById(R.id.contact);
         name = view.findViewById(R.id.name);
-        email = view.findViewById(R.id.email);
+        number = view.findViewById(R.id.number);
     }
 
     public void setAnimations(View view) {
@@ -93,7 +93,7 @@ public class optionsFragment extends Fragment {
             @Override
             public void onSuccess(String userName, String userEmail, String phoneNumber) {
                 name.setText(userName);
-                email.setText(userEmail);
+                number.setText(phoneNumber);
             }
 
             @Override

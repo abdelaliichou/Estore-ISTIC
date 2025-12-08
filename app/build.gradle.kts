@@ -58,7 +58,9 @@ dependencies {
     implementation (libs.firebase.firestore.v2422)
     implementation (libs.firebase.storage.v2001)
 
-    // pinview
+    // splash
+    implementation (libs.core.splashscreen)
+
     // implementation(libs.pinview)
     implementation(libs.pinview)
 

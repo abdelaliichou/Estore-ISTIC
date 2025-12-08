@@ -9,70 +9,151 @@
     android:orientation="vertical"
     tools:context=".View.Fragments.optionsFragment">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/parent"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        app:cardBackgroundColor="@color/colorlast"
-        app:cardCornerRadius="10dp"
-        app:strokeWidth="0dp"
-        app:cardElevation="10dp">
+        android:background="@drawable/tasks_background"
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                android:src="@drawable/avatar" />
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/parent"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="20dp"
+                app:cardBackgroundColor="@color/mainblue"
+                app:cardCornerRadius="100dp"
+                app:cardElevation="10dp"
+                app:strokeWidth="0dp">
 
-            <View
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:scaleType="centerCrop"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:src="@drawable/avatar" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#4F1C1C1C" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:maxLines="1"
+                    android:text="Name"
+                    android:textColor="@color/fontmain"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:maxLines="1"
+                    android:text="Phone number"
+                    android:textColor="@color/fontmain"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:background="@color/gray"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="          "
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@color/gray"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="                "
+                        android:textSize="20dp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/email"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/gray"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="Name"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp" />
+                android:text="          "
+                android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/email"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="15dp"
-                android:fontFamily="@font/poppins"
-                android:text="E-mail"
-                android:textColor="@color/gray2"
-                android:textSize="14sp" />
+                android:layout_marginTop="5dp">
 
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="20dp"
+                    android:background="@color/gray"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="          "
+                    android:textSize="20dp" />
 
-    </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".3"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/gray"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="                "
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/second"
         android:layout_marginStart="20dp"
-        android:fontFamily="@font/poppins_bold"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins_semibold"
         android:text="Profile options"
         android:textColor="@color/colorfirst"
         android:textSize="20sp" />
@@ -84,14 +165,14 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
         android:layout_weight="1"
         android:background="@drawable/bottom_sheet"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
-        android:layout_marginBottom="30dp"
-        app:strokeWidth="0dp"
-        app:strokeColor="@color/white">
+        app:strokeColor="@color/white"
+        app:strokeWidth="0dp">
 
 
         <LinearLayout
@@ -102,13 +183,13 @@
             <RelativeLayout
                 android:id="@+id/lastOrder"
                 android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:clickable="true"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:layout_weight="1"
-                android:layout_height="0dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/img1"
@@ -137,7 +218,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@+id/img1"
-                    android:fontFamily="@font/poppins_bold"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="Last Order check"
                     android:textColor="#373737"
                     android:textSize="17dp" />
@@ -156,13 +237,13 @@
             <RelativeLayout
                 android:id="@+id/history"
                 android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:clickable="true"
                 android:focusable="true"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:layout_weight="1"
-                android:layout_height="0dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/img2"
@@ -191,7 +272,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@+id/img2"
-                    android:fontFamily="@font/poppins_bold"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="Orders history"
                     android:textColor="#373737"
                     android:textSize="17dp" />
@@ -210,13 +291,13 @@
             <RelativeLayout
                 android:id="@+id/update"
                 android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:layout_height="0dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/img3"
@@ -245,7 +326,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@+id/img3"
-                    android:fontFamily="@font/poppins_bold"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="Update profile"
                     android:textColor="#373737"
                     android:textSize="17dp" />
@@ -264,13 +345,13 @@
             <RelativeLayout
                 android:id="@+id/contact"
                 android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:layout_height="0dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/img4"
@@ -299,7 +380,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@+id/img4"
-                    android:fontFamily="@font/poppins_bold"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="Contact us"
                     android:textColor="#373737"
                     android:textSize="17dp" />
@@ -318,13 +399,13 @@
             <RelativeLayout
                 android:id="@+id/logout"
                 android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:layout_height="0dp">
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/img5"
@@ -351,7 +432,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@+id/img5"
-                    android:fontFamily="@font/poppins_bold"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="Logout"
                     android:textColor="#373737"
                     android:textSize="17dp" />

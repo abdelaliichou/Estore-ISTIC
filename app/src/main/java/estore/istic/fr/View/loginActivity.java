@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
+import androidx.core.splashscreen.SplashScreen;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
@@ -43,35 +45,46 @@ public class loginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.parent), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        Utils.statusAndActionBarIconsColor(this, R.id.parent);
+        boolean fromSplash = getIntent().getBooleanExtra("FROM_SPLASH", false);
 
-        initialisation();
-        handlingAnimation();
-        RememberMeUser(this);
-        handlingOnClicks(this);
+        if (!fromSplash) {
 
-        // DatabaseSeeder.seed();
+            // Keep the native splash visible to hide the transition
+            splashScreen.setKeepOnScreenCondition(() -> true);
 
-    }
+            Intent intent = new Intent(this, splashActivity.class);
+            startActivity(intent);
 
-    private void handlingAnimation() {
-        Animations.FromUpToDown(mainImage);
-        Animations.FromeLeftToRight(mainTextView);
-        Animations.FromeLeftToRight1(secondTextView);
-        Animations.FromeRightToLeft(LoginButton);
-        Animations.FromeDownToUp(SupportLinearLayout);
-        Animations.FromeRightToLeftEditetext1(emailLayout);
-        Animations.FromeRightToLeftEditetext2(passwordLayout);
-        Animations.FromeDownToUp(orLoginLayout);
+            overridePendingTransition(0, 0);
+            finish();
+
+        } else {
+
+            setContentView(R.layout.activity_login);
+            EdgeToEdge.enable(this);
+            Optional<View> parentView = Optional.ofNullable(findViewById(R.id.parent));
+            parentView.ifPresent(parent -> {
+                ViewCompat.setOnApplyWindowInsetsListener(parent, (v, insets) -> {
+                    Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+                    v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+                    return insets;
+                });
+
+                Utils.statusAndActionBarIconsColor(this, R.id.parent);
+            });
+
+
+            initialisation();
+            handlingAnimation();
+            RememberMeUser(this);
+            handlingOnClicks(this);
+
+            // DatabaseSeeder.seed();
+        }
     }
 
     public void initialisation() {
@@ -86,6 +99,17 @@ public class loginActivity extends AppCompatActivity {
         passwordLayout = findViewById(R.id.password_parent_login);
         orLoginLayout = findViewById(R.id.or_login_with_layout);
         forgotPasswordTextView = findViewById(R.id.forgot_password_text);
+    }
+
+    private void handlingAnimation() {
+        Animations.FromUpToDown(mainImage);
+        Animations.FromeLeftToRight(mainTextView);
+        Animations.FromeLeftToRight1(secondTextView);
+        Animations.FromeRightToLeft(LoginButton);
+        Animations.FromeDownToUp(SupportLinearLayout);
+        Animations.FromeRightToLeftEditetext1(emailLayout);
+        Animations.FromeRightToLeftEditetext2(passwordLayout);
+        Animations.FromeDownToUp(orLoginLayout);
     }
 
     public void handlingOnClicks(Context context) {
@@ -175,7 +199,6 @@ public class loginActivity extends AppCompatActivity {
     }
 
     public void navigateToHome() {
-        showToast("Welcome !");
         startActivity(new Intent(loginActivity.this, MainActivity.class));
         finishAffinity();
     }
