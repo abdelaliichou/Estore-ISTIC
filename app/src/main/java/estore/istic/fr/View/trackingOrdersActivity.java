@@ -102,7 +102,7 @@ public class trackingOrdersActivity extends AppCompatActivity {
         TextView[] texts = { textone, textsecond, textthird, textfour, textfive };
 
         int totalSteps = cards.length;
-        int currentStep = getOrderStatus(status);
+        int currentStep = Utils.getOrderStatus(status);
 
         int activeCardColor = getResources().getColor(R.color.colorlast);
         int inactiveCardColor = getResources().getColor(R.color.white);
@@ -131,37 +131,6 @@ public class trackingOrdersActivity extends AppCompatActivity {
         doneButton.setClickable(false);
         doneimage.setVisibility(View.GONE);
         sendimage.setVisibility(View.VISIBLE);
-    }
-
-    public int getOrderStatus (OrderStatus status) {
-        int currentStep;
-        switch (status) {
-            case PENDING : {
-                currentStep = 0;
-                break;
-            }
-            case CONFIRMED : {
-                currentStep = 1;
-                break;
-            }
-            case ON_PROCESS :{
-                currentStep = 2;
-                break;
-            }
-            case SHIPPED : {
-                currentStep = 3;
-                break;
-            }
-            case DELIVERED : {
-                currentStep = 4;
-                break;
-            }
-            default: {
-                currentStep = -1;
-                break;
-            }
-        };
-        return currentStep;
     }
 
     public void bottomSheetDialog() {

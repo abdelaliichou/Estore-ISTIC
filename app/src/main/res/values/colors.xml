@@ -23,4 +23,16 @@
     <color name="edite_text_hint_color">#B7474747</color>
     <color name="green">#6CFF49</color>
     <color name="deliveryText">#2b2b2b</color>
+    <color name="pending">#BFAD0F</color>
+    <color name="pendingLite">#26FFEB3B</color>
+    <color name="confirmed">#4979d1</color>
+    <color name="confirmedLite">#1A2C8DCD</color>
+    <color name="onProcess">#00BCD4</color>
+    <color name="onProcessLite">#2600BCD4</color>
+    <color name="shipped">#f0730d</color>
+    <color name="shippedLite">#26EEAD71</color>
+    <color name="delivered">@color/colorlast</color>
+    <color name="deliveredLite">#2800C793</color>
+    <color name="canceled">#ff0000</color>
+    <color name="canceledLite">#26FFEAEA</color>
 </resources>

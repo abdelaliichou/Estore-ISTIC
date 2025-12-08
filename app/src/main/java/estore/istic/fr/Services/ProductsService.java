@@ -20,17 +20,17 @@ import estore.istic.fr.Facade.OnGetProductsResultListener;
 import estore.istic.fr.Model.Domain.Product;
 import estore.istic.fr.Model.Dto.ProductDto;
 import estore.istic.fr.Model.Mappers.ProductMapper;
-import estore.istic.fr.Resources.databaseHelper;
+import estore.istic.fr.Resources.DatabaseHelper;
 
 
 public class ProductsService {
 
-    private static final String uid = Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid();
+    private static final String uid = Objects.requireNonNull(DatabaseHelper.getAuth().getCurrentUser()).getUid();
 
     private static ValueEventListener productsListener; // to stop listening when quiting the app
 
     public static void stopListening(String child) {
-        DatabaseReference ref = databaseHelper.getDatabaseReference()
+        DatabaseReference ref = DatabaseHelper.getDatabaseReference()
                 .child(child)
                 .child(uid);
 
@@ -43,8 +43,8 @@ public class ProductsService {
         List<Product> allProducts = new ArrayList<>();
         Set<String> allFavoriteProductsIds = new HashSet<>();
 
-        DatabaseReference productsRef = databaseHelper.getDatabaseReference().child("products");
-        DatabaseReference favoritesRef = databaseHelper.getDatabaseReference().child("favorites").child(uid);
+        DatabaseReference productsRef = DatabaseHelper.getDatabaseReference().child("products");
+        DatabaseReference favoritesRef = DatabaseHelper.getDatabaseReference().child("favorites").child(uid);
 
         // fetch all products
         productsListener = new ValueEventListener() {
@@ -93,7 +93,7 @@ public class ProductsService {
             Product product,
             OnFavoriteProductsModifiedListener listener
     ) {
-        DatabaseReference ref = databaseHelper
+        DatabaseReference ref = DatabaseHelper
                 .getDatabaseReference()
                 .child("favorites")
                 .child(uid);
@@ -127,7 +127,7 @@ public class ProductsService {
             Product product,
             OnFavoriteProductsModifiedListener listener
     ) {
-        DatabaseReference ref = databaseHelper
+        DatabaseReference ref = DatabaseHelper
                 .getDatabaseReference()
                 .child("favorites")
                 .child(uid);
@@ -170,10 +170,10 @@ public class ProductsService {
         List<Product> allProducts = new ArrayList<>();
         Set<String> allFavoriteProductsIds = new HashSet<>();
 
-        DatabaseReference favoritesRef = databaseHelper.getDatabaseReference().child("favorites").child(uid);
+        DatabaseReference favoritesRef = DatabaseHelper.getDatabaseReference().child("favorites").child(uid);
 
         // fetch all products
-        databaseHelper.getDatabaseReference()
+        DatabaseHelper.getDatabaseReference()
                 .child("products")
                 .orderByChild("name")
                 .equalTo(productName)
@@ -231,10 +231,10 @@ public class ProductsService {
         List<Product> allProducts = new ArrayList<>();
         Set<String> allFavoriteProductsIds = new HashSet<>();
 
-        DatabaseReference favoritesRef = databaseHelper.getDatabaseReference().child("favorites").child(uid);
+        DatabaseReference favoritesRef = DatabaseHelper.getDatabaseReference().child("favorites").child(uid);
 
         // fetch all products
-        databaseHelper.getDatabaseReference()
+        DatabaseHelper.getDatabaseReference()
                 .child("products")
                 .orderByChild("categoryId")
                 .equalTo(categoryId)

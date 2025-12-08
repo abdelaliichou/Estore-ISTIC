@@ -28,7 +28,7 @@ import java.util.Optional;
 
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Animations;
-import estore.istic.fr.Resources.databaseHelper;
+import estore.istic.fr.Resources.DatabaseHelper;
 import estore.istic.fr.Resources.Utils;
 
 public class loginActivity extends AppCompatActivity {
@@ -138,7 +138,7 @@ public class loginActivity extends AppCompatActivity {
     }
 
     public void RememberMeUser(Context context) {
-        if (Optional.ofNullable(databaseHelper.getAuth().getCurrentUser()).isPresent()) {
+        if (Optional.ofNullable(DatabaseHelper.getAuth().getCurrentUser()).isPresent()) {
             dialog = Utils.createDialog(
                     context,
                     "Wait a minute please !",
@@ -156,8 +156,8 @@ public class loginActivity extends AppCompatActivity {
     }
 
     public void authenticateUser(String UserEmail, String UserPassword) {
-        databaseHelper.getAuth().signOut();
-        databaseHelper.getAuth().signInWithEmailAndPassword(
+        DatabaseHelper.getAuth().signOut();
+        DatabaseHelper.getAuth().signInWithEmailAndPassword(
                 UserEmail,
                 UserPassword
         ).addOnCompleteListener(new OnCompleteListener<>() {

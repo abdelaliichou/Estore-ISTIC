@@ -25,7 +25,7 @@ import java.util.Optional;
 
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Animations;
-import estore.istic.fr.Resources.databaseHelper;
+import estore.istic.fr.Resources.DatabaseHelper;
 import estore.istic.fr.Resources.Utils;
 
 public class phoneOtpActivity extends AppCompatActivity {
@@ -125,7 +125,7 @@ public class phoneOtpActivity extends AppCompatActivity {
                 serverCode,
                 userCode
         );
-        databaseHelper.getAuth().signInWithCredential(phoneAuthCredential).addOnCompleteListener(task -> {
+        DatabaseHelper.getAuth().signInWithCredential(phoneAuthCredential).addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
                 showToast("Invalid verification code !");
                 return;
@@ -136,7 +136,7 @@ public class phoneOtpActivity extends AppCompatActivity {
     }
 
     public void SendEmailVerification(String email) {
-        databaseHelper.getAuth().sendPasswordResetEmail(email).addOnCompleteListener(task -> {
+        DatabaseHelper.getAuth().sendPasswordResetEmail(email).addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
                         showToast(Objects.requireNonNull(task.getException()).getMessage());
                         return;
@@ -144,7 +144,7 @@ public class phoneOtpActivity extends AppCompatActivity {
 
                     showToast("Your need to insert your new password in the link we've send in your email !");
                     Intent intent = new Intent(phoneOtpActivity.this, resetEmailActivity.class);
-                    databaseHelper.getAuth().signOut();
+                    DatabaseHelper.getAuth().signOut();
                     startActivity(intent);
                     finish();
 

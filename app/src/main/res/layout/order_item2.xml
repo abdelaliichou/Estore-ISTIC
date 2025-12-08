@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/contact_us_image" />
+            android:src="@drawable/avatar" />
 
         <View
             android:layout_width="match_parent"
@@ -42,22 +42,26 @@
             android:layout_marginBottom="10dp"
             android:clickable="true"
             android:focusable="true"
+            android:visibility="gone"
             android:foreground="?android:attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/deliveryText"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="60dp"
             app:cardElevation="10dp"
             app:strokeWidth="0dp">
 
             <RelativeLayout
+                android:id="@+id/arrowParent"
+                android:background="@color/shippedLite"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <ImageView
+                    android:id="@+id/arrowIMG"
                     android:layout_width="23dp"
                     android:layout_height="22dp"
                     android:layout_centerInParent="true"
                     android:src="@drawable/arow2"
-                    app:tint="@color/white" />
+                    app:tint="@color/mainyellow" />
 
             </RelativeLayout>
 
@@ -86,7 +90,7 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:text="$"
                     android:textColor="@color/red"
-                    android:textSize="12sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -97,9 +101,39 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:text="1255.5440"
                     android:textColor="@color/deliveryText"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
             </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/top_date_background"
+            android:layout_alignParentTop="true"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/orderStatusParent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp">
+
+                <TextView
+                    android:id="@+id/orderStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="On Process"
+                    android:textColor="@color/delivered"
+                    android:textSize="11sp" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 
@@ -107,12 +141,11 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/top_date_background"
-            android:backgroundTint="@color/white"
-            android:paddingLeft="7dp"
-            android:paddingRight="7dp"
+            android:background="@drawable/favorite_heart_background"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:paddingTop="3dp"
             android:paddingBottom="3dp">
 
@@ -121,10 +154,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/poppins_semibold"
                 android:text="13 september,2020"
                 android:textColor="@color/deliveryText"
-                android:textSize="9sp" />
+                android:textSize="8.5sp" />
 
         </RelativeLayout>
 

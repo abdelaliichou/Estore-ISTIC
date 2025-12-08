@@ -45,6 +45,7 @@ import java.util.regex.Pattern;
 
 import estore.istic.fr.Model.Domain.Category;
 import estore.istic.fr.Model.Domain.Product;
+import estore.istic.fr.Model.Dto.OrderStatus;
 import estore.istic.fr.Model.Dto.ProductDto;
 import estore.istic.fr.R;
 import estore.istic.fr.View.forgetPasswordActivity;
@@ -218,6 +219,37 @@ public class Utils {
                 message,
                 Toast.LENGTH_SHORT
         ).show();
+    }
+
+    public static int getOrderStatus (OrderStatus status) {
+        int currentStep;
+        switch (status) {
+            case PENDING : {
+                currentStep = 0;
+                break;
+            }
+            case CONFIRMED : {
+                currentStep = 1;
+                break;
+            }
+            case ON_PROCESS :{
+                currentStep = 2;
+                break;
+            }
+            case SHIPPED : {
+                currentStep = 3;
+                break;
+            }
+            case DELIVERED : {
+                currentStep = 4;
+                break;
+            }
+            default: {
+                currentStep = -1;
+                break;
+            }
+        };
+        return currentStep;
     }
 
     public static List<SlideModel> getSlideList() {

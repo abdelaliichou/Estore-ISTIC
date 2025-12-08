@@ -2,8 +2,6 @@ package estore.istic.fr.Services;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -15,14 +13,14 @@ import java.util.Optional;
 
 import estore.istic.fr.Facade.OnUserActionListener;
 import estore.istic.fr.Model.Domain.User;
-import estore.istic.fr.Resources.databaseHelper;
+import estore.istic.fr.Resources.DatabaseHelper;
 
 public class UsersService {
 
     public static void getUserData(OnUserActionListener listener) {
-        databaseHelper.getDatabaseReference()
+        DatabaseHelper.getDatabaseReference()
                 .child("users")
-                .child(Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid())
+                .child(Objects.requireNonNull(DatabaseHelper.getAuth().getCurrentUser()).getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -51,9 +49,9 @@ public class UsersService {
         updatedUser.put("name", userName);
         updatedUser.put("phoneNumber", phoneNumber);
 
-        databaseHelper.getDatabaseReference()
+        DatabaseHelper.getDatabaseReference()
                 .child("users")
-                .child(Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid())
+                .child(Objects.requireNonNull(DatabaseHelper.getAuth().getCurrentUser()).getUid())
                 .updateChildren(updatedUser)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

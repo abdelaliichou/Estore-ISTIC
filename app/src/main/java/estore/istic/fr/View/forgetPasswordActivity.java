@@ -2,7 +2,6 @@ package estore.istic.fr.View;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -31,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 import estore.istic.fr.Model.Domain.User;
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Animations;
-import estore.istic.fr.Resources.databaseHelper;
+import estore.istic.fr.Resources.DatabaseHelper;
 import estore.istic.fr.Resources.Utils;
 
 public class forgetPasswordActivity extends AppCompatActivity {
@@ -97,7 +96,7 @@ public class forgetPasswordActivity extends AppCompatActivity {
     }
 
     private void verifyingPhoneNumber(String number) {
-        databaseHelper.getDatabaseReference()
+        DatabaseHelper.getDatabaseReference()
                 .child("Users")
                 .orderByChild("phoneNumber")
                 .equalTo(number)

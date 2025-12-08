@@ -22,16 +22,16 @@ import estore.istic.fr.Facade.OnOrderSaveListener;
 import estore.istic.fr.Model.Domain.Order;
 import estore.istic.fr.Model.Domain.Product;
 import estore.istic.fr.Model.Domain.CartItem;
-import estore.istic.fr.Resources.databaseHelper;
+import estore.istic.fr.Resources.DatabaseHelper;
 
 
 public class OrdersService {
 
-    private static final String uid = Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid();
+    private static final String uid = Objects.requireNonNull(DatabaseHelper.getAuth().getCurrentUser()).getUid();
     private static ValueEventListener listener; // to stop listening when quiting the app
 
     public static void stopListening() {
-        DatabaseReference ref = databaseHelper.getDatabaseReference()
+        DatabaseReference ref = DatabaseHelper.getDatabaseReference()
                 .child("cart")
                 .child(uid);
         if (listener != null) ref.removeEventListener(listener);
@@ -57,14 +57,14 @@ public class OrdersService {
             }
         };
 
-        databaseHelper.getDatabaseReference()
+        DatabaseHelper.getDatabaseReference()
                 .child("cart")
                 .child(uid)
                 .addValueEventListener(listener);
     }
 
     public static void addProductToCart(Product product, int quantity, OnCartActionListener listener) {
-        DatabaseReference ref = databaseHelper.getDatabaseReference()
+        DatabaseReference ref = DatabaseHelper.getDatabaseReference()
                 .child("cart")
                 .child(uid);
 
@@ -113,7 +113,7 @@ public class OrdersService {
     }
 
     public static void saveOrder(Order order, OnOrderSaveListener listener) {
-        DatabaseReference ref = databaseHelper.getDatabaseReference()
+        DatabaseReference ref = DatabaseHelper.getDatabaseReference()
                 .child("orders")
                 .child(order.getUserId());
 
@@ -137,8 +137,8 @@ public class OrdersService {
     }
 
     public static void getLastOrder(OnGetOrderListener listener) {
-        String uid = Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid();
-        DatabaseReference ref = databaseHelper.getDatabaseReference()
+        String uid = Objects.requireNonNull(DatabaseHelper.getAuth().getCurrentUser()).getUid();
+        DatabaseReference ref = DatabaseHelper.getDatabaseReference()
                 .child("orders")
                 .child(uid);
 
@@ -173,8 +173,8 @@ public class OrdersService {
     }
 
     public static void getOrderById(String orderId, OnGetOrderListener listener) {
-        String uid = Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid();
-        DatabaseReference ref = databaseHelper.getDatabaseReference()
+        String uid = Objects.requireNonNull(DatabaseHelper.getAuth().getCurrentUser()).getUid();
+        DatabaseReference ref = DatabaseHelper.getDatabaseReference()
                 .child("orders")
                 .child(uid);
 
@@ -213,11 +213,11 @@ public class OrdersService {
         listener.onLoading();
         List<Order> allOrders = new ArrayList<>();
 
-        String uid = Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid();
-        databaseHelper.getDatabaseReference()
+        String uid = Objects.requireNonNull(DatabaseHelper.getAuth().getCurrentUser()).getUid();
+        DatabaseHelper.getDatabaseReference()
                 .child("orders")
                 .child(uid)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+                .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -226,6 +226,7 @@ public class OrdersService {
                             return;
                         }
 
+                        allOrders.clear();
                         for (DataSnapshot orderSnap : snapshot.getChildren()) {
                             try {
                                 allOrders.add(0, Objects.requireNonNull(orderSnap.getValue(Order.class)));
@@ -246,9 +247,9 @@ public class OrdersService {
     }
 
     public static void trackOrderDeliveryStatus(String orderID, OnOrderSaveListener listener) {
-        databaseHelper.getDatabaseReference()
+        DatabaseHelper.getDatabaseReference()
                 .child("orders")
-                .child(Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid())
+                .child(Objects.requireNonNull(DatabaseHelper.getAuth().getCurrentUser()).getUid())
                 .orderByChild("orderId")
                 .equalTo(orderID)
                 .addValueEventListener(new ValueEventListener() {
@@ -279,7 +280,7 @@ public class OrdersService {
     }
 
     public static void clearCart(String uid) {
-        databaseHelper.getDatabaseReference()
+        DatabaseHelper.getDatabaseReference()
                 .child("cart")
                 .child(uid)
                 .removeValue();
@@ -287,7 +288,7 @@ public class OrdersService {
 
     public static void deleteCartItem(CartItem cartItem, OnCartActionListener listener) {
 
-        DatabaseReference ref = databaseHelper.getDatabaseReference()
+        DatabaseReference ref = DatabaseHelper.getDatabaseReference()
                 .child("cart")
                 .child(uid);
 

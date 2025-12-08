@@ -31,7 +31,7 @@ import estore.istic.fr.Facade.OnCartRealTimeListener;
 import estore.istic.fr.Facade.OnOrderSaveListener;
 import estore.istic.fr.Model.Domain.Order;
 import estore.istic.fr.Model.Domain.CartItem;
-import estore.istic.fr.Resources.databaseHelper;
+import estore.istic.fr.Resources.DatabaseHelper;
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Utils;
 import estore.istic.fr.Services.OrdersService;
@@ -199,7 +199,7 @@ public class cartFragment extends Fragment implements OnCartAdapterListener {
     }
 
     public void registerOrder(List<CartItem> cartItems) {
-        String uid = Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid();
+        String uid = Objects.requireNonNull(DatabaseHelper.getAuth().getCurrentUser()).getUid();
         Order order = new Order(
                 uid,
                 getTotalPrice(cartItems),

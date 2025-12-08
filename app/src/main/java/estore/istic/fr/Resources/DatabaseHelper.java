@@ -1,17 +1,16 @@
 package estore.istic.fr.Resources;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Optional;
 
-public class databaseHelper {
+public class DatabaseHelper {
     private static DatabaseReference databaseReference;
     private static FirebaseAuth auth;
 
-    private databaseHelper() { }
+    private DatabaseHelper() { }
 
     public static DatabaseReference getDatabaseReference() {
         if (Optional.ofNullable(databaseReference).isEmpty()) {

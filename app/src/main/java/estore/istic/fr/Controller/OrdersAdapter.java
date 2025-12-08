@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,6 +55,12 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
         holder.totalPrice.setText(String.valueOf(order.getTotalPrice()));
         holder.cardParent.setAnimation(AnimationUtils.loadAnimation(context, R.anim.card_pop_up));
 
+        listener.onOrderStatus(
+                holder.statusParent,
+                holder.statusText,
+                order
+        );
+
         holder.cardParent.setOnClickListener(v -> {
             listener.onOrderClicked(order);
         });
@@ -70,7 +77,8 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView totalPrice, date ;
+        TextView totalPrice, date, statusText;
+        RelativeLayout statusParent, arrowParent;
         MaterialCardView MoreInfoButton, cardParent ;
         ImageView orderIMG;
         public ViewHolder(@NonNull View itemView) {
@@ -80,6 +88,9 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
             totalPrice = itemView.findViewById(R.id.orderPrice);
             date = itemView.findViewById(R.id.orderDate);
             MoreInfoButton = itemView.findViewById(R.id.more);
+            statusText = itemView.findViewById(R.id.orderStatus);
+            statusParent = itemView.findViewById(R.id.orderStatusParent);
+            arrowParent = itemView.findViewById(R.id.arrowParent);
         }
     }
 }

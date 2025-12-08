@@ -14,8 +14,8 @@ import estore.istic.fr.Model.Dto.ProductDto;
 
 public class DatabaseSeeder {
     public static void seed() {
-        DatabaseReference catRef = databaseHelper.getDatabaseReference().child("categories");
-        DatabaseReference prodRef = databaseHelper.getDatabaseReference().child("products");
+        DatabaseReference catRef = DatabaseHelper.getDatabaseReference().child("categories");
+        DatabaseReference prodRef = DatabaseHelper.getDatabaseReference().child("products");
 
         ArrayList<Category> categories = categoriesList();
         ArrayList<ProductDto> products = productsList();

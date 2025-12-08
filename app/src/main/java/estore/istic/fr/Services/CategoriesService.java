@@ -11,7 +11,7 @@ import java.util.List;
 
 import estore.istic.fr.Facade.OnCategoriesResultListener;
 import estore.istic.fr.Model.Domain.Category;
-import estore.istic.fr.Resources.databaseHelper;
+import estore.istic.fr.Resources.DatabaseHelper;
 
 
 public class CategoriesService {
@@ -21,7 +21,7 @@ public class CategoriesService {
         listener.onLoading();
         List<Category> list = new ArrayList<>();
 
-        databaseHelper.getDatabaseReference()
+        DatabaseHelper.getDatabaseReference()
                 .child("categories")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

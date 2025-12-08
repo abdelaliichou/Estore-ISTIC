@@ -20,7 +20,7 @@ import java.util.Optional;
 import estore.istic.fr.Facade.OnUserActionListener;
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Animations;
-import estore.istic.fr.Resources.databaseHelper;
+import estore.istic.fr.Resources.DatabaseHelper;
 import estore.istic.fr.Resources.Utils;
 import estore.istic.fr.Services.UsersService;
 import estore.istic.fr.View.contactUsActivity;
@@ -129,7 +129,7 @@ public class optionsFragment extends Fragment {
                         R.drawable.alert_dialog_back,
                         true,
                         () -> {
-                            databaseHelper.getAuth().signOut();
+                            DatabaseHelper.getAuth().signOut();
                             requireActivity().finishAffinity();
                             startActivity(new Intent(view.getContext(), loginActivity.class));
                         },

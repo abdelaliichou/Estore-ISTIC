@@ -23,7 +23,7 @@ import java.util.Objects;
 import estore.istic.fr.Model.Domain.User;
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Animations;
-import estore.istic.fr.Resources.databaseHelper;
+import estore.istic.fr.Resources.DatabaseHelper;
 import estore.istic.fr.Resources.Utils;
 
 public class signupActivity extends AppCompatActivity {
@@ -151,7 +151,7 @@ public class signupActivity extends AppCompatActivity {
             String password,
             String number
     ) {
-        databaseHelper.getAuth().createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+        DatabaseHelper.getAuth().createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
                 showToast(Objects.requireNonNull(task.getException()).getMessage());
                 return;
@@ -159,9 +159,9 @@ public class signupActivity extends AppCompatActivity {
 
             // save the created user into the realtime database
             User user = new User(name, email, number);
-            databaseHelper.getDatabaseReference()
+            DatabaseHelper.getDatabaseReference()
                     .child("users")
-                    .child(Objects.requireNonNull(databaseHelper.getAuth().getCurrentUser()).getUid())
+                    .child(Objects.requireNonNull(DatabaseHelper.getAuth().getCurrentUser()).getUid())
                     .setValue(user)
                     .addOnCompleteListener(task1 -> {
                         if (!task1.isSuccessful()){
