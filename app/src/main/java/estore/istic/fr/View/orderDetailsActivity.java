@@ -2,9 +2,9 @@ package estore.istic.fr.View;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -24,21 +24,20 @@ import java.util.function.Consumer;
 import estore.istic.fr.Controller.CartAdapter;
 import estore.istic.fr.Facade.OnCartAdapterListener;
 import estore.istic.fr.Facade.OnGetOrderListener;
-import estore.istic.fr.Facade.OnUserActionListener;
 import estore.istic.fr.Model.Domain.Order;
 import estore.istic.fr.Model.Domain.CartItem;
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Utils;
 import estore.istic.fr.Services.OrdersService;
-import estore.istic.fr.Services.UsersService;
 
 public class orderDetailsActivity extends AppCompatActivity implements OnCartAdapterListener {
 
-    TextView emailText, dateText, orderTotalPriceText, orderProductsQuantityText, orderIdText;
+    TextView dateText, orderTotalPriceText, orderProductsQuantityText, orderIdText, statusText;
     RecyclerView orderRecycler;
     CartAdapter orderAdapter;
     ProgressBar progressBar;
     MaterialCardView checkProcessButton;
+    RelativeLayout statusParent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,31 +60,17 @@ public class orderDetailsActivity extends AppCompatActivity implements OnCartAda
     public void initialisation() {
         checkProcessButton = findViewById(R.id.process);
         progressBar = findViewById(R.id.progress);
-        emailText = findViewById(R.id.email);
         dateText = findViewById(R.id.date);
         orderTotalPriceText = findViewById(R.id.products_total_price);
         orderProductsQuantityText = findViewById(R.id.total_products);
         orderIdText = findViewById(R.id.id);
         orderRecycler = findViewById(R.id.order_list);
+        statusText = findViewById(R.id.orderStatus);
+        statusParent = findViewById(R.id.orderStatusParent);
     }
 
     public void updateUI() {
-        fetchUserEmail();
         checkOrderType();
-    }
-
-    public void fetchUserEmail() {
-        UsersService.getUserData(new OnUserActionListener() {
-            @Override
-            public void onSuccess(String userName, String userEmail, String phoneNumber) {
-                emailText.setText(userEmail);
-            }
-
-            @Override
-            public void onError(String message) {
-                showToast(message);
-            }
-        });
     }
 
     public void checkOrderType() {
@@ -126,6 +111,8 @@ public class orderDetailsActivity extends AppCompatActivity implements OnCartAda
                                     .sum()
                     ));
 
+                    updateStatus(order);
+
                     // expose orderId because in this case we haven't receive order is by intent
                     orderId.accept(order.getOrderId());
                 });
@@ -162,6 +149,8 @@ public class orderDetailsActivity extends AppCompatActivity implements OnCartAda
                                     .mapToInt(CartItem::getQuantity)
                                     .sum()
                     ));
+
+                    updateStatus(order);
                 });
             }
 
@@ -171,6 +160,15 @@ public class orderDetailsActivity extends AppCompatActivity implements OnCartAda
                 showToast(message);
             }
         });
+    }
+
+    public void updateStatus(Order order) {
+        Utils.handlingOrderStatus(
+                this,
+                statusParent,
+                statusText,
+                order
+        );
     }
 
     public void onClicks(String orderID) {

@@ -2,7 +2,6 @@ package estore.istic.fr.Resources;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.MotionEvent;
@@ -16,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,9 +23,6 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -44,6 +39,7 @@ import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import estore.istic.fr.Model.Domain.Category;
+import estore.istic.fr.Model.Domain.Order;
 import estore.istic.fr.Model.Domain.Product;
 import estore.istic.fr.Model.Dto.OrderStatus;
 import estore.istic.fr.Model.Dto.ProductDto;
@@ -161,13 +157,74 @@ public class Utils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Instant instant = Instant.ofEpochMilli(date);
             ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy • h:mm");
             return zdt.format(formatter);
         }
 
         Date fixedDate = new Date(date);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy • h:mm", Locale.getDefault());
         return sdf.format(fixedDate);
+    }
+
+    public static void handlingOrderStatus(
+            Context context,
+            RelativeLayout parent,
+            TextView status,
+            Order order
+    ) {
+        int pendingCardColor = context.getResources().getColor(R.color.pendingLite);
+        int pendingColor = context.getResources().getColor(R.color.pending);
+        int confirmedCardColor = context.getResources().getColor(R.color.confirmedLite);
+        int confirmedColor = context.getResources().getColor(R.color.confirmed);
+        int onProcessCardColor = context.getResources().getColor(R.color.onProcessLite);
+        int onProcessColor = context.getResources().getColor(R.color.onProcess);
+        int shippedCardColor = context.getResources().getColor(R.color.shippedLite);
+        int shippedColor = context.getResources().getColor(R.color.shipped);
+        int deliveredCardColor = context.getResources().getColor(R.color.deliveredLite);
+        int deliveredColor = context.getResources().getColor(R.color.delivered);
+        int canceledCardColor = context.getResources().getColor(R.color.canceledLite);
+        int canceledColor = context.getResources().getColor(R.color.canceled);
+
+        int deliveryStatus = Utils.getOrderStatus(order.getStatus());
+
+        switch (deliveryStatus) {
+            case 0 : {
+                status.setTextColor(pendingColor);
+                status.setText(OrderStatus.PENDING.name());
+                parent.setBackgroundColor(pendingCardColor);
+                break;
+            }
+            case 1 : {
+                parent.setBackgroundColor(confirmedCardColor);
+                status.setTextColor(confirmedColor);
+                status.setText(OrderStatus.CONFIRMED.name());
+                break;
+            }
+            case 2 : {
+                parent.setBackgroundColor(onProcessCardColor);
+                status.setTextColor(onProcessColor);
+                status.setText(OrderStatus.ON_PROCESS.name());
+                break;
+            }
+            case 3 : {
+                parent.setBackgroundColor(shippedCardColor);
+                status.setTextColor(shippedColor);
+                status.setText(OrderStatus.SHIPPED.name());
+                break;
+            }
+            case 4 : {
+                parent.setBackgroundColor(deliveredCardColor);
+                status.setTextColor(deliveredColor);
+                status.setText(OrderStatus.DELIVERED.name());
+                break;
+            }
+            case -1 : {
+                parent.setBackgroundColor(canceledCardColor);
+                status.setTextColor(canceledColor);
+                status.setText(OrderStatus.CANCELED.name());
+                break;
+            }
+        }
     }
 
     public static void statusAndActionBarIconsColor(

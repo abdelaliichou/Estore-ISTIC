@@ -1,5 +1,6 @@
 package estore.istic.fr.View;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -112,7 +113,7 @@ public class trackingOrdersActivity extends AppCompatActivity {
         int inactiveIconColor = ContextCompat.getColor(this, R.color.edite_text_hint_color);
 
         for (int i = 0; i < totalSteps; i++) {
-            icons[i].setColorFilter(i <= currentStep ? activeIconColor : inactiveIconColor, android.graphics.PorterDuff.Mode.MULTIPLY);
+            icons[i].setImageTintList(ColorStateList.valueOf(i <= currentStep ? activeIconColor : inactiveIconColor));
             cards[i].setCardBackgroundColor(i <= currentStep ? activeCardColor : inactiveCardColor);
             texts[i].setTextColor(i <= currentStep ? activeTextColor : inactiveTextColor);
             if (i < 4) lines[i].setVisibility(i == currentStep ? View.VISIBLE : View.GONE);

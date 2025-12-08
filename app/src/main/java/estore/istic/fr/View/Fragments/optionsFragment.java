@@ -11,9 +11,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.google.android.material.card.MaterialCardView;
 
 import java.util.Optional;
 
@@ -31,7 +30,7 @@ import estore.istic.fr.View.userProfileActivity;
 
 public class optionsFragment extends Fragment {
 
-    MaterialCardView deliveryProcessButton, ordersHistoryButton, updateButton, contactLayout, logoutButton;
+    RelativeLayout deliveryProcessButton, ordersHistoryButton, updateButton, contactLayout, logoutButton;
     TextView name, email;
 
     AlertDialog dialog;
@@ -70,9 +69,9 @@ public class optionsFragment extends Fragment {
     }
 
     public void initialisation(View view) {
-        deliveryProcessButton = view.findViewById(R.id.localisation);
-        ordersHistoryButton = view.findViewById(R.id.emaillayout);
-        updateButton = view.findViewById(R.id.phone);
+        deliveryProcessButton = view.findViewById(R.id.lastOrder);
+        ordersHistoryButton = view.findViewById(R.id.history);
+        updateButton = view.findViewById(R.id.update);
         logoutButton = view.findViewById(R.id.logout);
         contactLayout = view.findViewById(R.id.contact);
         name = view.findViewById(R.id.name);
@@ -82,9 +81,9 @@ public class optionsFragment extends Fragment {
     public void setAnimations(View view) {
         Animations.FromeLeftToRight(view.findViewById(R.id.info));
         Animations.FromeRightToLeftCardd(view.findViewById(R.id.parent));
-        Animations.FromeRightToLeftCard1(view.findViewById(R.id.localisation));
-        Animations.FromeRightToLeftCard2(view.findViewById(R.id.emaillayout));
-        Animations.FromeRightToLeftCard3(view.findViewById(R.id.phone));
+        Animations.FromeRightToLeftCard1(view.findViewById(R.id.lastOrder));
+        Animations.FromeRightToLeftCard2(view.findViewById(R.id.history));
+        Animations.FromeRightToLeftCard3(view.findViewById(R.id.update));
         Animations.FromeRightToLeftCard4(view.findViewById(R.id.contact));
         Animations.FromeRightToLeftCard5(view.findViewById(R.id.logout));
     }

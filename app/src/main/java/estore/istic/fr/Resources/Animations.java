@@ -124,7 +124,7 @@ public class Animations {
         animatorSet.start();
     }
 
-    public static void FromeRightToLeftCard1(MaterialCardView itemView) {
+    public static void FromeRightToLeftCard1(RelativeLayout itemView) {
         itemView.setTranslationX(itemView.getX() +500);
         itemView.setAlpha(0.f);
         AnimatorSet animatorSet = new AnimatorSet();
@@ -137,7 +137,7 @@ public class Animations {
         animatorSet.start();
     }
 
-    public static void FromeRightToLeftCard2(MaterialCardView itemView) {
+    public static void FromeRightToLeftCard2(RelativeLayout itemView) {
         itemView.setTranslationX(itemView.getX() +500);
         itemView.setAlpha(0.f);
         AnimatorSet animatorSet = new AnimatorSet();
@@ -150,7 +150,7 @@ public class Animations {
         animatorSet.start();
     }
 
-    public static void FromeRightToLeftCard3(MaterialCardView itemView) {
+    public static void FromeRightToLeftCard3(RelativeLayout itemView) {
         itemView.setTranslationX(itemView.getX() +500);
         itemView.setAlpha(0.f);
         AnimatorSet animatorSet = new AnimatorSet();
@@ -163,7 +163,7 @@ public class Animations {
         animatorSet.start();
     }
 
-    public static void FromeRightToLeftCard4(MaterialCardView itemView) {
+    public static void FromeRightToLeftCard4(RelativeLayout itemView) {
         itemView.setTranslationX(itemView.getX() +500);
         itemView.setAlpha(0.f);
         AnimatorSet animatorSet = new AnimatorSet();
@@ -176,7 +176,7 @@ public class Animations {
         animatorSet.start();
     }
 
-    public static void FromeRightToLeftCard5(MaterialCardView itemView) {
+    public static void FromeRightToLeftCard5(RelativeLayout itemView) {
         itemView.setTranslationX(itemView.getX() +500);
         itemView.setAlpha(0.f);
         AnimatorSet animatorSet = new AnimatorSet();
