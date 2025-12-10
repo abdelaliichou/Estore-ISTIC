@@ -419,9 +419,8 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="6dp"
-                        android:src="@drawable/ic_logout"
-                        app:tint="#ff0000" />
+                        android:layout_margin="3dp"
+                        android:src="@drawable/ic_logout" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView

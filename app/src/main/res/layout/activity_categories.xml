@@ -6,19 +6,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="20dp"
-    android:paddingBottom="10dp"
+    android:background="@color/white"
     tools:context=".View.categoriesActivity">
 
-    <TextView
-        android:id="@+id/header_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/poppins_bold"
-        android:text="All Categories"
-        android:textColor="#2B2B2B"
-        android:textSize="28dp" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/white"
+        android:elevation="4dp"
+        app:navigationIcon="@drawable/arrow">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Title"
+            android:maxLines="1"
+            android:textColor="@color/colorfirst"
+            android:textSize="22sp"
+            android:fontFamily="@font/poppins_bold" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/AllCategories_recycler"
@@ -27,7 +37,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:clipToPadding="false"
-        android:paddingBottom="30dp"
-        android:layout_marginTop="30dp" />
+        android:paddingBottom="30dp" />
 
 </LinearLayout>

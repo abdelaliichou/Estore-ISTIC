@@ -78,26 +78,21 @@ public class forgetPasswordActivity extends AppCompatActivity {
     }
 
     public void handlingOnClicks() {
-        SubmitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String userNumber = Objects.requireNonNull(phoneLayout.getEditText()).getText().toString().trim();
-
-                if (userNumber.isEmpty()) {
-                    phoneLayout.getEditText().setError("Enter your phone number !");
-                    return;
-                }
-
-                progressBar.setVisibility(View.VISIBLE);
-                verifyingPhoneNumber(userNumber);
+        SubmitButton.setOnClickListener(v -> {
+            String userNumber = Objects.requireNonNull(phoneLayout.getEditText()).getText().toString().trim();
+            if (userNumber.isEmpty()) {
+                phoneLayout.getEditText().setError("Enter your phone number !");
+                return;
             }
+
+            progressBar.setVisibility(View.VISIBLE);
+            verifyingPhoneNumber(userNumber);
         });
     }
 
     private void verifyingPhoneNumber(String number) {
         DatabaseHelper.getDatabaseReference()
-                .child("Users")
+                .child("users")
                 .orderByChild("phoneNumber")
                 .equalTo(number)
                 .addListenerForSingleValueEvent(new ValueEventListener() {

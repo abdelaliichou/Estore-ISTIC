@@ -43,6 +43,7 @@ public class ordersActivity extends AppCompatActivity implements OnOrderActionLi
         });
 
         Utils.statusAndActionBarIconsColor(this, R.id.main);
+        Utils.setup(ordersActivity.this, "Orders", true);
 
         initialisation();
         fetchOrders();

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/tasks_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Title"
+            android:textColor="@color/fontmain"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="left"
+            android:lineSpacingExtra="4dp"
+            android:text="Description"
+            android:textColor="@color/fontmain"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/buttons_background"
+            android:backgroundTint="@color/gray"
+            android:fontFamily="@font/poppins_semibold"
+            android:minWidth="0dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:minHeight="0dp"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/settingsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="@drawable/buttons_background"
+            android:backgroundTint="@color/fontmain"
+            android:fontFamily="@font/poppins_semibold"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="Accept"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
+    </LinearLayout>
+</LinearLayout>

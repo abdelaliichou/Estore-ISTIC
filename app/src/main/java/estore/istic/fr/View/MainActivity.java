@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     final int FAV_ID = R.id.Fav;
     final int OPTIONS_ID = R.id.Options;
     final int CART_ID = R.id.Cart;
+    private long pressedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         initialFragment();
         initialisation();
         onClicks();
+        doublePressedToQuite();
 
     }
 
@@ -69,6 +72,22 @@ public class MainActivity extends AppCompatActivity {
         cartFragment = new cartFragment();
         favoritesFragment = new favoritesFragment();
         optionsFragment = new optionsFragment();
+    }
+
+    public void doublePressedToQuite() {
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (pressedTime + 2000 > System.currentTimeMillis()) {
+                    finishAffinity();
+                    System.exit(0);
+                    return;
+                }
+
+                Utils.showToast(MainActivity.this,  "Press back again to exit");
+                pressedTime = System.currentTimeMillis();
+            }
+        });
     }
 
     public void onClicks() {

@@ -49,6 +49,7 @@ public class productDetailsActivity extends AppCompatActivity {
         });
 
         Utils.statusAndActionBarIconsColor(this, R.id.main);
+        Utils.setup(productDetailsActivity.this, "Details", true);
 
         initialisation();
         chargeProductData();

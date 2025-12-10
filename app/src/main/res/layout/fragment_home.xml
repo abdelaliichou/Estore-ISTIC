@@ -29,20 +29,6 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:src="@drawable/nutri" />
 
-            <TextView
-                android:id="@+id/second_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-6dp"
-                android:layout_marginBottom="15dp"
-                android:fontFamily="@font/poppins_medium"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:text="Let's buy something ?"
-                android:textColor="#888888"
-                android:textSize="14dp"
-                android:visibility="gone" />
-
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
@@ -70,10 +56,10 @@
                     android:id="@+id/header_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="You can find all your\nfitness supplements\nand more!"
+                    android:text="You can find\nwhat you want !"
                     android:textColor="@color/white"
                     android:textSize="17dp"
                     android:textStyle="bold" />
@@ -223,10 +209,11 @@
                         android:background="#85CACACA" />
 
                     <TextView
+                        android:id="@+id/SliderSecondHeader"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_above="@id/SliderSecondHeader"
-                        android:layout_marginLeft="14dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="15dp"
                         android:fontFamily="@font/poppins_bold"
                         android:text="Find All your\nfitness supplements"
                         android:textColor="#1a2744"
@@ -234,13 +221,12 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/SliderSecondHeader"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
                         android:layout_marginLeft="14dp"
+                        android:layout_below="@id/SliderSecondHeader"
                         android:layout_marginBottom="14dp"
-                        android:fontFamily="@font/poppins"
+                        android:fontFamily="@font/poppins_medium"
                         android:text="Find all your favorite products\neasily"
                         android:textColor="#E61A2744"
                         android:textSize="12dp" />

@@ -51,6 +51,7 @@ public class orderDetailsActivity extends AppCompatActivity implements OnCartAda
         });
 
         Utils.statusAndActionBarIconsColor(this, R.id.main);
+        Utils.setup(orderDetailsActivity.this, "Order Details", true);
 
         initialisation();
         updateUI();

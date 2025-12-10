@@ -11,48 +11,40 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="20dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/otp_image"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_verification_code" />
 
-            <ImageView
-                android:id="@+id/otp_image"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_verification_code" />
+        <TextView
+            android:id="@+id/otp_main_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="OTP \nVerification ! "
+            android:textColor="#0F1647"
+            android:textSize="28sp" />
 
-            <TextView
-                android:id="@+id/otp_main_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="OTP \nVerification ! "
-                android:textColor="#0F1647"
-                android:textSize="28sp" />
-
-            <TextView
-                android:id="@+id/otp_second_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/poppins"
-                android:text="Check your SMS messages ,We've sent you\nthe PIN in (+33) "
-                android:textColor="#9DA4AA"
-                android:textSize="13sp" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/otp_second_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Check your SMS messages ,We've sent you\nthe PIN in (+33) "
+            android:textColor="#9DA4AA"
+            android:textSize="13sp" />
 
 
         <com.chaos.view.PinView
@@ -80,18 +72,14 @@
             app:lineWidth="1dp"
             app:viewType="rectangle" />
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="0.13" />
-
         <RelativeLayout
             android:id="@+id/otp_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="35dp"
             android:background="@drawable/done_creating_task_button_back"
-            android:backgroundTint="@color/colorlast"
+            android:backgroundTint="@color/fontmain"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
@@ -106,11 +94,11 @@
                 android:textSize="18dp" />
         </RelativeLayout>
 
-
         <Space
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="0.18" />
+            android:layout_weight=".2"/>
+
     </LinearLayout>
 
     <ProgressBar

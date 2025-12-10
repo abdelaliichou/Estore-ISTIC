@@ -43,6 +43,7 @@ public class trackingOrdersActivity extends AppCompatActivity {
         });
 
         Utils.statusAndActionBarIconsColor(this, R.id.main);
+        Utils.setup(trackingOrdersActivity.this, "Delivery Details", true);
 
         initialisation();
         fetchOrderState();

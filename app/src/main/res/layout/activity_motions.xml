@@ -29,7 +29,7 @@
         android:layout_below="@+id/lottie"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="15dp"
-        android:background="@color/colorlast"
+        android:background="@color/fontmain"
         android:fontFamily="@font/poppins_semibold"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"

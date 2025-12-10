@@ -1,7 +1,6 @@
 package estore.istic.fr.View;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.RelativeLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -14,7 +13,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 
 import estore.istic.fr.Facade.OnUserActionListener;
 import estore.istic.fr.R;
@@ -40,6 +38,7 @@ public class userProfileActivity extends AppCompatActivity {
         });
 
         Utils.statusAndActionBarIconsColor(this, R.id.main);
+        Utils.setup(userProfileActivity.this, "Profile", true);
 
         initialisation();
         loadUser();
@@ -83,18 +82,11 @@ public class userProfileActivity extends AppCompatActivity {
             return;
         }
 
-        dialog = Utils.createDialog(
+        dialog = Utils.createLoadingDialog(
                 this,
                 "Updating profile !",
-                "We are updating your profile, please wait a minute !",
-                true,
-                R.drawable.update_profile_image,
-                R.drawable.alert_dialog_back,
-                false,
-                null,
-                null
+                "We are updating your profile, please wait a minute !"
         );
-        dialog.show();
         UpdateUser(
                 nameLayout.getEditText().getText().toString().trim(),
                 phoneLayout.getEditText().getText().toString().trim()

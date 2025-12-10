@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +17,6 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import estore.istic.fr.Controller.ProductsAdapter;
 import estore.istic.fr.Facade.OnFavoriteProductsModifiedListener;
@@ -33,7 +31,6 @@ import estore.istic.fr.Services.ProductsService;
 
 public class productsByCategoryActivity extends AppCompatActivity implements OnProductActionListener{
 
-    TextView headerText;
     RecyclerView productsRecyclerView;
     ProductsAdapter productsAdapter;
     ShimmerFrameLayout shimmerFrameLayout;
@@ -51,6 +48,7 @@ public class productsByCategoryActivity extends AppCompatActivity implements OnP
         });
 
         Utils.statusAndActionBarIconsColor(this, R.id.main);
+        Utils.setup(productsByCategoryActivity.this, loadCategory().getName(), true);
 
         initialisation();
         settingProductsRecyclers(this, Collections.emptyList());
@@ -60,9 +58,7 @@ public class productsByCategoryActivity extends AppCompatActivity implements OnP
 
     public void initialisation() {
         productsRecyclerView = findViewById(R.id.category_items_recycler);
-        headerText = findViewById(R.id.category_name);
         shimmerFrameLayout = findViewById(R.id.shimmer);
-        headerText.setText(loadCategory().getName());
     }
 
     public Category loadCategory() {

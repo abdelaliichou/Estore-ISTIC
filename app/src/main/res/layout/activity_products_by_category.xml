@@ -1,83 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="20dp"
-    android:paddingBottom="10dp"
+    android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".View.productsByCategoryActivity">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/white"
+        android:elevation="4dp"
+        app:navigationIcon="@drawable/arrow">
         <TextView
-            android:id="@+id/category_name"
+            android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/poppins_bold"
-            android:gravity="center_horizontal"
+            android:text="Title"
+            android:textColor="@color/colorfirst"
             android:maxLines="1"
-            android:text="Category"
-            android:textColor="#2B2B2B"
-            android:textSize="28dp" />
+            android:textSize="22sp"
+            android:fontFamily="@font/poppins_bold" />
+    </androidx.appcompat.widget.Toolbar>
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="10dp">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/shimmer"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ScrollView
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <LinearLayout
+                    <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clipToPadding="false"
-                        android:paddingBottom="20dp"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent">
 
-                        <include layout="@layout/shimmer_search_loading_item" />
-                        <include layout="@layout/shimmer_search_loading_item" />
-                        <include layout="@layout/shimmer_search_loading_item" />
-                        <include layout="@layout/shimmer_search_loading_item" />
-                        <include layout="@layout/shimmer_search_loading_item" />
-                        <include layout="@layout/shimmer_search_loading_item" />
-                        <include layout="@layout/shimmer_search_loading_item" />
-                        <include layout="@layout/shimmer_search_loading_item" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clipToPadding="false"
+                            android:orientation="vertical"
+                            android:paddingBottom="20dp">
 
-                    </LinearLayout>
-                </ScrollView>
-            </com.facebook.shimmer.ShimmerFrameLayout>
+                            <include layout="@layout/shimmer_search_loading_item" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/category_items_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
-                android:clipToPadding="false"
-                android:paddingBottom="30dp" />
+                            <include layout="@layout/shimmer_search_loading_item" />
 
-        </RelativeLayout>
+                            <include layout="@layout/shimmer_search_loading_item" />
 
-    </LinearLayout>
+                            <include layout="@layout/shimmer_search_loading_item" />
 
-    <ProgressBar
-        android:id="@+id/spisific_items_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
+                            <include layout="@layout/shimmer_search_loading_item" />
 
-</RelativeLayout>
+                            <include layout="@layout/shimmer_search_loading_item" />
+
+                            <include layout="@layout/shimmer_search_loading_item" />
+
+                            <include layout="@layout/shimmer_search_loading_item" />
+
+                        </LinearLayout>
+                    </ScrollView>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/category_items_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:clipToPadding="false"
+                    android:paddingBottom="30dp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/spisific_items_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+</LinearLayout>

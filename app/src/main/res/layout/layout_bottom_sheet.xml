@@ -52,7 +52,7 @@
         android:background="@drawable/done_creating_task_button_back"
         android:clickable="true"
         android:focusable="true"
-        android:backgroundTint="@color/colorlast"
+        android:backgroundTint="@color/fontmain"
         android:foreground="?android:attr/selectableItemBackground">
 
         <ImageView
@@ -73,7 +73,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
-            android:fontFamily="@font/poppins_medium"
+            android:fontFamily="@font/poppins_semibold"
             android:text="Check process "
             android:textColor="@color/white"
             android:textSize="18dp" />

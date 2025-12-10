@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorgray"
     android:orientation="vertical"
-    android:paddingTop="15dp"
     tools:context=".View.Fragments.cartFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp">
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:maxLines="1"
+            android:text="Cart"
+            android:textColor="@color/colorfirst"
+            android:textSize="22sp"
+            android:fontFamily="@font/poppins_bold" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/empty"
@@ -17,22 +38,11 @@
         android:src="@drawable/empty"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/header_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="@font/poppins_bold"
-        android:text="My Cart"
-        android:textColor="#2B2B2B"
-        android:textSize="28dp" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Card_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/gradient"
-        android:layout_below="@+id/header_text"
         android:clipToPadding="false"
         android:paddingBottom="20dp"/>
 
@@ -161,4 +171,6 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

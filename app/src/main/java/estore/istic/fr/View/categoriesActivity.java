@@ -3,7 +3,6 @@ package estore.istic.fr.View;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +12,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Collections;
 import java.util.List;
 
 import estore.istic.fr.Controller.CategoriesAdapter;
@@ -41,6 +39,7 @@ public class categoriesActivity extends AppCompatActivity implements OnCategoryA
         });
 
         Utils.statusAndActionBarIconsColor(this, R.id.main);
+        Utils.setup(categoriesActivity.this, "Categories", true);
 
         initialisation();
         fetchCategories(this);

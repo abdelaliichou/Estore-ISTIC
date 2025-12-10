@@ -51,7 +51,7 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
 
     ImageView bigImage;
     ImageSlider imageSlider;
-    TextView HeaderText, popularItemsText, secondHeaderText, categoriesText, SuggestedItemsText, viewAllText1, viewAllText2, viewAllText3;
+    TextView HeaderText, popularItemsText, categoriesText, SuggestedItemsText, viewAllText1, viewAllText2, viewAllText3;
     MaterialCardView parent_slide_card;
     RecyclerView categoriesRecycler, populaireProductsRecycler, allProductsRecycler;
     CategoriesAdapter categoriesAdapter;
@@ -117,7 +117,6 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
         Animations.FromRightToLeft1(viewAllText1);
         Animations.FromRightToLeft1(viewAllText2);
         Animations.FromRightToLeft1(viewAllText3);
-        Animations.FromeLeftToRight1(secondHeaderText);
     }
 
     public void initialisation(View view) {
@@ -127,7 +126,6 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
         categoriesProgressBar = view.findViewById(R.id.categories_progress);
         HeaderText = view.findViewById(R.id.header_text);
         popularItemsText = view.findViewById(R.id.popular_items_text);
-        secondHeaderText = view.findViewById(R.id.second_header);
         categoriesText = view.findViewById(R.id.category_text);
         SuggestedItemsText = view.findViewById(R.id.suggested_items_text);
         viewAllText1 = view.findViewById(R.id.first_view_all_text);

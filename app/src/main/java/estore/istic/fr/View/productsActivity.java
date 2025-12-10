@@ -1,18 +1,13 @@
 package estore.istic.fr.View;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,6 +51,7 @@ public class productsActivity extends AppCompatActivity implements OnProductActi
         });
 
         Utils.statusAndActionBarIconsColor(this, R.id.main);
+        Utils.setup(productsActivity.this, "Products", true);
 
         initialisation();
         settingProductsRecyclers(this, Collections.emptyList());

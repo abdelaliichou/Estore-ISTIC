@@ -119,23 +119,18 @@ public class optionsFragment extends Fragment {
         contactLayout.setOnClickListener(view -> startActivity(new Intent(getActivity(), contactUsActivity.class)));
         logoutButton.setOnClickListener(view -> {
             safeContext.ifPresent(context -> {
-                dialog = Utils.createDialog(
-                        safeContext.get(),
-                        "Déconnecter ?",
-                        "Vous êtes sûr que vous voulez déconnecter ?",
-                        true,
-                        R.drawable.ic_logout,
-                        R.drawable.alert_dialog_back,
+                Utils.createActionDialog(
+                        getActivity(),
+                        "Loging out?",
+                        "Are you sur you want to logout from this session ?",
                         true,
                         () -> {
                             DatabaseHelper.getAuth().signOut();
                             requireActivity().finishAffinity();
                             startActivity(new Intent(view.getContext(), loginActivity.class));
                         },
-                        () -> {
-                        }
+                        () -> {}
                 );
-                dialog.show();
             });
         });
     }

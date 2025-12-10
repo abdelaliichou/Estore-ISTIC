@@ -36,6 +36,7 @@ public class contactUsActivity extends AppCompatActivity {
         });
 
         Utils.statusAndActionBarIconsColor(this, R.id.main);
+        Utils.setup(contactUsActivity.this, "Contacts", true);
 
         initialisation();
         onClicks();

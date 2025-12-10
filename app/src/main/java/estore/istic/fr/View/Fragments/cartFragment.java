@@ -167,34 +167,22 @@ public class cartFragment extends Fragment implements OnCartAdapterListener {
     }
 
     public void confirmationDialog() {
-        dialog = Utils.createDialog(
+        Utils.createActionDialog(
                 getActivity(),
-                "Confirmation dialog !",
+                "Order confirmation !",
                 "You want to send this order to the store ?",
                 true,
-                R.drawable.update_profile_image,
-                R.drawable.alert_dialog_back,
-                true,
                 this::sendOrder,
-                () -> {
-                }
+                () -> {}
         );
-        dialog.show();
     }
 
     public void sendOrder() {
-        dialog = Utils.createDialog(
+        dialog = Utils.createLoadingDialog(
                 getActivity(),
                 "Wait a minute please !",
-                "Your order is being send to the store !",
-                false,
-                R.drawable.ic__cloud_upload,
-                R.drawable.alert_dialog_back,
-                false,
-                null,
-                null
+                "Your order is being send to the store !"
         );
-        dialog.show();
         registerOrder(adapter.getCartItems());
     }
 
@@ -245,19 +233,14 @@ public class cartFragment extends Fragment implements OnCartAdapterListener {
 
     @Override
     public void onProductLongClicked(CartItem item) {
-        dialog = Utils.createDialog(
+        Utils.createActionDialog(
                 getActivity(),
-                "Confirmation text !",
+                "Delete item !",
                 "Do you want to delete this product from your card ?",
                 true,
-                R.drawable.delete,
-                R.drawable.alert_dialog_back,
-                true,
                 () -> removeItemFromCart(item),
-                () -> {
-                }
+                () -> {}
         );
-        dialog.show();
     }
 
     public void removeItemFromCart(CartItem item) {

@@ -38,7 +38,7 @@ public class loginActivity extends AppCompatActivity {
     RelativeLayout LoginButton;
     TextView signupTestView, mainTextView, forgotPasswordTextView, secondTextView;
     ImageView mainImage;
-    LinearLayout SupportLinearLayout, orLoginLayout;
+    LinearLayout SupportLinearLayout;
     TextInputLayout emailLayout, passwordLayout;
     AlertDialog dialog;
     ProgressBar progressBar;
@@ -80,8 +80,8 @@ public class loginActivity extends AppCompatActivity {
 
             initialisation();
             handlingAnimation();
-            RememberMeUser(this);
-            handlingOnClicks(this);
+            RememberMeUser();
+            handlingOnClicks();
 
             // DatabaseSeeder.seed();
         }
@@ -97,7 +97,6 @@ public class loginActivity extends AppCompatActivity {
         SupportLinearLayout = findViewById(R.id.support_linear_layout);
         emailLayout = findViewById(R.id.email_parent_login);
         passwordLayout = findViewById(R.id.password_parent_login);
-        orLoginLayout = findViewById(R.id.or_login_with_layout);
         forgotPasswordTextView = findViewById(R.id.forgot_password_text);
     }
 
@@ -109,10 +108,9 @@ public class loginActivity extends AppCompatActivity {
         Animations.FromeDownToUp(SupportLinearLayout);
         Animations.FromeRightToLeftEditetext1(emailLayout);
         Animations.FromeRightToLeftEditetext2(passwordLayout);
-        Animations.FromeDownToUp(orLoginLayout);
     }
 
-    public void handlingOnClicks(Context context) {
+    public void handlingOnClicks() {
         LoginButton.setOnClickListener(v -> {
             String userEmail = Objects.requireNonNull(emailLayout.getEditText()).getText().toString().trim();
             String userPassword = Objects.requireNonNull(passwordLayout.getEditText()).getText().toString().trim();
@@ -134,19 +132,11 @@ public class loginActivity extends AppCompatActivity {
                 return;
             }
 
-            dialog = Utils.createDialog(
-                    context,
+            dialog = Utils.createLoadingDialog(
+                    this,
                     "Wait a minute please !",
-                    "Searching for this user...",
-                    false,
-                    R.drawable.ic__cloud_upload,
-                    R.drawable.alert_dialog_back,
-                    false,
-                    null,
-                    null
+                    "Searching for this user..."
             );
-
-            dialog.show();
             authenticateUser(userEmail, userPassword);
         });
 
@@ -161,20 +151,13 @@ public class loginActivity extends AppCompatActivity {
         )));
     }
 
-    public void RememberMeUser(Context context) {
+    public void RememberMeUser() {
         if (Optional.ofNullable(DatabaseHelper.getAuth().getCurrentUser()).isPresent()) {
-            dialog = Utils.createDialog(
-                    context,
+            dialog = Utils.createLoadingDialog(
+                    this,
                     "Wait a minute please !",
-                    "Hello again, we're redirecting you to Home !",
-                    false,
-                    R.drawable.ic__cloud_upload,
-                    R.drawable.alert_dialog_back,
-                    false,
-                    null,
-                    null
+                    "Hello again, we're redirecting you to Home !"
             );
-            dialog.show();
             navigateToHome();
         }
     }

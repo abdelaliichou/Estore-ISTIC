@@ -1,12 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/white"
     tools:context=".View.orderDetailsActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/white"
+        android:elevation="5dp"
+        android:layout_marginBottom="10dp"
+        app:navigationIcon="@drawable/arrow">
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Title"
+            android:maxLines="1"
+            android:textColor="@color/colorfirst"
+            android:textSize="22sp"
+            android:fontFamily="@font/poppins_bold" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,17 +40,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/header_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/poppins_bold"
-            android:text="Order details"
-            android:textColor="@color/black"
-            android:textSize="28dp" />
 
         <ir.beigirad.zigzagview.ZigzagView
             android:layout_width="match_parent"
@@ -451,7 +465,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
         android:background="@drawable/done_creating_task_button_back"
-        android:backgroundTint="@color/colorlast"
+        android:backgroundTint="@color/fontmain"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
@@ -505,5 +519,7 @@
         </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
 
-</RelativeLayout>
+
+</LinearLayout>

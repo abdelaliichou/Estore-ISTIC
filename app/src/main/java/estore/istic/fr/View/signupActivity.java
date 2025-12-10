@@ -28,10 +28,8 @@ import estore.istic.fr.Resources.Utils;
 
 public class signupActivity extends AppCompatActivity {
 
-    ImageView mainImage;
     TextView loginText, secondText, mainText;
     RelativeLayout loginButton;
-    LinearLayout supportLinearLayout;
     TextInputLayout fullNameTextLayout, phoneNumberTextLayout, emailTextLayout, confirmPasswordTextLayout, passwordTextLayout;
     AlertDialog dialog ;
 
@@ -49,15 +47,13 @@ public class signupActivity extends AppCompatActivity {
         Utils.statusAndActionBarIconsColor(this, R.id.parent);
 
         initialisation();
-        handlingOnClicks(this);
+        handlingOnClicks();
         handlingAnimation();
 
     }
 
     private void handlingAnimation() {
-        Animations.FromUpToDownSignup(mainImage);
         Animations.FromeRightToLeft(loginButton);
-        Animations.FromeDownToUp(supportLinearLayout);
         Animations.FromeRightToLeftEditetext4(confirmPasswordTextLayout);
         Animations.FromeRightToLeftEditetext1(emailTextLayout);
         Animations.FromeRightToLeftEditetext(fullNameTextLayout);
@@ -72,8 +68,6 @@ public class signupActivity extends AppCompatActivity {
         loginText = findViewById(R.id.go_to_login);
         secondText = findViewById(R.id.signup_second_text);
         mainText = findViewById(R.id.signup_main_text);
-        mainImage = findViewById(R.id.main_img);
-        supportLinearLayout = findViewById(R.id.support_layout);
         fullNameTextLayout = findViewById(R.id.full_name_parent);
         phoneNumberTextLayout = findViewById(R.id.phone_parent);
         emailTextLayout = findViewById(R.id.email_parent);
@@ -81,7 +75,7 @@ public class signupActivity extends AppCompatActivity {
         passwordTextLayout = findViewById(R.id.password_parent);
     }
 
-    public void handlingOnClicks(Context context) {
+    public void handlingOnClicks() {
         loginButton.setOnClickListener(v -> {
 
             String userName = Objects.requireNonNull(fullNameTextLayout.getEditText()).getText().toString().trim();
@@ -123,19 +117,11 @@ public class signupActivity extends AppCompatActivity {
                 return;
             }
 
-            dialog = Utils.createDialog(
-                    context,
+            dialog = Utils.createLoadingDialog(
+                    this,
                     "Wait a minute please !",
-                    "We are registering you , you'll be ready in just a moment ...",
-                    false,
-                    R.drawable.ic__cloud_upload,
-                    R.drawable.alert_dialog_back,
-                    false,
-                    null,
-                    null
+                    "We are registering you , you'll be ready in just a moment ..."
             );
-
-            dialog.show();
             createUser(userName, userEmail, userPassword, userNumber);
         });
 
