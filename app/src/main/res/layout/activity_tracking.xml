@@ -440,6 +440,7 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
                 app:strokeWidth="0dp"
+                app:cardBackgroundColor="@color/white"
                 android:layout_marginLeft="15dp"
                 app:cardCornerRadius="7dp"
                 app:cardElevation="10dp">

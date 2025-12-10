@@ -1,8 +1,11 @@
 package estore.istic.fr.View;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,6 +30,7 @@ import estore.istic.fr.Facade.OnGetOrderListener;
 import estore.istic.fr.Model.Domain.Order;
 import estore.istic.fr.Model.Domain.CartItem;
 import estore.istic.fr.R;
+import estore.istic.fr.Resources.PdfUtils;
 import estore.istic.fr.Resources.Utils;
 import estore.istic.fr.Services.OrdersService;
 
@@ -58,6 +62,21 @@ public class orderDetailsActivity extends AppCompatActivity implements OnCartAda
 
     }
 
+    public void generatePdf(Context context, String orderID) {
+        LinearLayout receiptContent = findViewById(R.id.receipt_container);
+        Optional<ImageView> shareButton = Optional.ofNullable(findViewById(R.id.share));
+        shareButton.ifPresent(imageView -> imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PdfUtils.generateAndSharePdf(
+                        context,
+                        receiptContent,
+                        orderID
+                );
+            }
+        }));
+    }
+
     public void initialisation() {
         checkProcessButton = findViewById(R.id.process);
         progressBar = findViewById(R.id.progress);
@@ -78,7 +97,10 @@ public class orderDetailsActivity extends AppCompatActivity implements OnCartAda
         boolean isLastOrder = getIntent().getBooleanExtra("isLast", true);
         if (isLastOrder) {
             // pass the order id received from the exposed value
-            fetchLastOrder(this::onClicks);
+            fetchLastOrder(orderId -> {
+                        onClicks(orderId);
+                        generatePdf(this, orderId);
+            });
             return;
         }
 
@@ -86,6 +108,7 @@ public class orderDetailsActivity extends AppCompatActivity implements OnCartAda
         String orderId = getIntent().getStringExtra("id");
         fetchOrder(orderId);
         onClicks(orderId);
+        generatePdf(this, orderId);
     }
 
     public void fetchLastOrder(Consumer<String> orderId) {

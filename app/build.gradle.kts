@@ -92,7 +92,4 @@ dependencies {
     // lottie
     implementation(libs.lottie)
 
-    // ticket view
-    implementation(libs.zigzagview)
-
 }
