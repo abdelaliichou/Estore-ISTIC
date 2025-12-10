@@ -17,6 +17,7 @@ firebaseDatabase = "22.0.1"
 firebaseDatabaseVersion = "20.0.5"
 firebaseFirestore = "26.0.2"
 firebaseFirestoreVersion = "24.2.2"
+firebaseMessaging = "25.0.1"
 firebaseStorage = "20.0.1"
 firebaseUiAuth = "8.0.1"
 googleServices = "4.4.4"
@@ -61,6 +62,7 @@ firebase-database = { module = "com.google.firebase:firebase-database", version.
 firebase-database-v2005 = { module = "com.google.firebase:firebase-database", version.ref = "firebaseDatabaseVersion" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
 firebase-firestore-v2422 = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestoreVersion" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebaseMessaging" }
 firebase-storage = { module = "com.google.firebase:firebase-storage", version.ref = "firebaseDatabase" }
 firebase-storage-v2001 = { module = "com.google.firebase:firebase-storage", version.ref = "firebaseStorage" }
 firebase-ui-auth = { module = "com.firebaseui:firebase-ui-auth", version.ref = "firebaseUiAuth" }

@@ -61,6 +61,9 @@ dependencies {
     // splash
     implementation (libs.core.splashscreen)
 
+    // notifications
+    implementation(libs.firebase.messaging)
+
     // implementation(libs.pinview)
     implementation(libs.pinview)
 

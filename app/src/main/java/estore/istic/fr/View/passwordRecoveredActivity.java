@@ -45,7 +45,7 @@ public class passwordRecoveredActivity extends AppCompatActivity {
         Snackbar.make(findViewById(R.id.main), "Password updated successfully !", Snackbar.LENGTH_SHORT)
                 .setText("Your password has been updated successfully !")
                 .setTextColor(getResources().getColor(R.color.white))
-                .setBackgroundTint(getResources().getColor(R.color.colorlast))
+                .setBackgroundTint(getResources().getColor(R.color.fontmain))
                 .setAction("Got it !", view -> {})
                 .setActionTextColor(getResources().getColor(R.color.mainyellow))
                 .show();

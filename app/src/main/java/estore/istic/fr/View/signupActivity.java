@@ -20,11 +20,13 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
+import estore.istic.fr.Facade.OnUserActionListener;
 import estore.istic.fr.Model.Domain.User;
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Animations;
 import estore.istic.fr.Resources.DatabaseHelper;
 import estore.istic.fr.Resources.Utils;
+import estore.istic.fr.Services.UsersService;
 
 public class signupActivity extends AppCompatActivity {
 
@@ -137,28 +139,24 @@ public class signupActivity extends AppCompatActivity {
             String password,
             String number
     ) {
-        DatabaseHelper.getAuth().createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (!task.isSuccessful()) {
-                showToast(Objects.requireNonNull(task.getException()).getMessage());
-                return;
-            }
-
-            // save the created user into the realtime database
-            User user = new User(name, email, number);
-            DatabaseHelper.getDatabaseReference()
-                    .child("users")
-                    .child(Objects.requireNonNull(DatabaseHelper.getAuth().getCurrentUser()).getUid())
-                    .setValue(user)
-                    .addOnCompleteListener(task1 -> {
-                        if (!task1.isSuccessful()){
-                            showToast(Objects.requireNonNull(task1.getException()).getMessage());
-                            return;
-                        }
-
+        UsersService.createUser(
+                name,
+                email,
+                password,
+                number,
+                new OnUserActionListener() {
+                    @Override
+                    public void onSuccess(String userName, String userEmail, String phoneNumber) {
                         showToast("Successfully Signed in !");
                         startActivity(new Intent(signupActivity.this, MainActivity.class));
-                    });
-        });
+                    }
+
+                    @Override
+                    public void onError(String message) {
+                        showToast(message);
+                    }
+                }
+        );
     }
 
     private void showToast(String message) {

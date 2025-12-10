@@ -1,7 +1,5 @@
 package estore.istic.fr.View;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -20,18 +17,17 @@ import androidx.core.splashscreen.SplashScreen;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
 
 import java.util.Objects;
 import java.util.Optional;
 
+import estore.istic.fr.Facade.OnUserActionListener;
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Animations;
 import estore.istic.fr.Resources.DatabaseHelper;
 import estore.istic.fr.Resources.Utils;
+import estore.istic.fr.Services.UsersService;
 
 public class loginActivity extends AppCompatActivity {
 
@@ -164,19 +160,15 @@ public class loginActivity extends AppCompatActivity {
 
     public void authenticateUser(String UserEmail, String UserPassword) {
         DatabaseHelper.getAuth().signOut();
-        DatabaseHelper.getAuth().signInWithEmailAndPassword(
-                UserEmail,
-                UserPassword
-        ).addOnCompleteListener(new OnCompleteListener<>() {
-            @SuppressLint("ResourceAsColor")
+        UsersService.authenticateUser(UserEmail, UserPassword, new OnUserActionListener() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    navigateToHome();
-                    return;
-                }
+            public void onSuccess(String userName, String userEmail, String phoneNumber) {
+                navigateToHome();
+            }
 
-                showToast(Objects.requireNonNull(task.getException()).getMessage());
+            @Override
+            public void onError(String message) {
+                showToast(message);
             }
         });
     }

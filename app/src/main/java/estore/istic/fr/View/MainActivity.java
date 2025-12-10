@@ -2,6 +2,7 @@ package estore.istic.fr.View;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -25,6 +26,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import java.util.Optional;
 
+import estore.istic.fr.Controller.NotificationsPermissionHandler;
 import estore.istic.fr.R;
 import estore.istic.fr.Resources.Utils;
 import estore.istic.fr.View.Fragments.cartFragment;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     final int OPTIONS_ID = R.id.Options;
     final int CART_ID = R.id.Cart;
     private long pressedTime;
+    private NotificationsPermissionHandler permissionHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,14 @@ public class MainActivity extends AppCompatActivity {
         initialisation();
         onClicks();
         doublePressedToQuite();
+
+        // Initialize the Permission Handler
+        permissionHandler = new NotificationsPermissionHandler(this);
+        permissionHandler.askNotificationPermission();
+
+        // starting the order status notification service
+        Intent serviceIntent = new Intent(this, estore.istic.fr.Services.OrderStatusService.class);
+        startService(serviceIntent);
 
     }
 
