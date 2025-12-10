@@ -78,8 +78,6 @@ public class cartFragment extends Fragment implements OnCartAdapterListener {
     ) {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
-        Utils.statusAndActionBarIconsColor(getActivity(), R.id.main);
-
         initialisation(view);
         settingRecycler(view.getContext(), Collections.emptyList());
         listeningToCartItems();

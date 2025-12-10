@@ -68,8 +68,6 @@ public class favoritesFragment extends Fragment implements OnProductActionListen
 
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
 
-        Utils.statusAndActionBarIconsColor(getActivity(), R.id.main);
-
         initialisation(view);
         settingProductsRecyclers(view, Collections.emptyList());
         fetchProducts();

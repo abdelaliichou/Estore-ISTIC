@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:backgroundTint="@color/orderBlue"
         android:background="@drawable/tasks_background"
         android:orientation="vertical">
 
@@ -80,7 +81,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
-                        android:background="@color/gray"
+                        android:background="@color/white"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="          "
                         android:textSize="20dp" />
@@ -89,7 +90,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:layout_marginLeft="10dp"
-                        android:background="@color/gray"
+                        android:background="@color/white"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="                "
                         android:textSize="20dp" />
@@ -111,7 +112,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:background="@color/gray"
+                android:background="@color/white"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="          "
@@ -126,7 +127,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="20dp"
-                    android:background="@color/gray"
+                    android:background="@color/white"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="          "
                     android:textSize="20dp" />
@@ -136,7 +137,7 @@
                     android:layout_weight=".3"
                     android:layout_height="20dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@color/gray"
+                    android:background="@color/white"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="                "
                     android:textSize="20dp" />
@@ -166,8 +167,8 @@
         android:layout_marginTop="15dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="30dp"
+        app:cardBackgroundColor="@color/orderBlue"
         android:layout_weight="1"
-        app:cardBackgroundColor="@color/mainblue"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
         app:strokeWidth="0dp">
@@ -183,6 +184,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/fui_transparent"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"

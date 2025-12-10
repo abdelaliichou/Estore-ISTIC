@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -25,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
 
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
@@ -312,6 +314,25 @@ public class Utils {
                 break;
             }
         }
+    }
+
+    public static void setStatusBarColor(Activity activity, int colorResId) {
+        if (activity != null) {
+            Window window = activity.getWindow();
+
+            // Essential to make the status bar color change work
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+            // Set the color
+            window.setStatusBarColor(ContextCompat.getColor(activity, colorResId));
+        }
+    }
+
+    public static void fragmentStatusBar(
+            Activity activity
+    ) {
+        activity.getWindow().setStatusBarColor(Color.WHITE);
     }
 
     public static void statusAndActionBarIconsColor(

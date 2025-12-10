@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import estore.istic.fr.Facade.OnUserActionListener;
@@ -56,8 +58,6 @@ public class optionsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_options, container, false);
-
-        Utils.statusAndActionBarIconsColor(getActivity(), R.id.main);
 
         initialisation(view);
         setAnimations(view);

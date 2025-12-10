@@ -91,8 +91,6 @@ public class homeFragment extends Fragment implements OnProductActionListener, O
 
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        Utils.statusAndActionBarIconsColor(getActivity(), R.id.main);
-
         initialisation(view);
 
         settingAnimation();

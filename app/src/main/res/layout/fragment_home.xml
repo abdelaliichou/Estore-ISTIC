@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/orderBlue"
     tools:context=".View.Fragments.homeFragment">
 
     <ScrollView
@@ -106,7 +106,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/first_recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
+                    android:layout_height="80dp"
                     android:clipToPadding="false"
                     android:paddingLeft="5dp"
                     android:paddingRight="10dp" />
@@ -124,7 +124,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="5dp">
 
@@ -183,6 +182,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="5dp"
                 android:elevation="100dp"
+                app:strokeWidth="0dp"
                 app:cardCornerRadius="10dp">
 
                 <RelativeLayout
