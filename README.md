@@ -211,9 +211,11 @@ classDiagram
 ## 👤 Author
 
 **Abdelali Ichou**
+**Gregoire Boudin**
+**Leo**
+**Barry**
 
   * **University:** ISTIC (University of Rennes 1)
-  * **GitHub:** [@abdelaliichou](https://github.com/abdelaliichou)
 
 -----
 
