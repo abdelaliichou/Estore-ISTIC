@@ -28,50 +28,106 @@ The app provides a seamless shopping experience allowing users to browse product
 
 The application uses **Firebase Realtime Database / Firestore**. Below is the entity relationship and class interaction diagram.
 
+- **The complete properties** for `User`, `Product`, `Order`, and `Category`.
+- **The Relationships**: Connecting `Product` to `Category`, `CartItem` to `Product`, and `Order` to `CartItem`.
+- **The Enum**: Added the `OrderStatus` enumeration used inside the Order class.
+- **The DTO**: Added `ProductDto` which wraps the product for UI logic (favorites).
+
 ```mermaid
 classDiagram
+    %% --- DATA MODELS ---
+
     class User {
         +String userId
+        +String name
         +String email
-        +String phone
-        +String fcmToken
+        +String phoneNumber
+    }
+
+    class Product {
+        +String productId
+        +String categoryId
+        +String imageUrl
+        +String name
+        +Double price
+    }
+
+    class Category {
+        +String categoryId
+        +String name
+        +String imageUrl
+    }
+
+    class CartItem {
+        +Product product
+        +int quantity
+        +calculateTotalPrice() double
     }
 
     class Order {
         +String orderId
-        +String status
+        +String userId
+        +OrderStatus status
+        +long orderDate
         +double totalPrice
-        +long date
-        +List~Item~ items
+        +List~CartItem~ items
     }
 
-    class Item {
-        +String productId
-        +String name
-        +int quantity
-        +double price
+    class OrderStatus {
+        <<enumeration>>
+        PENDING
+        CONFIRMED
+        ON_PROCESS
+        SHIPPED
+        DELIVERED
+        CANCELED
     }
 
+    class ProductDto {
+        +Product product
+        +boolean isFavorite
+        +getPriceString() String
+    }
+
+    %% --- ARCHITECTURAL CLASSES (Context) ---
     class OrderStatusService {
         +onStartCommand()
         -startListening()
         -triggerNotification()
     }
 
-    class MainActivity {
-        +onCreate()
-        +setupToolbar()
-    }
-
     class PdfUtils {
         +generateAndSharePdf()
     }
 
+    class MainActivity {
+        +onCreate()
+    }
+
+    %% --- RELATIONSHIPS ---
+
+    %% User places Orders (1 to Many)
     User "1" --> "*" Order : places
-    Order "1" --> "*" Item : contains
+
+    %% Order is composed of CartItems (1 to Many)
+    Order "1" *-- "*" CartItem : contains
+
+    %% Order uses the Status Enum
+    Order ..> OrderStatus : uses
+
+    %% CartItem refers to a specific Product
+    CartItem --> "1" Product : references
+
+    %% Product belongs to a Category (via categoryId)
+    Product --> "1" Category : belongs to
+
+    %% ProductDto wraps a Product (for UI)
+    ProductDto --> "1" Product : wraps
+
+    %% Architectural dependencies
     MainActivity ..> OrderStatusService : starts
-    OrderStatusService ..> NotificationUtils : delegates
-    ReceiptActivity ..> PdfUtils : delegates
+    OrderStatusService ..> Order : monitors
+    MainActivity ..> ProductDto : displays
 ```
 
 -----
